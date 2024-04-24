@@ -1,0 +1,9 @@
+api/node_modules
+client/.env.local
+api/.env
+client/.env
+api/node_modules
+/node_modules
+coverage/
+.idea/
+node_modules

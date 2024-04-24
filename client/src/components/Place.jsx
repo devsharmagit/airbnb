@@ -1,0 +1,74 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {toast} from "react-hot-toast"
+import IconButton from "./ui/IconButton";
+import {HeartOutlineSvg} from "../assets/svgs";
+import Heading from "./typography/Heading";
+import Paragrapgh from "./typography/Paragrapgh";
+
+
+
+function Place({ id, photo, title, description, price, favourites, removeFromSaved }) {
+
+  const navigate = useNavigate();
+  const user = useSelector((state)=> state.user.user)
+
+  const [isSaved, setIsSaved] = useState(false)
+
+  const handlePlaceClick = () => {
+    navigate(`/place/${id}`);
+  };
+
+  const handleFavClick = async(event)=>{
+    event.stopPropagation()
+    if(!user) return toast.error("Please Login to Save !")
+    if(!isSaved){
+      setIsSaved(true)
+      try {
+        const responseData = await axios.post("/api/fav/", {place: id}, {withCredentials: true})
+        if(responseData.data.status === "success") toast.success("Successfully saved !")  
+      } catch (error) {
+        setIsSaved(false)
+      }
+      
+    }else{
+      if(removeFromSaved) removeFromSaved(id)
+    const responseData = await axios.post(`/api/fav/remove`, {place: id}, {withCredentials: true})
+    if(responseData.data.status === "success"){
+      setIsSaved(false)
+      toast.success("Successfully Removed !")
+    } 
+      
+    }
+  }
+
+  useEffect(()=>{
+    if(user){
+      if(favourites?.includes(user?._id)) setIsSaved(true)
+    }
+  }, [user])
+
+  return (
+    <div
+      className="relative overflow-hidden cursor-pointer " onClick={handlePlaceClick}>
+        <IconButton onClick={handleFavClick} className="absolute top-2 right-2 hover:scale-110 transition-all !bg-white !bg-opacity-50 rounded-full p-1" Icon={HeartOutlineSvg} IconClass={isSaved ? " fill-primary text-primary" : "text-white fill-black"}  />
+       
+      <img
+        src={photo.url}
+        className="h-72 w-full object-cover rounded-lg"
+        alt=""
+        loading="lazy"
+      />
+      <div className="px-2 py-1 !text-left">
+        <Heading text={title} className={'text-lg truncate'} />
+        <Paragrapgh text={description} className={"truncate text-sm"} />
+        <Paragrapgh text={price && `$ ${price} per night`} className={"font-semibold text-base mt-2"} />
+   
+      </div>
+    </div>
+  );
+}
+
+export default Place;

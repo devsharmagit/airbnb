@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type="number"],input[type="email"], input[type="password"], input[type="text"], textarea{
+    @apply w-full border border-gray-400 my-1  py-2 px-3 rounded-2xl
+}
+
+button.primary{
+    @apply bg-primary p-2 w-full text-white rounded-2xl
+}
+
+.mont{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.raleway{
+    font-family: "Raleway", sans-serif;
+}
+.khula{
+    font-family: "Khula", sans-serif;
+}
+
+.poppings{
+    font-family: "Poppins", sans-serif;
+}
