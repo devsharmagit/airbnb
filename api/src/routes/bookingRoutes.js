@@ -1,5 +1,5 @@
 import express from "express"
-import { cancelbooking, createBooking, getABooking, getAllBookings, getUserBooking } from "../controller/bookingController.js"
+import { cancelbooking, createBooking, getABooking, getUserBooking } from "../controller/bookingController.js"
 import { protect } from "../controller/authController.js"
 
 const bookingRouter = express.Router()
