@@ -7,3 +7,4 @@ api/node_modules
 coverage/
 .idea/
 node_modules
+client/build

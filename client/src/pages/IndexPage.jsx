@@ -37,7 +37,7 @@ function IndexPage() {
     return () => {
       setPage(1);
     };
-  }, []);
+  }, [filter]);
 
   if (error) {
     return (
