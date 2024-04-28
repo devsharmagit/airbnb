@@ -20,7 +20,7 @@ function BookingOverview() {
   const { bookingId } = useParams();
   const navigate = useNavigate();
 
-  const { result, error, loading } = useFetchData(`https://airbnb-backend-pearl.vercel.app/api/booking/${bookingId}`);
+  const { result, error, loading } = useFetchData(`https://dev-sharma-bookinh.onrender.com/api/booking/${bookingId}`);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,7 +33,7 @@ function BookingOverview() {
   const handleCancelClick = async () => {
     try {
       setIsLoading(true);
-      const responseData = await axios.get(`https://airbnb-backend-pearl.vercel.app/api/booking/cancel/${bookingId}`, {
+      const responseData = await axios.get(`https://dev-sharma-bookinh.onrender.com/api/booking/cancel/${bookingId}`, {
         withCredentials: true,
       });
       if (responseData.status === 200) toast.success("Successfully done !");

@@ -79,7 +79,7 @@ function Profile() {
   async function logoutUser() {
     try {
       setLoading(true);
-      await axios.post("https://airbnb-backend-pearl.vercel.app/api/user/logout", {}, { withCredentials: true });
+      await axios.post("https://dev-sharma-bookinh.onrender.com/api/user/logout", {}, { withCredentials: true });
       dispatch(logout());
       navigate("/");
     } catch (error) {

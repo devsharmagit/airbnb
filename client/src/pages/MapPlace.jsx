@@ -50,7 +50,7 @@ const MapPlace = () => {
   };
 
   const fetchAllLocations = async () => {
-    const result = await axios.get("https://airbnb-backend-pearl.vercel.app/api/place/map");
+    const result = await axios.get("https://dev-sharma-bookinh.onrender.com/api/place/map");
     setPlaces(result?.data?.places);
   };
 

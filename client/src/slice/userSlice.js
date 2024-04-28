@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get("https://airbnb-backend-pearl.vercel.app/api/user/me", {
+    const { data } = await axios.get("https://dev-sharma-bookinh.onrender.com/api/user/me", {
       withCredentials: true,
     });
 

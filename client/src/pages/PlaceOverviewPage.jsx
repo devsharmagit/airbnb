@@ -28,7 +28,7 @@ function PlaceOverviewPage() {
 
   const user = useSelector((state) => state.user.user);
 
-  const { result, loading, error } = useFetchData(`https://airbnb-backend-pearl.vercel.app/api/place/${placeId}`);
+  const { result, loading, error } = useFetchData(`https://dev-sharma-bookinh.onrender.com/api/place/${placeId}`);
   const place = result?.data?.place;
 
   const handleBookClick = async () => {
@@ -36,7 +36,7 @@ function PlaceOverviewPage() {
     try {
       setIsLoading(true);
       const data = await axios.post(
-        "https://airbnb-backend-pearl.vercel.app/api/booking",
+        "https://dev-sharma-bookinh.onrender.com/api/booking",
         { checkIn, totalPrice: price, checkOut, place: placeId },
         { withCredentials: true }
       );

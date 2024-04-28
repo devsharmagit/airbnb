@@ -60,13 +60,13 @@ function PlaceForm({ type, placeId, place }) {
       };
       console.log(placeObj);
       if (type === "new") {
-        const responseData = await axios.post("https://airbnb-backend-pearl.vercel.app/api/place", placeObj, {
+        const responseData = await axios.post("https://dev-sharma-bookinh.onrender.com/api/place", placeObj, {
           withCredentials: true,
         });
         if (responseData.status === 201) toast.success("Successfully Created !");
       }
       if (type === "edit") {
-        const responseData = await axios.patch(`https://airbnb-backend-pearl.vercel.app/api/place/${placeId}`, placeObj, {
+        const responseData = await axios.patch(`https://dev-sharma-bookinh.onrender.com/api/place/${placeId}`, placeObj, {
           withCredentials: true,
         });
         if (responseData.status === 200) toast.success("Successfully Updated !");
