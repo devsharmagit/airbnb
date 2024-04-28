@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 
 app.use("/images",express.static("./images"))
 
-const whitelist = ['http://localhost:5173', 'http://127.0.0.1:5173', "http://localhost:3500"]
+const whitelist = ['http://localhost:5173', 'http://127.0.0.1:5173', "http://localhost:3500", "https://air-bnb-frontend.vercel.app"]
 
 app.use(cors({
     credentials: true,

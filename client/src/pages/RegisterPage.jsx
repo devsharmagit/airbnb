@@ -40,7 +40,7 @@ function RegisterPage() {
         dataToSend["profilePhoto"] = responseData?.uploadedImages[0];
       }
       const responseData = await axios.post(
-        "/api/user/signup",
+        "https://airbnb-backend-pearl.vercel.app/api/user/signup",
         { ...dataToSend },
         { withCredentials: true }
       );

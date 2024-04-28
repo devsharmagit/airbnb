@@ -12,7 +12,7 @@ const BookingsPage = () => {
 
   const navigate = useNavigate();
 
-  const { result, loading, error } = useFetch(`/api/booking?allBookings=${viewlAll}`);
+  const { result, loading, error } = useFetch(`https://airbnb-backend-pearl.vercel.app/api/booking?allBookings=${viewlAll}`);
 
   const bookings = result?.data?.bookingDoc;
 

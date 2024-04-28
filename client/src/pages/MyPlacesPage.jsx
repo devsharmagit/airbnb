@@ -12,7 +12,7 @@ import { useState } from "react";
 import LoadingModal from "../components/Modal/LoadingModal";
 
 function MyPlacesPage() {
-  const { result, error, loading, fetchData } = useFetchData("/api/place/getAllUserPlaces");
+  const { result, error, loading, fetchData } = useFetchData("https://airbnb-backend-pearl.vercel.app/api/place/getAllUserPlaces");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,7 +21,7 @@ function MyPlacesPage() {
   const handleClick = async (placeId) => {
     try {
       setIsLoading(true);
-      const responseData = await axios.delete(`/api/place/${placeId}`, {
+      const responseData = await axios.delete(`https://airbnb-backend-pearl.vercel.app/api/place/${placeId}`, {
         withCredentials: true,
       });
       if (responseData.status === 204) {

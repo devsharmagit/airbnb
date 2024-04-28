@@ -25,7 +25,7 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
       setIsSaved(true);
       try {
         const responseData = await axios.post(
-          "/api/fav/",
+          "https://airbnb-backend-pearl.vercel.app/api/fav/",
           { place: id },
           { withCredentials: true }
         );
@@ -36,7 +36,7 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
     } else {
       if (removeFromSaved) removeFromSaved(id);
       const responseData = await axios.post(
-        "/api/fav/remove",
+        "https://airbnb-backend-pearl.vercel.app/api/fav/remove",
         { place: id },
         { withCredentials: true }
       );

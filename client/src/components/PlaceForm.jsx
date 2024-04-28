@@ -60,13 +60,13 @@ function PlaceForm({ type, placeId, place }) {
       };
       console.log(placeObj);
       if (type === "new") {
-        const responseData = await axios.post("/api/place", placeObj, {
+        const responseData = await axios.post("https://airbnb-backend-pearl.vercel.app/api/place", placeObj, {
           withCredentials: true,
         });
         if (responseData.status === 201) toast.success("Successfully Created !");
       }
       if (type === "edit") {
-        const responseData = await axios.patch(`/api/place/${placeId}`, placeObj, {
+        const responseData = await axios.patch(`https://airbnb-backend-pearl.vercel.app/api/place/${placeId}`, placeObj, {
           withCredentials: true,
         });
         if (responseData.status === 200) toast.success("Successfully Updated !");
@@ -76,7 +76,7 @@ function PlaceForm({ type, placeId, place }) {
       console.log(error);
       toast.error("Something went wrong. Please try again later.");
     } finally {
-      loading(false);
+      setLoading(false);
     }
   }
 

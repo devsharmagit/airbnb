@@ -23,7 +23,7 @@ function usePlace() {
       try {
         console.log("fetching all places function is called", loadig);
         const response = await axios.get(
-          `/api/place?fields=title,description,mainImage,price,favourites&limit=12&page=${page}&${queryString}`,
+          `https://airbnb-backend-pearl.vercel.app/api/place?fields=title,description,mainImage,price,favourites&limit=12&page=${page}&${queryString}`,
           { withCredentials: true, signal }
         );
         setPlaces((prev) => [...prev, ...response.data.places]);

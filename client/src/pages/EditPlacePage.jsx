@@ -7,7 +7,7 @@ import LoadingModal from "../components/Modal/LoadingModal";
 function EditPlacePage() {
   const { placeId } = useParams();
 
-  const { result, loading, error } = useFetchData(`/api/place/${placeId}`);
+  const { result, loading, error } = useFetchData(`https://airbnb-backend-pearl.vercel.app/api/place/${placeId}`);
 
   if (loading)
     return (

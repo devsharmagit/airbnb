@@ -7,7 +7,7 @@ import Skeleton from "../components/ui/Skeleton";
 import Error from "../components/Error";
 
 function SavedPlacesPage() {
-  const { result, loading, error } = useFetchData("/api/place/fav");
+  const { result, loading, error } = useFetchData("https://airbnb-backend-pearl.vercel.app/api/place/fav");
   const [places, setPlaces] = useState(result?.data?.places || []);
 
   const removeFromSaved = (id) => {

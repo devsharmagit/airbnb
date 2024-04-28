@@ -32,7 +32,7 @@ function LoginPage() {
     try {
       setLoading(true);
       const responseData = await axios.post(
-        "/api/user/login",
+        "https://airbnb-backend-pearl.vercel.app/api/user/login",
         { ...data },
         { withCredentials: true }
       );

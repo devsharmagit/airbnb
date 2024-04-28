@@ -17,7 +17,7 @@ export const uploadFilesToServer = async (filesArr, type) => {
     destination = "user-image";
   }
 
-  const responseData = await axios.post(`http://localhost:3500/api/upload/${destination}`, data, {
+  const responseData = await axios.post(`https://airbnb-backend-pearl.vercel.app/api/upload/${destination}`, data, {
     headers: { "Content-Type": "multipart/form-data" },
     withCredentials: true,
   });
