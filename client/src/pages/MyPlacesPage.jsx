@@ -1,18 +1,18 @@
-import axios from 'axios';
-import Place from '../components/Place';
-import { Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import useFetchData from '../hooks/useFetchData';
-import IconButton from '../components/ui/IconButton';
-import Heading from '../components/typography/Heading';
-import Paragrapgh from '../components/typography/Paragrapgh';
-import { EditSvg, TrashSvg } from '../assets/svgs';
-import Skeleton from '../components/ui/Skeleton';
-import { useState } from 'react';
-import LoadingModal from '../components/Modal/LoadingModal';
+import axios from "axios";
+import Place from "../components/Place";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import useFetchData from "../hooks/useFetchData";
+import IconButton from "../components/ui/IconButton";
+import Heading from "../components/typography/Heading";
+import Paragrapgh from "../components/typography/Paragrapgh";
+import { EditSvg, TrashSvg } from "../assets/svgs";
+import Skeleton from "../components/ui/Skeleton";
+import { useState } from "react";
+import LoadingModal from "../components/Modal/LoadingModal";
 
 function MyPlacesPage() {
-  const { result, error, loading, fetchData } = useFetchData(`/api/place/getAllUserPlaces`);
+  const { result, error, loading, fetchData } = useFetchData("/api/place/getAllUserPlaces");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,11 +25,11 @@ function MyPlacesPage() {
         withCredentials: true,
       });
       if (responseData.status === 204) {
-        toast.success('Successfully deleted.');
+        toast.success("Successfully deleted.");
         await fetchData();
       }
     } catch (error) {
-      toast.error('Something  went worng!');
+      toast.error("Something  went worng!");
     } finally {
       setIsLoading(false);
     }
@@ -41,12 +41,12 @@ function MyPlacesPage() {
 
   return (
     <>
-      <LoadingModal isOpen={isLoading} text={'Deleting your place...'} />
+      <LoadingModal isOpen={isLoading} text={"Deleting your place..."} />
       <div className=" border-t border-gray-300 px-14 py-5">
-        <Heading text={'My Places'} className={'mb-5 text-center'} />
+        <Heading text={"My Places"} className={"mb-5 text-center"} />
 
         {places?.length === 0 && !loading && (
-          <Paragrapgh text={'You have not created a Place yet.'} className={'text-center'} />
+          <Paragrapgh text={"You have not created a Place yet."} className={"text-center"} />
         )}
 
         <div className="sm:grid-col-2 m-auto grid max-w-7xl justify-center gap-4 md:grid-cols-3 lg:grid-cols-4">
@@ -62,18 +62,18 @@ function MyPlacesPage() {
                     to={`/place/${obj?._id}/edit`}
                     className="mont flex items-center gap-1 rounded-md border border-gray-300 bg-gray-100 px-2 py-[2px] text-base font-medium hover:bg-gray-200"
                   >
-                    <EditSvg className={'!h-4 !w-4'} />
+                    <EditSvg className={"!h-4 !w-4"} />
                     Edit
                   </Link>
 
                   <IconButton
                     onClick={() => handleClick(obj?.id)}
                     className={
-                      'mont flex flex-row-reverse items-center gap-1 rounded-md border border-gray-300 bg-gray-100 px-2 py-[2px] text-base font-medium'
+                      "mont flex flex-row-reverse items-center gap-1 rounded-md border border-gray-300 bg-gray-100 px-2 py-[2px] text-base font-medium"
                     }
                     Icon={TrashSvg}
-                    text={'Delete'}
-                    IconClass={'!w-4 !h-4'}
+                    text={"Delete"}
+                    IconClass={"!w-4 !h-4"}
                   />
                 </div>
               </div>

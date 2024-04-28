@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import Place from '../components/Place';
-import useFetchData from '../hooks/useFetchData';
-import Heading from '../components/typography/Heading';
-import Paragrapgh from '../components/typography/Paragrapgh';
-import Skeleton from '../components/ui/Skeleton';
-import Error from '../components/Error';
+import { useEffect, useState } from "react";
+import Place from "../components/Place";
+import useFetchData from "../hooks/useFetchData";
+import Heading from "../components/typography/Heading";
+import Paragrapgh from "../components/typography/Paragrapgh";
+import Skeleton from "../components/ui/Skeleton";
+import Error from "../components/Error";
 
 function SavedPlacesPage() {
-  const { result, loading, error } = useFetchData('/api/place/fav');
+  const { result, loading, error } = useFetchData("/api/place/fav");
   const [places, setPlaces] = useState(result?.data?.places || []);
 
   const removeFromSaved = (id) => {
@@ -40,10 +40,10 @@ function SavedPlacesPage() {
   return (
     <div>
       <div className=" border-t border-gray-300 px-14 py-5">
-        <Heading text={'Saved Places'} className={'mb-5 text-center'} />
+        <Heading text={"Saved Places"} className={"mb-5 text-center"} />
 
         {places.length === 0 && !loading && (
-          <Paragrapgh text={'You have not saved a Place yet.'} className={'text-center'} />
+          <Paragrapgh text={"You have not saved a Place yet."} className={"text-center"} />
         )}
         <div className="sm:grid-col-2 m-auto grid w-fit max-w-7xl justify-center gap-4 md:grid-cols-3 lg:grid-cols-4">
           {places.map((obj) => {

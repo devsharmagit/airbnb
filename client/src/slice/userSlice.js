@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   user: null,
@@ -7,9 +7,9 @@ const initialState = {
   error: null,
 };
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async (_, thunkAPI) => {
+export const fetchUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get('/api/user/me', {
+    const { data } = await axios.get("/api/user/me", {
       withCredentials: true,
     });
 
@@ -20,7 +20,7 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (_, thunkAPI) 
 });
 
 export const userSlice = createSlice({
-  name: 'filter',
+  name: "filter",
   initialState,
   reducers: {
     login: (state, action) => {

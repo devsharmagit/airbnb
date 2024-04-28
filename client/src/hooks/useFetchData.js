@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 
 function useFetchData(url) {
   const [result, setResult] = useState(null);
@@ -20,8 +20,8 @@ function useFetchData(url) {
       setResult(responseData);
       setError(false);
     } catch (error) {
-      if (error.name === 'CanceledError') {
-        return console.log('aborted');
+      if (error.name === "CanceledError") {
+        return console.log("aborted");
       } else {
         setError(true);
       }

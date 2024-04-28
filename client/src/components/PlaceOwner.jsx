@@ -1,6 +1,6 @@
-import React from 'react';
-import Heading from './typography/Heading';
-import Paragrapgh from './typography/Paragrapgh';
+import React from "react";
+import Heading from "./typography/Heading";
+import Paragrapgh from "./typography/Paragrapgh";
 
 const PlaceOwner = ({ place }) => {
   return (

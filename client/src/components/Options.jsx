@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   TicketSvg,
   HeartSolidSvg,
@@ -7,16 +7,16 @@ import {
   PlusCircleSvg,
   UserSolidSvg,
   HomeSvg,
-} from '../assets/svgs';
+} from "../assets/svgs";
 
 function Options() {
   const profileOptions = [
-    { to: '/', Svg: HomeSvg, text: 'Home' },
-    { to: '/account', Svg: UserSolidSvg, text: 'Profile' },
-    { to: '/place/add-new', Svg: PlusCircleSvg, text: '  Add New Place' },
-    { to: '/my-places', Svg: HomeModernSvg, text: '  My Places' },
-    { to: '/saved-places', Svg: HeartSolidSvg, text: '  Saved Places' },
-    { to: '/booking', Svg: TicketSvg, text: ' My Bookings' },
+    { to: "/", Svg: HomeSvg, text: "Home" },
+    { to: "/account", Svg: UserSolidSvg, text: "Profile" },
+    { to: "/place/add-new", Svg: PlusCircleSvg, text: "  Add New Place" },
+    { to: "/my-places", Svg: HomeModernSvg, text: "  My Places" },
+    { to: "/saved-places", Svg: HeartSolidSvg, text: "  Saved Places" },
+    { to: "/booking", Svg: TicketSvg, text: " My Bookings" },
   ];
 
   return (

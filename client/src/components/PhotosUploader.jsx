@@ -1,6 +1,6 @@
-import { TrashSvg, UploadSvg } from '../assets/svgs';
-import toast from 'react-hot-toast';
-import IconButton from './ui/IconButton';
+import { TrashSvg, UploadSvg } from "../assets/svgs";
+import toast from "react-hot-toast";
+import IconButton from "./ui/IconButton";
 
 function PhotosUploader({ addedPhoto, setAddedPhoto }) {
   const handleDelteImage = async (link, event) => {
@@ -13,10 +13,10 @@ function PhotosUploader({ addedPhoto, setAddedPhoto }) {
   const handleFileSelect = async (event) => {
     const files = [];
     Array.from(event.target.files).forEach((value) => {
-      if (value?.type?.includes('image') && value?.size / 1048576 < 4.5) {
+      if (value?.type?.includes("image") && value?.size / 1048576 < 4.5) {
         files.push({ file: value, url: URL.createObjectURL(value) });
       } else {
-        toast.error('Please select images with size less than 4.5 mb only!');
+        toast.error("Please select images with size less than 4.5 mb only!");
       }
     });
     const newAddedPhotos = addedPhoto.concat(files);
@@ -34,7 +34,7 @@ function PhotosUploader({ addedPhoto, setAddedPhoto }) {
               <IconButton
                 onClick={(event) => handleDelteImage(fileObj?.url, event)}
                 className={
-                  'absolute bottom-1 right-1 rounded-md bg-white !bg-opacity-60 p-1 hover:bg-opacity-100'
+                  "absolute bottom-1 right-1 rounded-md bg-white !bg-opacity-60 p-1 hover:bg-opacity-100"
                 }
                 Icon={TrashSvg}
               />
@@ -53,7 +53,7 @@ function PhotosUploader({ addedPhoto, setAddedPhoto }) {
             className="hidden "
           />
           <UploadSvg />
-          {addedPhoto.length === 10 ? 'You can only upload 10 photos' : 'Upload'}
+          {addedPhoto.length === 10 ? "You can only upload 10 photos" : "Upload"}
         </label>
       </div>
     </>

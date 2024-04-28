@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const TextArea = React.forwardRef(({ errorMsg, ...other }, ref) => {
   function autoExpand(textarea) {
-    textarea.style.height = 'auto';
-    textarea.style.height = parseInt(textarea.scrollHeight + 5) + 'px';
+    textarea.style.height = "auto";
+    textarea.style.height = parseInt(textarea.scrollHeight + 5) + "px";
   }
 
   return (

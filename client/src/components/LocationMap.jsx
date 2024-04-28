@@ -1,8 +1,8 @@
-import React from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import { LocationSvg } from '../assets/svgs';
-import Heading from './typography/Heading';
-import Paragrapgh from './typography/Paragrapgh';
+import React from "react";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { LocationSvg } from "../assets/svgs";
+import Heading from "./typography/Heading";
+import Paragrapgh from "./typography/Paragrapgh";
 
 function LocationMap({ coordinates, title }) {
   return (
@@ -11,9 +11,9 @@ function LocationMap({ coordinates, title }) {
         <div className=" border-t border-gray-300 py-8">
           <div className="flex items-center gap-1">
             <LocationSvg />
-            <Heading text={'Location'} />
+            <Heading text={"Location"} />
           </div>
-          <Paragrapgh text={'Location on Map.'} />
+          <Paragrapgh text={"Location on Map."} />
 
           <div id="map" className="mt-2">
             <MapContainer
@@ -32,7 +32,7 @@ function LocationMap({ coordinates, title }) {
             </MapContainer>
           </div>
         </div>
-      )}{' '}
+      )}{" "}
     </>
   );
 }

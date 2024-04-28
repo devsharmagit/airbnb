@@ -1,5 +1,5 @@
-import { addDays, format, isBefore, parseISO } from 'date-fns';
-import { enUS } from 'date-fns/locale';
+import { addDays, format, isBefore, parseISO } from "date-fns";
+import { enUS } from "date-fns/locale";
 
 export const findTwoConsecutiveFutureDays = (blockedDates) => {
   const today = new Date();
@@ -7,8 +7,8 @@ export const findTwoConsecutiveFutureDays = (blockedDates) => {
 
   while (true) {
     const nextDay = addDays(currentDay, 1);
-    const formattedCurrentDay = format(currentDay, 'yyyy-MM-dd');
-    const formattedNextDay = format(nextDay, 'yyyy-MM-dd');
+    const formattedCurrentDay = format(currentDay, "yyyy-MM-dd");
+    const formattedNextDay = format(nextDay, "yyyy-MM-dd");
 
     if (
       !blockedDates.includes(formattedCurrentDay) &&
@@ -24,7 +24,7 @@ export const findTwoConsecutiveFutureDays = (blockedDates) => {
 
 export const formatDate = (dateString) => {
   const parsedDate = parseISO(dateString);
-  return format(parsedDate, 'd MMM yyyy', { locale: enUS });
+  return format(parsedDate, "d MMM yyyy", { locale: enUS });
 };
 
 export function getTimeCategory(checkIn, checkOut) {
@@ -37,10 +37,10 @@ export function getTimeCategory(checkIn, checkOut) {
 
   // Compare current time with check-in and check-out
   if (currentTime < checkInDate) {
-    return 'Before Check-in';
+    return "Before Check-in";
   } else if (currentTime >= checkInDate && currentTime < checkOutDate) {
-    return 'Between Check-in and Check-out';
+    return "Between Check-in and Check-out";
   } else {
-    return 'After Check-out';
+    return "After Check-out";
   }
 }

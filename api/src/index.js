@@ -52,6 +52,7 @@ app.use("/api/fav", favouriteRouter)
 
 
 
+
 process.on("uncaughtException", (error)=>{
     console.log("UNHANDLED EXCEPTION")
     console.log(error)
@@ -67,8 +68,6 @@ const server = app.listen(port, ()=>{
 
 process.on("unhandledRejection", (reason, promise)=>{
     console.log({reason,promise})
-    server.close()
-    process.exit(1)
 })
 
 export default app

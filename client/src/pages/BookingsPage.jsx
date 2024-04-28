@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { formatDate } from '../utils/dateFunctions';
-import { useNavigate } from 'react-router-dom';
-import useFetch from '../hooks/useFetchData';
-import Heading from '../components/typography/Heading';
-import Button from '../components/ui/Button';
-import Paragrapgh from '../components/typography/Paragrapgh';
-import Skeleton from '../components/ui/Skeleton';
+import React, { useState } from "react";
+import { formatDate } from "../utils/dateFunctions";
+import { useNavigate } from "react-router-dom";
+import useFetch from "../hooks/useFetchData";
+import Heading from "../components/typography/Heading";
+import Button from "../components/ui/Button";
+import Paragrapgh from "../components/typography/Paragrapgh";
+import Skeleton from "../components/ui/Skeleton";
 
 const BookingsPage = () => {
   const [viewlAll, setViewAll] = useState(false);
@@ -26,18 +26,18 @@ const BookingsPage = () => {
 
   return (
     <div className="ml-auto mr-auto mt-1 max-w-3xl  px-4 pt-5">
-      <Heading text={'My Bookings'} className={'mb-5 text-center'} />
+      <Heading text={"My Bookings"} className={"mb-5 text-center"} />
       {viewlAll ? (
         <Button
           onClick={() => setViewAll(false)}
-          text={'View Active Bookings Only.'}
-          className={' mb-2 border border-gray-300 !bg-gray-50 text-sm !text-black'}
+          text={"View Active Bookings Only."}
+          className={" mb-2 border border-gray-300 !bg-gray-50 text-sm !text-black"}
         />
       ) : (
         <Button
           onClick={() => setViewAll(true)}
-          text={'View all Bookings.'}
-          className={' mb-2 border border-gray-300 !bg-gray-50 text-sm !text-black'}
+          text={"View all Bookings."}
+          className={" mb-2 border border-gray-300 !bg-gray-50 text-sm !text-black"}
         />
       )}
 
@@ -72,8 +72,8 @@ const BookingsPage = () => {
                   <Paragrapgh text={`Total Price paid - $ ${booking?.totalPrice}`} />
                   <Paragrapgh text={`Booked at - ${formatDate(booking?.createdAt)}`} />
                   <Paragrapgh
-                    className={'text-xl !font-bold text-primary'}
-                    text={booking?.active === true ? 'Active' : 'Completed'}
+                    className={"text-xl !font-bold text-primary"}
+                    text={booking?.active === true ? "Active" : "Completed"}
                   />
                 </div>
               </div>

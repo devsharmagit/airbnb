@@ -1,6 +1,6 @@
-import React from 'react';
-import ModalContainer from './ModalContainer';
-import Paragrapgh from '../typography/Paragrapgh';
+import React from "react";
+import ModalContainer from "./ModalContainer";
+import Paragrapgh from "../typography/Paragrapgh";
 
 const LoadingModal = ({ isOpen, text }) => {
   return (
@@ -11,7 +11,7 @@ const LoadingModal = ({ isOpen, text }) => {
           role="status"
         ></div>
         <div className="px-4">
-          <Paragrapgh className={'mt-5 text-center font-semibold text-primary'} text={text} />
+          <Paragrapgh className={"mt-5 text-center font-semibold text-primary"} text={text} />
         </div>
       </div>
     </ModalContainer>

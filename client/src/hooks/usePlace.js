@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import useQueryMake from './useQueryMake';
-import { useSelector } from 'react-redux';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import useQueryMake from "./useQueryMake";
+import { useSelector } from "react-redux";
 
 function usePlace() {
   const [page, setPage] = useState(1);
@@ -21,7 +21,7 @@ function usePlace() {
     const signal = controller.signal;
     const fetchData = async () => {
       try {
-        console.log('fetching all places function is called', loadig);
+        console.log("fetching all places function is called", loadig);
         const response = await axios.get(
           `/api/place?fields=title,description,mainImage,price,favourites&limit=12&page=${page}&${queryString}`,
           { withCredentials: true, signal }
@@ -29,7 +29,7 @@ function usePlace() {
         setPlaces((prev) => [...prev, ...response.data.places]);
         setTotalPlaces(response.data.totalPlaces);
       } catch (error) {
-        if (error.code !== 'ERR_CANCELED') {
+        if (error.code !== "ERR_CANCELED") {
           console.log(error);
           setError(true);
         }

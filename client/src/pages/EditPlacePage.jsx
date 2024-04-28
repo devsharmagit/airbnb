@@ -1,8 +1,8 @@
-import React from 'react';
-import PlaceForm from '../components/PlaceForm';
-import { useParams } from 'react-router-dom';
-import useFetchData from '../hooks/useFetchData';
-import LoadingModal from '../components/Modal/LoadingModal';
+import React from "react";
+import PlaceForm from "../components/PlaceForm";
+import { useParams } from "react-router-dom";
+import useFetchData from "../hooks/useFetchData";
+import LoadingModal from "../components/Modal/LoadingModal";
 
 function EditPlacePage() {
   const { placeId } = useParams();
@@ -12,7 +12,7 @@ function EditPlacePage() {
   if (loading)
     return (
       <>
-        <LoadingModal isOpen={loading} text={'Getting your place details...'} />
+        <LoadingModal isOpen={loading} text={"Getting your place details..."} />
       </>
     );
 
@@ -21,7 +21,7 @@ function EditPlacePage() {
   return (
     <>
       {result?.data?.place && (
-        <PlaceForm type={'edit'} placeId={placeId} place={result?.data?.place} />
+        <PlaceForm type={"edit"} placeId={placeId} place={result?.data?.place} />
       )}
     </>
   );

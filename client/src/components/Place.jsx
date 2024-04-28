@@ -1,12 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-import IconButton from './ui/IconButton';
-import { HeartOutlineSvg } from '../assets/svgs';
-import Heading from './typography/Heading';
-import Paragrapgh from './typography/Paragrapgh';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import IconButton from "./ui/IconButton";
+import { HeartOutlineSvg } from "../assets/svgs";
+import Heading from "./typography/Heading";
+import Paragrapgh from "./typography/Paragrapgh";
 
 function Place({ id, photo, title, description, price, favourites, removeFromSaved }) {
   const navigate = useNavigate();
@@ -20,29 +20,29 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
 
   const handleFavClick = async (event) => {
     event.stopPropagation();
-    if (!user) return toast.error('Please Login to Save !');
+    if (!user) return toast.error("Please Login to Save !");
     if (!isSaved) {
       setIsSaved(true);
       try {
         const responseData = await axios.post(
-          '/api/fav/',
+          "/api/fav/",
           { place: id },
           { withCredentials: true }
         );
-        if (responseData.data.status === 'success') toast.success('Successfully saved !');
+        if (responseData.data.status === "success") toast.success("Successfully saved !");
       } catch (error) {
         setIsSaved(false);
       }
     } else {
       if (removeFromSaved) removeFromSaved(id);
       const responseData = await axios.post(
-        `/api/fav/remove`,
+        "/api/fav/remove",
         { place: id },
         { withCredentials: true }
       );
-      if (responseData.data.status === 'success') {
+      if (responseData.data.status === "success") {
         setIsSaved(false);
-        toast.success('Successfully Removed !');
+        toast.success("Successfully Removed !");
       }
     }
   };
@@ -59,16 +59,16 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
         onClick={handleFavClick}
         className="absolute right-2 top-2 rounded-full !bg-white !bg-opacity-50 p-1 transition-all hover:scale-110"
         Icon={HeartOutlineSvg}
-        IconClass={isSaved ? ' fill-primary text-primary' : 'text-white fill-black'}
+        IconClass={isSaved ? " fill-primary text-primary" : "text-white fill-black"}
       />
 
       <img src={photo.url} className="h-72 w-full rounded-lg object-cover" alt="" loading="lazy" />
       <div className="px-2 py-1 !text-left">
-        <Heading text={title} className={'truncate text-lg'} />
-        <Paragrapgh text={description} className={'truncate text-sm'} />
+        <Heading text={title} className={"truncate text-lg"} />
+        <Paragrapgh text={description} className={"truncate text-sm"} />
         <Paragrapgh
           text={price && `$ ${price} per night`}
-          className={'mt-2 text-base font-semibold'}
+          className={"mt-2 text-base font-semibold"}
         />
       </div>
     </div>

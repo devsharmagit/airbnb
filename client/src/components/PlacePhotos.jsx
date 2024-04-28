@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { ImageSvg } from '../assets/svgs';
-import IconButton from './ui/IconButton';
-import Modal from './Modal';
-import ImageModal from './Modal/ImageModal';
+import React, { useState } from "react";
+import { ImageSvg } from "../assets/svgs";
+import IconButton from "./ui/IconButton";
+import Modal from "./Modal";
+import ImageModal from "./Modal/ImageModal";
 
 function PlacePhotos({ photos }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ function PlacePhotos({ photos }) {
         <IconButton
           onClick={handleClick}
           className="mont absolute bottom-1 right-1 flex items-center gap-1 rounded-lg bg-white bg-opacity-70 p-2 text-sm font-bold backdrop-blur-md hover:bg-opacity-100"
-          text={'View all Photos'}
+          text={"View all Photos"}
           Icon={ImageSvg}
         />
       </div>

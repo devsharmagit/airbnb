@@ -1,36 +1,36 @@
-import { EnteranceSvg, ParkingSvg, PetsSvg, RadioSvg, TVSvg, WifiSvg } from '../assets/svgs';
+import { EnteranceSvg, ParkingSvg, PetsSvg, RadioSvg, TVSvg, WifiSvg } from "../assets/svgs";
 
 function Perks({ selected, onChange, forDisplay, allowedPerks }) {
   const perksArr = [
     {
-      perk: 'wifi',
+      perk: "wifi",
       Svg: () => <WifiSvg />,
-      text: 'Wifi',
+      text: "Wifi",
     },
     {
-      perk: 'parking',
+      perk: "parking",
       Svg: () => <ParkingSvg />,
-      text: 'Free parking spot',
+      text: "Free parking spot",
     },
     {
-      perk: 'tv',
+      perk: "tv",
       Svg: () => <TVSvg />,
-      text: 'TV',
+      text: "TV",
     },
     {
-      perk: 'radio',
+      perk: "radio",
       Svg: () => <RadioSvg />,
-      text: 'Radio',
+      text: "Radio",
     },
     {
-      perk: 'pets',
+      perk: "pets",
       Svg: () => <PetsSvg />,
-      text: 'Pets',
+      text: "Pets",
     },
     {
-      perk: 'private enterance',
+      perk: "private enterance",
       Svg: () => <EnteranceSvg />,
-      text: 'Private Enterance',
+      text: "Private Enterance",
     },
   ];
 
@@ -51,7 +51,7 @@ function Perks({ selected, onChange, forDisplay, allowedPerks }) {
           <div
             key={text}
             onClick={() => handleClick(perk)}
-            className={`flex items-center justify-center gap-2 border border-black ${selected?.includes(perk) && 'bg-primary text-white'} min-h-[50px] rounded-xl ${forDisplay && !allowedPerks?.includes(perk) ? 'hidden' : ''}`}
+            className={`flex items-center justify-center gap-2 border border-black ${selected?.includes(perk) && "bg-primary text-white"} min-h-[50px] rounded-xl ${forDisplay && !allowedPerks?.includes(perk) ? "hidden" : ""}`}
           >
             <Svg />
             <p>{text}</p>

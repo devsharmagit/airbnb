@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const MapSvg = ({ className }) => {
   return (
@@ -9,7 +9,7 @@ const MapSvg = ({ className }) => {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className={'h-6 w-6 ' + className}
+        className={"h-6 w-6 " + className}
       >
         <path
           strokeLinecap="round"

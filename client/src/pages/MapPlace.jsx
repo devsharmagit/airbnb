@@ -1,12 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
-import { useNavigate } from 'react-router-dom';
-import mapSrc from '../assets/placeholder.png';
-import L from 'leaflet';
-import Button from '../components/ui/Button';
-import toast from 'react-hot-toast';
-import Paragrapgh from '../components/typography/Paragrapgh';
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { useNavigate } from "react-router-dom";
+import mapSrc from "../assets/placeholder.png";
+import L from "leaflet";
+import Button from "../components/ui/Button";
+import toast from "react-hot-toast";
+import Paragrapgh from "../components/typography/Paragrapgh";
 
 const MapPlace = () => {
   const myIcon = L.icon({
@@ -28,14 +28,14 @@ const MapPlace = () => {
       (position) => setCoordinates([position.coords.latitude, position.coords.longitude]),
       (err) => {
         console.log(err);
-        toast.error('Error occured to get location!');
+        toast.error("Error occured to get location!");
         setCoordinates([]);
       }
     );
   };
 
   const onClickShowMarker = () => {
-    if (coordinates.length === 0) return toast.error('Please allow location! and Refresh.');
+    if (coordinates.length === 0) return toast.error("Please allow location! and Refresh.");
     const map = mapRef.current;
     if (!map) {
       return;
@@ -50,7 +50,7 @@ const MapPlace = () => {
   };
 
   const fetchAllLocations = async () => {
-    const result = await axios.get('/api/place/map');
+    const result = await axios.get("/api/place/map");
     setPlaces(result?.data?.places);
   };
 
@@ -84,7 +84,7 @@ const MapPlace = () => {
                   onClick={() => navigate(`/place/${place._id}`)}
                 >
                   <img src={place.mainImage.url} className="h-28 w-28 rounded-md object-cover" />
-                  <Paragrapgh text={place.title} className={'!mb-0  !mt-2 w-28 truncate text-sm'} />
+                  <Paragrapgh text={place.title} className={"!mb-0  !mt-2 w-28 truncate text-sm"} />
                 </div>
               </Popup>
             </Marker>
@@ -92,14 +92,14 @@ const MapPlace = () => {
         })}
 
         {coordinates.length !== 0 && (
-          <Marker ref={markerRef} icon={myIcon} key={'current_location'} position={coordinates}>
+          <Marker ref={markerRef} icon={myIcon} key={"current_location"} position={coordinates}>
             <Popup>Your Current Location</Popup>
           </Marker>
         )}
       </MapContainer>
 
       <div className="absolute bottom-5 left-5 z-[99999] text-center">
-        <Button onClick={onClickShowMarker} className={' bottom-0'} text={'Get Current Location'} />
+        <Button onClick={onClickShowMarker} className={" bottom-0"} text={"Get Current Location"} />
       </div>
     </div>
   );

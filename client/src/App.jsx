@@ -1,6 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import { Toaster } from 'react-hot-toast';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import { Toaster } from "react-hot-toast";
 import {
   AccountPage,
   AuthProtection,
@@ -17,28 +17,28 @@ import {
   PlaceOverviewPage,
   RegisterPage,
   SavedPlacesPage,
-} from './pages/index';
-import { fetchUser } from './slice/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+} from "./pages/index";
+import { fetchUser } from "./slice/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-import Cookies from 'js-cookie';
-import LoadingModal from './components/Modal/LoadingModal';
-import Error from './components/Error';
-import { useEffect } from 'react';
+import Cookies from "js-cookie";
+import LoadingModal from "./components/Modal/LoadingModal";
+import Error from "./components/Error";
+import { useEffect } from "react";
 
 function App() {
   const { loading, error, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
     if (token && !user) {
       dispatch(fetchUser());
     }
   }, [user]);
 
   if (loading) {
-    return <LoadingModal text={'Getting your details...'} />;
+    return <LoadingModal text={"Getting your details..."} />;
   }
   if (error) {
     return <Error />;

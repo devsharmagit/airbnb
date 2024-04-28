@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function AuthProtection({ children }) {
   console.log(children);
@@ -9,7 +9,7 @@ function AuthProtection({ children }) {
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    if (!user) navigate('/login');
+    if (!user) navigate("/login");
   }, [user]);
   return <>{user && children}</>;
 }

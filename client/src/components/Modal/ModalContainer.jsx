@@ -1,5 +1,5 @@
-import React from 'react';
-import { ReactPortal } from './ReactPortal';
+import React from "react";
+import { ReactPortal } from "./ReactPortal";
 
 const ModalContainer = ({ isOpen, children }) => {
   if (!isOpen) {

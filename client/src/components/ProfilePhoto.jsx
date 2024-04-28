@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
-import userImgSrc from '../assets/user (1).png';
-import { PencilSvg } from '../assets/svgs';
-import toast from 'react-hot-toast';
+import { useRef, useState } from "react";
+import userImgSrc from "../assets/user (1).png";
+import { PencilSvg } from "../assets/svgs";
+import toast from "react-hot-toast";
 
 function ProfilePhoto({ photo, setPhoto, setFile }) {
   const [hoverProfile, setHoverProfile] = useState(false);
@@ -12,13 +12,13 @@ function ProfilePhoto({ photo, setPhoto, setFile }) {
   };
 
   const handleFile = (event) => {
-    if (!event.target.files[0].type.includes('image')) {
-      event.target.value = '';
-      return toast.error('Please select image only!');
+    if (!event.target.files[0].type.includes("image")) {
+      event.target.value = "";
+      return toast.error("Please select image only!");
     }
     if (event.target.files[0].size / 1048576 > 4.5) {
-      event.target.value = '';
-      return toast.error('Please select image with size less than 4.5 mb only!');
+      event.target.value = "";
+      return toast.error("Please select image with size less than 4.5 mb only!");
     }
     setFile(event.target.files[0]);
     setPhoto({ url: URL.createObjectURL(event.target.files[0]) });
@@ -44,7 +44,7 @@ function ProfilePhoto({ photo, setPhoto, setFile }) {
         />
         <div
           className={`absolute flex h-full  w-full cursor-pointer items-center justify-center gap-1 bg-black opacity-70 transition-all duration-200 ${
-            hoverProfile ? 'top-0' : 'top-32'
+            hoverProfile ? "top-0" : "top-32"
           }`}
         >
           <PencilSvg />

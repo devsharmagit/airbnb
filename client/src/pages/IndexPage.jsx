@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
-import Place from '../components/Place.jsx';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import usePlace from '../hooks/usePlace.js';
-import Skeleton from '../components/ui/Skeleton.jsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeAllFilter } from '../slice/filterSlice.js';
-import Paragrapgh from '../components/typography/Paragrapgh.jsx';
-import { CircleExlamanation } from '../assets/svgs';
-import Error from '../components/Error.jsx';
-import { Link } from 'react-router-dom';
-import { MapSvg } from '../assets/svgs';
+import { useEffect } from "react";
+import Place from "../components/Place.jsx";
+import InfiniteScroll from "react-infinite-scroll-component";
+import usePlace from "../hooks/usePlace.js";
+import Skeleton from "../components/ui/Skeleton.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { removeAllFilter } from "../slice/filterSlice.js";
+import Paragrapgh from "../components/typography/Paragrapgh.jsx";
+import { CircleExlamanation } from "../assets/svgs";
+import Error from "../components/Error.jsx";
+import { Link } from "react-router-dom";
+import { MapSvg } from "../assets/svgs";
 
 function LoadingSkeleton({ loadig }) {
   return (
@@ -54,7 +54,7 @@ function IndexPage() {
           <>
             <Paragrapgh text={`Showing ${places?.length} results out of ${totalPlaces}.`} />
             {filter && (
-              <Paragrapgh text={'Filter is applied. Please remove filter to get more results.'} />
+              <Paragrapgh text={"Filter is applied. Please remove filter to get more results."} />
             )}
 
             {filter && (
@@ -92,8 +92,8 @@ function IndexPage() {
 
               {!totalPlaces && !loadig && (
                 <div>
-                  <CircleExlamanation className={'m-auto h-8 w-8'} />
-                  <Paragrapgh text={' No Places found. Try Removing filter or clearing search.'} />
+                  <CircleExlamanation className={"m-auto h-8 w-8"} />
+                  <Paragrapgh text={" No Places found. Try Removing filter or clearing search."} />
                 </div>
               )}
             </div>
@@ -102,7 +102,7 @@ function IndexPage() {
       </div>
       <div className="fixed bottom-5 m-auto flex w-full justify-center">
         <Link
-          to={'/map-place'}
+          to={"/map-place"}
           className="flex gap-2 rounded-full bg-primary px-4 py-2 font-semibold text-white"
         >
           <MapSvg /> Map View

@@ -1,8 +1,8 @@
-import React from 'react';
-import { CalenderSvg } from '../assets/svgs';
-import Paragrapgh from './typography/Paragrapgh';
-import DatePicker from './DatePicker';
-import { formatDate } from '../utils/dateFunctions';
+import React from "react";
+import { CalenderSvg } from "../assets/svgs";
+import Paragrapgh from "./typography/Paragrapgh";
+import DatePicker from "./DatePicker";
+import { formatDate } from "../utils/dateFunctions";
 
 const PlaceDate = ({ checkOut, checkIn, blockedDates, setCheckIN, setCheckOut }) => {
   return (
@@ -14,7 +14,7 @@ const PlaceDate = ({ checkOut, checkIn, blockedDates, setCheckIN, setCheckOut })
         </label>
         <div className="flex gap-2">
           <div className="h-4 w-4 bg-gray-300 "></div>
-          <Paragrapgh text={'gray boxes are those boxes which are booked or not available'} />
+          <Paragrapgh text={"gray boxes are those boxes which are booked or not available"} />
         </div>
         {checkIn && checkOut && (
           <Paragrapgh text={` From ${formatDate(checkIn)} to ${formatDate(checkOut)}`} />

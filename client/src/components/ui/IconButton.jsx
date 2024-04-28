@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function IconButton({ type, onClick, className, Icon, text, IconClass }) {
   return (

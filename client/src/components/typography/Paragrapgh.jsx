@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function Paragrapgh({ text, className }) {
   return (

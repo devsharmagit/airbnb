@@ -1,46 +1,46 @@
 function useQueryMake(filter, searchString) {
-  let searchPrice = '';
-  if (filter?.price?.type === 'lessThan') {
+  let searchPrice = "";
+  if (filter?.price?.type === "lessThan") {
     searchPrice = searchPrice + `price[lte]=${filter?.price?.value}`;
   }
-  if (filter?.price?.type === 'moreThan') {
+  if (filter?.price?.type === "moreThan") {
     searchPrice = searchPrice + `price[gte]=${filter?.price?.value}`;
   }
-  if (filter?.price?.type === 'equalsTo') {
+  if (filter?.price?.type === "equalsTo") {
     searchPrice = searchPrice + `price=${filter?.price?.value}`;
   }
-  if (filter?.price?.type === 'priceRange') {
+  if (filter?.price?.type === "priceRange") {
     searchPrice = searchPrice + `price[gte]=${filter?.price?.from}&price[lte]=${filter?.price?.to}`;
   }
-  let searchSort = '';
-  let latitude = '';
-  let longitude = '';
+  let searchSort = "";
+  let latitude = "";
+  let longitude = "";
   if (filter?.location) {
     latitude = `latitude=${filter?.location[1] || 0}`;
     longitude = `longitude=${filter?.location[0] || 0}`;
   }
-  if (filter?.sort === 'expensive') {
-    searchSort = 'sort=-price';
+  if (filter?.sort === "expensive") {
+    searchSort = "sort=-price";
   }
-  if (filter?.sort === 'cheapest') {
-    searchSort = 'sort=price';
+  if (filter?.sort === "cheapest") {
+    searchSort = "sort=price";
   }
-  if (filter?.sort === 'popular') {
-    searchSort = 'sort=-favCount';
+  if (filter?.sort === "popular") {
+    searchSort = "sort=-favCount";
   }
-  if (filter?.sort === 'far') {
-    searchSort = 'sort=far';
+  if (filter?.sort === "far") {
+    searchSort = "sort=far";
   }
-  if (filter?.sort === 'nearest') {
-    searchSort = 'sort=near';
+  if (filter?.sort === "nearest") {
+    searchSort = "sort=near";
   }
-  let searchPerk = '';
+  let searchPerk = "";
 
   if (filter?.perks?.length) {
-    searchPerk = `perks[all]=${filter.perks.join(',')}`;
+    searchPerk = `perks[all]=${filter.perks.join(",")}`;
   }
 
-  let searchStringToAdd = '';
+  let searchStringToAdd = "";
   if (searchString) {
     searchStringToAdd = `searchString=${searchString}`;
   }
@@ -51,7 +51,7 @@ function useQueryMake(filter, searchString) {
     .filter((value) => {
       return value.length !== 0;
     })
-    .join('&');
+    .join("&");
 
   return query;
 }

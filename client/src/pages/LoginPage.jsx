@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import toast from 'react-hot-toast';
-import { loginSchema } from '../constants/schemaConstant.js';
-import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../slice/userSlice.js';
-import Button from '../components/ui/Button.jsx';
-import Input from '../components/ui/Input.jsx';
-import Heading from '../components/typography/Heading.jsx';
-import LoadingModal from '../components/Modal/LoadingModal.jsx';
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
+import { loginSchema } from "../constants/schemaConstant.js";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../slice/userSlice.js";
+import Button from "../components/ui/Button.jsx";
+import Input from "../components/ui/Input.jsx";
+import Heading from "../components/typography/Heading.jsx";
+import LoadingModal from "../components/Modal/LoadingModal.jsx";
 
 function LoginPage() {
   const user = useSelector((state) => state.user.user);
@@ -32,17 +32,17 @@ function LoginPage() {
     try {
       setLoading(true);
       const responseData = await axios.post(
-        '/api/user/login',
+        "/api/user/login",
         { ...data },
         { withCredentials: true }
       );
-      if (responseData.status === 201) toast.success('Successfully Logged In !');
+      if (responseData.status === 201) toast.success("Successfully Logged In !");
       dispatch(login(responseData.data.data.user));
     } catch (error) {
       if (error?.response?.status === 401) {
-        toast.error('Incorrect Email or Password !');
+        toast.error("Incorrect Email or Password !");
       } else {
-        toast.error('Something went wrong. Please try later!');
+        toast.error("Something went wrong. Please try later!");
       }
     } finally {
       setLoading(false);
@@ -50,33 +50,33 @@ function LoginPage() {
   };
 
   useEffect(() => {
-    if (user) navigate('/');
+    if (user) navigate("/");
   }, [user]);
 
   return (
     <>
-      <LoadingModal isOpen={loading} text={'Logging you in.'} />
+      <LoadingModal isOpen={loading} text={"Logging you in."} />
       <div className="mx-auto mt-4 flex h-[45vh] max-w-md items-center justify-center">
         <div>
-          <Heading text={'Login'} className={'text-center'} />
+          <Heading text={"Login"} className={"text-center"} />
           <form className="" onSubmit={handleSubmit(handleLoginUser)}>
             <Input
-              type={'email'}
-              placeholder={'saraflex@gmail.com'}
-              {...register('email')}
+              type={"email"}
+              placeholder={"saraflex@gmail.com"}
+              {...register("email")}
               errorMsg={errors?.email?.message}
             />
             <Input
-              type={'password'}
-              placeholder={'password'}
-              {...register('password')}
+              type={"password"}
+              placeholder={"password"}
+              {...register("password")}
               errorMsg={errors?.password?.message}
             />
-            <Button text={'Login'} />
+            <Button text={"Login"} />
           </form>
           <div className="mt-4 text-center text-gray-600">
             <span className="mr-5">Dont have an account yet?</span>
-            <Link className="text-black underline" to={'/register'}>
+            <Link className="text-black underline" to={"/register"}>
               Register
             </Link>
           </div>
