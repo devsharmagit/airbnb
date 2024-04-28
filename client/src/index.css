@@ -2,25 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-input[type="number"],input[type="email"], input[type="password"], input[type="text"], textarea{
-    @apply w-full border border-gray-400 my-1  py-2 px-3 rounded-2xl
+input[type='number'],
+input[type='email'],
+input[type='password'],
+input[type='text'],
+textarea {
+  @apply my-1 w-full rounded-2xl border  border-gray-400 px-3 py-2;
 }
 
-button.primary{
-    @apply bg-primary p-2 w-full text-white rounded-2xl
+button.primary {
+  @apply w-full rounded-2xl bg-primary p-2 text-white;
 }
 
-.mont{
-    font-family: 'Montserrat', sans-serif;
+.mont {
+  font-family: 'Montserrat', sans-serif;
 }
 
-.raleway{
-    font-family: "Raleway", sans-serif;
+.raleway {
+  font-family: 'Raleway', sans-serif;
 }
-.khula{
-    font-family: "Khula", sans-serif;
+.khula {
+  font-family: 'Khula', sans-serif;
 }
 
-.poppings{
-    font-family: "Poppins", sans-serif;
+.poppings {
+  font-family: 'Poppins', sans-serif;
 }

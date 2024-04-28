@@ -177,7 +177,7 @@ export const getOnePlace = async (req,res)=>{
   } catch (error) {
     res.status(500).json({
       status: "fail",
-      message: error.message,
+      message: error.message
     });
   }
 }
@@ -248,14 +248,19 @@ req.body.mainImage = newPhotos[0]
 
 export const deleteAPlace = async(req,res)=>{
   try {
+    console.log("deleting the place is working")
     const userId = req.user._id
     const placeId = req.params.id
     const place = await PlaceModel.findById(placeId)
+
+    console.log("this is place ")
+    console.log({place})
 
     if(!place) throw Error("can not find place with this id")
     if(place.owner.toString() !== userId) throw Error("only owner can delte its own place")
 
     const photos = place.photos
+    console.log(place)
 
     photos.forEach(({publicId})=>{
       //  deleteImage(fileName)

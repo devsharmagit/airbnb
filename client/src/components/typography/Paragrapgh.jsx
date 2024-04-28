@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-function Paragrapgh( {text, className} ) {
+function Paragrapgh({ text, className }) {
   return (
-    <p className={`poppings font-normal text-base leading-tight text-gray-600 ${className}`}>
-    {text}
-  </p> 
-  )
+    <p className={`poppings text-base font-normal leading-tight text-gray-600 ${className}`}>
+      {text}
+    </p>
+  );
 }
 
-export default Paragrapgh
+export default Paragrapgh;

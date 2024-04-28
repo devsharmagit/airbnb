@@ -45,7 +45,9 @@ const PlaceSchema = new mongoose.Schema({
   },
   price:{
     type: Number,
-    required: [true, "Accomodation must have a price"]
+    required: [true, "Accomodation must have a price"],
+    default: 10,
+    minimum: 10
   },
   location:{
     type:{

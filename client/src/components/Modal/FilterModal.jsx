@@ -1,23 +1,20 @@
-import React from 'react'
+import React from 'react';
 import ModalContainer from './ModalContainer';
 import Button from '../ui/Button';
-import Filter from "../Filter"
+import Filter from '../Filter';
 
-const FilterModal = ({ isOpen, setIsOpen}) => {
+const FilterModal = ({ isOpen, setIsOpen }) => {
   return (
-    <ModalContainer isOpen={isOpen} >
+    <ModalContainer isOpen={isOpen}>
+      <div className="fixed left-0 top-0 z-[111111111] h-screen w-screen overflow-scroll overflow-x-hidden bg-white bg-opacity-50 backdrop-blur-sm">
+        <Button text={'close'} onClick={() => setIsOpen(false)} />
 
-    <div className='w-screen overflow-x-hidden h-screen fixed top-0 left-0 bg-white bg-opacity-50 backdrop-blur-sm z-[111111111] overflow-scroll'>
-    <Button text={"close"} onClick={()=>setIsOpen(false)} /> 
+        <div className="m-auto flex max-w-3xl items-center justify-center gap-3 p-4">
+          <Filter filterOpen={isOpen} setFilterOpen={setIsOpen} />
+        </div>
+      </div>
+    </ModalContainer>
+  );
+};
 
-        
-    <div className='max-w-3xl m-auto p-4 flex items-center justify-center gap-3'>
-   <Filter filterOpen={isOpen} setFilterOpen={setIsOpen} />
-    </div>
-     
-    </div>
-        </ModalContainer>
-  )
-}
-
-export default FilterModal
+export default FilterModal;

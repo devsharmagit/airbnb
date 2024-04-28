@@ -52,6 +52,7 @@ export const placeImageUpload = async (req, res) => {
 
 export const deleteCloudnaryImage = async (publicId) => {
   try {
+    console.log("deleting cloudnary image ....")
     await cloudinary.uploader.destroy(publicId);
   } catch (error) {
     console.log(error);

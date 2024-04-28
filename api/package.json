@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js",
-    "vercel-build": "echo yay"
+    "vercel-build": "echo yay",
+    "start:dev": "nodemon ./src/index.js"
   },
   "keywords": [],
   "author": "",

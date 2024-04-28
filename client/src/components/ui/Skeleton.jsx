@@ -1,23 +1,16 @@
-import React from 'react'
+import React from 'react';
 
 function Skeleton() {
   return (
-    <div
-      className="relative overflow-hidden cursor-pointer animate-pulse" >
-  
-      <div
-        className="h-72 bg-gray-300 w-full object-cover rounded-lg"
-      
-      ></div>
-      <div className=" py-2 flex flex-col gap-1">
-        <div className="h-7 bg-gray-300 rounded-lg"></div>
-        <div className="h-4 bg-gray-300 rounded-lg">
-        </div>
-        <div className="h-6 bg-gray-300 rounded-lg">
-        </div>
+    <div className="relative animate-pulse cursor-pointer overflow-hidden">
+      <div className="h-72 w-full rounded-lg bg-gray-300 object-cover"></div>
+      <div className=" flex flex-col gap-1 py-2">
+        <div className="h-7 rounded-lg bg-gray-300"></div>
+        <div className="h-4 rounded-lg bg-gray-300"></div>
+        <div className="h-6 rounded-lg bg-gray-300"></div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Skeleton
+export default Skeleton;

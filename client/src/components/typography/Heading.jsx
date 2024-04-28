@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-function Heading({text, className}) {
-  return (
-    <h1 className={`mont font-semibold text-2xl ${className}`}>
-    {text}
-  </h1>
-  )
+function Heading({ text, className }) {
+  return <h1 className={`mont text-2xl font-semibold ${className}`}>{text}</h1>;
 }
 
-export default Heading
+export default Heading;

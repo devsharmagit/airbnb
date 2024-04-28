@@ -4,15 +4,13 @@ const Input = React.forwardRef(({ type, placeholder, className, errorMsg, ...oth
   return (
     <>
       <input
-        type={type || "text"}
-        placeholder={placeholder || "Name"}
+        type={type || 'text'}
+        placeholder={placeholder || 'Name'}
         ref={ref}
         className={className}
         {...others}
       />
-      {errorMsg && (
-        <p className="text-red-500 font-medium text-sm pl-2 mont">{errorMsg}</p>
-      )}
+      {errorMsg && <p className="mont pl-2 text-sm font-medium text-red-500">{errorMsg}</p>}
     </>
   );
 });
