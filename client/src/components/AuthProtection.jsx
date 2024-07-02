@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function AuthProtection({ children }) {
-  console.log(children);
 
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);

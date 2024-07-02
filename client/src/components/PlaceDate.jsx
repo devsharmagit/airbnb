@@ -5,6 +5,7 @@ import DatePicker from "./DatePicker";
 import { formatDate } from "../utils/dateFunctions";
 
 const PlaceDate = ({ checkOut, checkIn, blockedDates, setCheckIN, setCheckOut }) => {
+  
   return (
     <div className="grid gap-4  border-t border-gray-300 pt-8 md:grid-cols-2">
       <div className="flex flex-col gap-3">
@@ -23,7 +24,7 @@ const PlaceDate = ({ checkOut, checkIn, blockedDates, setCheckIN, setCheckOut })
       <div className="flex flex-col gap-3">
         {checkIn && checkOut && (
           <DatePicker
-            blockedDates={blockedDates}
+            blockedDates={blockedDates || []}
             checkIn={checkIn}
             checkOut={checkOut}
             setCheckIN={setCheckIN}

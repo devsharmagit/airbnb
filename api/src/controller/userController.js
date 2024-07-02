@@ -2,7 +2,7 @@ import { UserModel } from "../model/User.js";
 import { deleteCloudnaryImage } from "./imageController.js";
 
 export const createUser = async (req, res) => {
-  console.log(req.body);
+
   const user = await UserModel.create(req.body);
 
   res.status(200).json({
@@ -14,7 +14,7 @@ export const createUser = async (req, res) => {
 export const handleMeRoute = async (req, res) => {
   try {
     const user = await UserModel.findById(req.user._id)
-    console.log(user)
+
     res.status(200).json({
       status: "success",
       user

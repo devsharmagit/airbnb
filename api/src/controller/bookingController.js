@@ -11,16 +11,14 @@ export const createBooking = async (req, res) => {
     const formattdDate = format(today, 'yyyy-MM-dd')
     const bookings = await BookingModel.find({place: req.body.place, active: true, checkOut: {$gte : formattdDate}})
     if (place.owner.toString() === req.user._id) {
-      console.log("owner can not book his own place ");
       throw new Error("owner cant book its own place");
     }
-    console.log(bookings)
     const isOverlapping = isDateRangeOverlapping(
       req.body.checkIn,
       req.body.checkOut,
      bookings
     );
-    console.log("date are overlapping ?? " + isOverlapping);
+
     if (isOverlapping) throw new Error("dates are overlapping");
 
     const bookedDoc = await BookingModel.create({
@@ -28,7 +26,7 @@ export const createBooking = async (req, res) => {
       ...req.body,
     });
 
-    console.log("this is proceeding task");
+
 
     res.status(201).json({
       status: "success",
@@ -74,7 +72,7 @@ query = query.find({active: true, checkOut:{$gte: formatedToday}})
   const bookingDoc = await query
 
   let newBookingDoc = [...bookingDoc]
-  console.log(bookingDoc)
+
 
   newBookingDoc = newBookingDoc.map((val)=>{
     const newVal = {...val._doc}
@@ -85,9 +83,6 @@ query = query.find({active: true, checkOut:{$gte: formatedToday}})
     return newVal
   })
 
-  console.log(newBookingDoc)
-
-  console.log(newBookingDoc)
 
   res.status(200).json({
     status: "success",

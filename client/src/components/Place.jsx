@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +6,7 @@ import IconButton from "./ui/IconButton";
 import { HeartOutlineSvg } from "../assets/svgs";
 import Heading from "./typography/Heading";
 import Paragrapgh from "./typography/Paragrapgh";
+import { removeSavePlace, saveAPLace } from "../services/api/placeApi";
 
 function Place({ id, photo, title, description, price, favourites, removeFromSaved }) {
   const navigate = useNavigate();
@@ -24,22 +24,15 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
     if (!isSaved) {
       setIsSaved(true);
       try {
-        const responseData = await axios.post(
-          "https://dev-sharma-bookinh.onrender.com/api/fav/",
-          { place: id },
-          { withCredentials: true }
-        );
-        if (responseData.data.status === "success") toast.success("Successfully saved !");
+        const responseData = await saveAPLace({ place: id })
+        if (responseData?.data?.status === "success") toast.success("Successfully saved !");
       } catch (error) {
         setIsSaved(false);
+        console.log(error)
       }
     } else {
       if (removeFromSaved) removeFromSaved(id);
-      const responseData = await axios.post(
-        "https://dev-sharma-bookinh.onrender.com/api/fav/remove",
-        { place: id },
-        { withCredentials: true }
-      );
+      const responseData = await removeSavePlace({ place: id })
       if (responseData.data.status === "success") {
         setIsSaved(false);
         toast.success("Successfully Removed !");

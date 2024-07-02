@@ -1,4 +1,3 @@
-import axios from "axios";
 import Place from "../components/Place";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -10,9 +9,13 @@ import { EditSvg, TrashSvg } from "../assets/svgs";
 import Skeleton from "../components/ui/Skeleton";
 import { useState } from "react";
 import LoadingModal from "../components/Modal/LoadingModal";
+import Error from "../components/Error";
+import { GET_MY_PLACES } from "../services/api/apiEndpoints";
+import { deletePlace } from "../services/api/placeApi";
+
 
 function MyPlacesPage() {
-  const { result, error, loading, fetchData } = useFetchData("https://dev-sharma-bookinh.onrender.com/api/place/getAllUserPlaces");
+  const { result, error, loading, fetchData } = useFetchData(GET_MY_PLACES);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,9 +24,7 @@ function MyPlacesPage() {
   const handleClick = async (placeId) => {
     try {
       setIsLoading(true);
-      const responseData = await axios.delete(`https://dev-sharma-bookinh.onrender.com/api/place/${placeId}`, {
-        withCredentials: true,
-      });
+      const responseData = await deletePlace(placeId);
       if (responseData.status === 204) {
         toast.success("Successfully deleted.");
         await fetchData();
@@ -45,7 +46,7 @@ function MyPlacesPage() {
       <div className=" border-t border-gray-300 px-14 py-5">
         <Heading text={"My Places"} className={"mb-5 text-center"} />
 
-        {places?.length === 0 && !loading && (
+        {(places?.length === 0) && !loading && (
           <Paragrapgh text={"You have not created a Place yet."} className={"text-center"} />
         )}
 
@@ -55,7 +56,7 @@ function MyPlacesPage() {
           {places?.map((obj) => {
             return (
               <div key={obj?._id}>
-                <Place id={obj?._id} title={obj?.title} photo={obj?.mainImage} />
+                <Place id={obj?._id} title={obj?.title} photo={obj?.mainImage}  favourites={obj?.favourites}/>
 
                 <div className="flex justify-center gap-2">
                   <Link

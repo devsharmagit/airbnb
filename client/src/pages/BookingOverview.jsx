@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, {  useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate, getTimeCategory } from "../utils/dateFunctions";
 import { differenceInDays } from "date-fns";
-import Place from "../components/Place";
+import Place from "../components/Place.jsx";
 import toast from "react-hot-toast";
 import useFetchData from "../hooks/useFetchData";
-import Button from "../components/ui/Button";
-import Heading from "../components/typography/Heading";
-import Paragrapgh from "../components/typography/Paragrapgh";
-import BookingOverviewSkeleton from "../components/ui/BookingOverviewSkeleton";
-import LoadingModal from "../components/Modal/LoadingModal";
+import Button from "../components/ui/Button.jsx";
+import Heading from "../components/typography/Heading.jsx";
+import Paragrapgh from "../components/typography/Paragrapgh.jsx";
+import BookingOverviewSkeleton from "../components/ui/BookingOverviewSkeleton.jsx";
+import LoadingModal from "../components/Modal/LoadingModal.jsx";
+import { GET_A_BOOKING } from "../services/api/apiEndpoints.js";
+import { cancelBooking } from "../services/api/bookingApi.js";
 
 const BookingHeading = ({ text }) => {
   return <Heading text={text} className={"text-lg"} />;
@@ -20,7 +21,7 @@ function BookingOverview() {
   const { bookingId } = useParams();
   const navigate = useNavigate();
 
-  const { result, error, loading } = useFetchData(`https://dev-sharma-bookinh.onrender.com/api/booking/${bookingId}`);
+  const { result, error, loading } = useFetchData(`${GET_A_BOOKING}/${bookingId}`);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,14 +29,10 @@ function BookingOverview() {
 
   const whereTime = getTimeCategory(bookingDoc?.checkIn, bookingDoc?.checkOut);
 
-  console.log(bookingDoc);
-
   const handleCancelClick = async () => {
     try {
       setIsLoading(true);
-      const responseData = await axios.get(`https://dev-sharma-bookinh.onrender.com/api/booking/cancel/${bookingId}`, {
-        withCredentials: true,
-      });
+      const responseData = await cancelBooking(bookingId)
       if (responseData.status === 200) toast.success("Successfully done !");
       navigate("/");
     } catch (error) {

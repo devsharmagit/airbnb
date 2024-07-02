@@ -6,13 +6,14 @@ import Heading from "../components/typography/Heading";
 import Button from "../components/ui/Button";
 import Paragrapgh from "../components/typography/Paragrapgh";
 import Skeleton from "../components/ui/Skeleton";
+import { GET_ALL_BOOKINGS } from "../services/api/apiEndpoints";
 
 const BookingsPage = () => {
   const [viewlAll, setViewAll] = useState(false);
 
   const navigate = useNavigate();
 
-  const { result, loading, error } = useFetch(`https://dev-sharma-bookinh.onrender.com/api/booking?allBookings=${viewlAll}`);
+  const { result, loading, error } = useFetch(`${GET_ALL_BOOKINGS}?allBookings=${viewlAll}`);
 
   const bookings = result?.data?.bookingDoc;
 

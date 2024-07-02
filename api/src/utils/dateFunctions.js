@@ -2,21 +2,21 @@ export  function isDateRangeOverlapping(checkin, checkout, existingBookings) {
 
     const userCheckin = new Date(checkin);
     const userCheckout = new Date(checkout);
-    console.log(userCheckin, userCheckout)
+
 
 const today = new Date().getDate()
 
-console.log(existingBookings)
+
 
 // if(userCheckin < today || userCheckout <= today){
 
 if(userCheckin < today ){
-    console.log("SMALLER DATE CULPRIT")
+
     throw new Error("CHECKIN OR CHECKOUT CANT BE SET IN PAST or same as today")
 }
 
     if(userCheckout <= userCheckin){
-        console.log("SAME OR INVALID DATE IS FOUND")
+  
         throw new Error("invalid dates entered")
         
     } 

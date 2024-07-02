@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import Place from "../components/Place";
-import useFetchData from "../hooks/useFetchData";
 import Heading from "../components/typography/Heading";
 import Paragrapgh from "../components/typography/Paragrapgh";
 import Skeleton from "../components/ui/Skeleton";
 import Error from "../components/Error";
+import { GET_SAVED_PLACE } from "../services/api/apiEndpoints";
+import useFetchData from "../hooks/useFetchData";
+
 
 function SavedPlacesPage() {
-  const { result, loading, error } = useFetchData("https://dev-sharma-bookinh.onrender.com/api/place/fav");
+  const { result, loading, error } = useFetchData(GET_SAVED_PLACE);
   const [places, setPlaces] = useState(result?.data?.places || []);
 
   const removeFromSaved = (id) => {

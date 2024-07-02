@@ -14,6 +14,7 @@ import Heading from "./typography/Heading";
 import Paragrapgh from "./typography/Paragrapgh";
 import { handleFormImages } from "../utils/utils";
 import LoadingModal from "./Modal/LoadingModal";
+import { createPlace, editPlace } from "../services/api/placeApi";
 
 function PlaceForm({ type, placeId, place }) {
   const [photos, setPhotos] = useState([]);
@@ -58,17 +59,12 @@ function PlaceForm({ type, placeId, place }) {
           coordinates: [data.longitude.toFixed(6), data.latitude.toFixed(6)],
         },
       };
-      console.log(placeObj);
       if (type === "new") {
-        const responseData = await axios.post("https://dev-sharma-bookinh.onrender.com/api/place", placeObj, {
-          withCredentials: true,
-        });
+        const responseData = await createPlace(placeObj)
         if (responseData.status === 201) toast.success("Successfully Created !");
       }
       if (type === "edit") {
-        const responseData = await axios.patch(`https://dev-sharma-bookinh.onrender.com/api/place/${placeId}`, placeObj, {
-          withCredentials: true,
-        });
+        const responseData = await editPlace(placeObj, placeId)
         if (responseData.status === 200) toast.success("Successfully Updated !");
       }
       navigate("/");

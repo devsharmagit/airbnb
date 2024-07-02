@@ -7,6 +7,8 @@ import L from "leaflet";
 import Button from "../components/ui/Button";
 import toast from "react-hot-toast";
 import Paragrapgh from "../components/typography/Paragrapgh";
+import useFetchData from "../hooks/useFetchData";
+import { GET_ALL_MAP_PLACE } from "../services/api/apiEndpoints";
 
 const MapPlace = () => {
   const myIcon = L.icon({
@@ -16,7 +18,6 @@ const MapPlace = () => {
     popupAnchor: [0, -20],
   });
 
-  const [places, setPlaces] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
   const navigate = useNavigate();
   const markerRef = useRef(null);
@@ -27,7 +28,6 @@ const MapPlace = () => {
     await navigator.geolocation.getCurrentPosition(
       (position) => setCoordinates([position.coords.latitude, position.coords.longitude]),
       (err) => {
-        console.log(err);
         toast.error("Error occured to get location!");
         setCoordinates([]);
       }
@@ -48,15 +48,11 @@ const MapPlace = () => {
       marker.openPopup();
     }
   };
+  const {result} = useFetchData(GET_ALL_MAP_PLACE)
 
-  const fetchAllLocations = async () => {
-    const result = await axios.get("https://dev-sharma-bookinh.onrender.com/api/place/map");
-    setPlaces(result?.data?.places);
-  };
-
+const places = result?.data?.places
   useEffect(() => {
     getCurrectLocation();
-    fetchAllLocations();
   }, []);
 
   return (

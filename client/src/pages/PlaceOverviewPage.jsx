@@ -17,6 +17,10 @@ import PlaceOwner from "../components/PlaceOwner";
 import PlaceDate from "../components/PlaceDate";
 import PlaceOverviewSkeleton from "../components/ui/PlaceOverviewSkeleton";
 import LoadingModal from "../components/Modal/LoadingModal";
+import Error from "../components/Error.jsx"
+import { GET_A_PLACE } from "../services/api/apiEndpoints.js";
+import { placeBooking } from "../services/api/bookingApi.js";
+
 
 function PlaceOverviewPage() {
   const { placeId } = useParams();
@@ -28,18 +32,15 @@ function PlaceOverviewPage() {
 
   const user = useSelector((state) => state.user.user);
 
-  const { result, loading, error } = useFetchData(`https://dev-sharma-bookinh.onrender.com/api/place/${placeId}`);
+  const { result, loading, error } = useFetchData(`${GET_A_PLACE}/${placeId}`);
   const place = result?.data?.place;
+const blockedDates = result?.data?.blockedDates
 
   const handleBookClick = async () => {
     if (!checkIn || !checkOut) return toast.error("check in and check out are not set");
     try {
       setIsLoading(true);
-      const data = await axios.post(
-        "https://dev-sharma-bookinh.onrender.com/api/booking",
-        { checkIn, totalPrice: price, checkOut, place: placeId },
-        { withCredentials: true }
-      );
+      const data = await placeBooking({ checkIn, totalPrice: price, checkOut, place: placeId })
 
       if (data.status === 201) toast.success("Successfully Booked !");
       navigate(`/booking/${data.data.booking._id}`);
@@ -56,12 +57,12 @@ function PlaceOverviewPage() {
   const price = place?.price * totalDays || 0;
 
   useEffect(() => {
-    if (result?.data?.blockedDates) {
-      const nearestAllowedDates = findTwoConsecutiveFutureDays(result?.data?.blockedDates);
+    if (blockedDates) {
+      const nearestAllowedDates = findTwoConsecutiveFutureDays(blockedDates);
       setCheckIN(nearestAllowedDates[0]);
       setCheckOut(nearestAllowedDates[1]);
     }
-  }, [result]);
+  }, [place]);
 
   if (loading) {
     return <PlaceOverviewSkeleton />;
@@ -121,7 +122,7 @@ function PlaceOverviewPage() {
             <PlaceDate
               checkIn={checkIn}
               checkOut={checkOut}
-              blockedDates={result?.data?.blockedDates}
+              blockedDates={blockedDates}
               setCheckIN={setCheckIN}
               setCheckOut={setCheckOut}
               key={"date-place-picker"}

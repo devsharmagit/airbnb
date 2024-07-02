@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import useQueryMake from "./useQueryMake";
 import { useSelector } from "react-redux";
+import { getAllPlace } from "../services/api/placeApi";
 
 function usePlace() {
   const [page, setPage] = useState(1);
@@ -21,16 +21,11 @@ function usePlace() {
     const signal = controller.signal;
     const fetchData = async () => {
       try {
-        console.log("fetching all places function is called", loadig);
-        const response = await axios.get(
-          `https://dev-sharma-bookinh.onrender.com/api/place?fields=title,description,mainImage,price,favourites&limit=12&page=${page}&${queryString}`,
-          { withCredentials: true, signal }
-        );
-        setPlaces((prev) => [...prev, ...response.data.places]);
+        const response = await getAllPlace(page, queryString, signal)
+        setPlaces((prev) => [...prev, ...response?.data?.places]);
         setTotalPlaces(response.data.totalPlaces);
       } catch (error) {
         if (error.code !== "ERR_CANCELED") {
-          console.log(error);
           setError(true);
         }
       } finally {
@@ -65,7 +60,6 @@ function usePlace() {
     };
   }, [queryString]);
 
-  console.log(loadig);
 
   return { places, totalPlaces, loadig, hasMore, page, error, setPage };
 }

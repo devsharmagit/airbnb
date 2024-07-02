@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
@@ -11,6 +10,7 @@ import Button from "../components/ui/Button.jsx";
 import Input from "../components/ui/Input.jsx";
 import Heading from "../components/typography/Heading.jsx";
 import LoadingModal from "../components/Modal/LoadingModal.jsx";
+import { logIn } from "../services/api/authApi.js";
 
 function LoginPage() {
   const user = useSelector((state) => state.user.user);
@@ -31,11 +31,8 @@ function LoginPage() {
   const handleLoginUser = async (data) => {
     try {
       setLoading(true);
-      const responseData = await axios.post(
-        "https://dev-sharma-bookinh.onrender.com/api/user/login",
-        { ...data },
-        { withCredentials: true }
-      );
+      
+      const responseData = await logIn({...data})
       if (responseData.status === 201) toast.success("Successfully Logged In !");
       dispatch(login(responseData.data.data.user));
     } catch (error) {

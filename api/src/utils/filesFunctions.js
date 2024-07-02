@@ -12,7 +12,7 @@ export const deleteImage = async(imageName)=>{
         // Delete the file
         await fs.unlink(filePath);
     }catch(error){
-console.log(error)
+    console.log(error)
     }
 }
 

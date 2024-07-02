@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { imagesUpload } from "../services/api/placeApi";
 
 export const uploadFilesToServer = async (filesArr, type) => {
   const data = new FormData();
@@ -17,10 +18,7 @@ export const uploadFilesToServer = async (filesArr, type) => {
     destination = "user-image";
   }
 
-  const responseData = await axios.post(`https://dev-sharma-bookinh.onrender.com/api/upload/${destination}`, data, {
-    headers: { "Content-Type": "multipart/form-data" },
-    withCredentials: true,
-  });
+  const responseData = await imagesUpload(destination, data)
 
   return responseData.data;
 };

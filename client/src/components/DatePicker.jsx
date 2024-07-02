@@ -13,7 +13,6 @@ function DatePicker({ blockedDates, setCheckIN, checkIn, checkOut, setCheckOut }
 
   const handleDateChange = (range) => {
     setDate(range.selection);
-    console.log();
     setCheckIN(format(range?.selection?.startDate, "yyyy-MM-dd"));
     setCheckOut(format(range?.selection?.endDate, "yyyy-MM-dd"));
   };

@@ -3,11 +3,13 @@ import PlaceForm from "../components/PlaceForm";
 import { useParams } from "react-router-dom";
 import useFetchData from "../hooks/useFetchData";
 import LoadingModal from "../components/Modal/LoadingModal";
+import { GET_A_PLACE } from "../services/api/apiEndpoints";
+
 
 function EditPlacePage() {
   const { placeId } = useParams();
 
-  const { result, loading, error } = useFetchData(`https://dev-sharma-bookinh.onrender.com/api/place/${placeId}`);
+  const { result, loading, error } = useFetchData(`${GET_A_PLACE}/${placeId}`);
 
   if (loading)
     return (

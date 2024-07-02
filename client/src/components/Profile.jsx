@@ -15,6 +15,9 @@ import Input from "./ui/Input";
 import { uploadFilesToServer } from "../utils/handleFiles";
 import Paragrapgh from "./typography/Paragrapgh";
 import LoadingModal from "./Modal/LoadingModal";
+import { updateUser } from "../services/api/userApi";
+import { logout as logouUser } from "../services/api/authApi";
+
 
 function Profile() {
   const user = useSelector((state) => state.user.user);
@@ -48,15 +51,15 @@ function Profile() {
         const responseData = await uploadFilesToServer([imageFile], "user");
         dataToSend["profilePhoto"] = responseData?.uploadedImages[0];
       }
-      const responseData = await axios.patch(
-        "/api/user",
-        { ...dataToSend },
+      
+      const responseData = await updateUser({ ...dataToSend },
         { withCredentials: true }
       );
       dispatch(login(responseData.data.user));
       toast.success("Successfully Updated !");
       setEditMode(false);
     } catch (error) {
+      console.log(error)
       toast.error("Something went wrong. Try again Later.");
     } finally {
       setLoading(false);
@@ -79,7 +82,7 @@ function Profile() {
   async function logoutUser() {
     try {
       setLoading(true);
-      await axios.post("https://dev-sharma-bookinh.onrender.com/api/user/logout", {}, { withCredentials: true });
+      await logouUser()
       dispatch(logout());
       navigate("/");
     } catch (error) {

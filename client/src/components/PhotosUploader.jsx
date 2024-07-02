@@ -23,7 +23,7 @@ function PhotosUploader({ addedPhoto, setAddedPhoto }) {
     setAddedPhoto(newAddedPhotos.slice(0, 10));
   };
 
-  console.log(addedPhoto);
+
 
   return (
     <>

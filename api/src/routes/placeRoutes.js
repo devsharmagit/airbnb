@@ -15,6 +15,6 @@ placeRouter.route("/fav").get(protect, getFavouritePlaces)
 placeRouter.route("/:id").get(getOnePlace).patch(protect, updateAPlace).delete(protect, deleteAPlace)
 
 placeRouter.route("/").get(getAllPlaces).post(protect, addAPlace)
-console.log("place route is working")
+
 
 export default placeRouter;

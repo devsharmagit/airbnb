@@ -11,7 +11,6 @@ export const getAllPlaces = async (req, res) => {
     const excludedFields = ['sort', 'limit', 'page','fields', 'latitude', 'longitude', 'searchString']
     const queryObj = {...req.query}
 
-    console.log(queryObj)
     excludedFields.forEach((value)=>{
       delete queryObj[value]
     })
@@ -88,7 +87,6 @@ if(req.query.sort === "near"){
         if(req.query.page){
           let limit = req.query.limit * 1 || 10
           let skip = (req.query.page - 1) * limit
-          console.log({limit, skip})
           query = query.skip(skip).limit(limit)
         }
        
@@ -165,9 +163,8 @@ export const getOnePlace = async (req,res)=>{
     const formattedDate = format(today, 'yyyy-MM-dd')
   const bookings = await BookingModel.find({place: place._id, active: true, checkOut: {$gte: formattedDate} })
 
-  console.log(bookings)
-
   const blockedDates = getBlockedDates(bookings)
+
 
   res.status(200).json({
     status: "success",
@@ -183,10 +180,9 @@ export const getOnePlace = async (req,res)=>{
 }
 
 export const getAllUserPlaces = async (req,res)=>{
-  console.log("this route is working")
   try {
    
-    const places = await PlaceModel.find({owner: req.user._id}).sort("-updatedAt").select("mainImage title price description")
+    const places = await PlaceModel.find({owner: req.user._id}).sort("-updatedAt").select("mainImage title price description favourites")
 
     res.status(200).json({
       status: "success",
@@ -248,19 +244,17 @@ req.body.mainImage = newPhotos[0]
 
 export const deleteAPlace = async(req,res)=>{
   try {
-    console.log("deleting the place is working")
+
     const userId = req.user._id
     const placeId = req.params.id
     const place = await PlaceModel.findById(placeId)
 
-    console.log("this is place ")
-    console.log({place})
+ 
 
     if(!place) throw Error("can not find place with this id")
     if(place.owner.toString() !== userId) throw Error("only owner can delte its own place")
 
     const photos = place.photos
-    console.log(place)
 
     photos.forEach(({publicId})=>{
       //  deleteImage(fileName)

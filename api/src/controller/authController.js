@@ -6,7 +6,7 @@ import bcryptjs from "bcryptjs"
 const assignJWT = (res, user)=>{
    user.password = undefined
   const token = jwt.sign({user}, process.env.SCERET, {expiresIn: process.env.JWT_EXP_DATE})
-  res.cookie("token", token).status(201).json({
+  res.cookie("token", token, { sameSite: 'none', secure: true}).status(201).json({
     status: "successfull !",
     data: {
       user,
@@ -29,7 +29,6 @@ export const signup = async (req, res) => {
 assignJWT(res, user)
 
   } catch (err) {
-  console.log("ERROR 🔥🔥🔥 ERROR 🔥🔥🔥 ERROR 🔥🔥🔥 ERROR ")
     res.status(500).json({
       status: "fail",
       error: err,
@@ -67,8 +66,6 @@ export const logout = async (req, res)=>{
 
 export const protect = async (req, res, next)=>{
 
-  console.log("protect is working")
-
   try {
     let token = req.headers.authorization || req.cookies.token
     if(!token) throw new Error("please provide token")
@@ -78,8 +75,6 @@ export const protect = async (req, res, next)=>{
  next()
     
   } catch (error) {
-    console.log("ERROR 🔥🔥🔥 ERROR 🔥🔥🔥 ERROR 🔥🔥🔥 ERROR ")
-    console.log(error)
     res.status(500).json({
       status: "fail",
       error: error,

@@ -46,13 +46,15 @@ export const placeImageUpload = async (req, res) => {
 
     res.json({ uploadedImages });
   } catch (error) {
-    console.log(error);
+   res.status(500).json({
+    status: "failed",
+    error: error.message
+   })
   }
 };
 
 export const deleteCloudnaryImage = async (publicId) => {
   try {
-    console.log("deleting cloudnary image ....")
     await cloudinary.uploader.destroy(publicId);
   } catch (error) {
     console.log(error);

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import ProfilePhoto from "../components/ProfilePhoto";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,6 +12,8 @@ import Input from "../components/ui/Input";
 import Heading from "../components/typography/Heading";
 import LoadingModal from "../components/Modal/LoadingModal";
 import { uploadFilesToServer } from "../utils/handleFiles";
+import { signUp } from "../services/api/authApi";
+
 
 function RegisterPage() {
   const [photo, setPhoto] = useState("");
@@ -39,11 +40,7 @@ function RegisterPage() {
         const responseData = await uploadFilesToServer([file], "user");
         dataToSend["profilePhoto"] = responseData?.uploadedImages[0];
       }
-      const responseData = await axios.post(
-        "https://dev-sharma-bookinh.onrender.com/api/user/signup",
-        { ...dataToSend },
-        { withCredentials: true }
-      );
+      const responseData = await signUp({...dataToSend});
       if (responseData.status === 201) {
         dispatch(login(responseData.data.data.user));
         toast.success("Account successfully created !");

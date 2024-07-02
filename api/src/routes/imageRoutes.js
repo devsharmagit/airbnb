@@ -8,7 +8,7 @@ var storage = multer.diskStorage({
       cb(null, 'images')
     },
     filename: function (req, file, cb) {
-        console.log(file)
+
       cb(null, `${imageNameConstructor(file.originalname)}`)
     }
 })

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { GET_ME } from "../services/api/apiEndpoints";
 
 const initialState = {
   user: null,
@@ -9,7 +10,7 @@ const initialState = {
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get("https://dev-sharma-bookinh.onrender.com/api/user/me", {
+    const { data } = await axios.get(GET_ME, {
       withCredentials: true,
     });
 
