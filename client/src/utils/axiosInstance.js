@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-const mode = import.meta.env.MODE
+const mode = import.meta.env.VITE_ENVIROMENT
 
 console.log({mode})
 
-let baseUrl = mode === "dev" ? "http://localhost:3500" : "https://bookers-backend.devsharmacode.com";
+let baseUrl = "http://localhost:3500";
+if(mode === "prod"){
+  baseUrl = "https://bookers-backend.devsharmacode.com"
+}
+
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,

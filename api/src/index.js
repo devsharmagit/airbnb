@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 
 app.use("/images",express.static("./images"))
 
-const whitelist = [ 'https://dev-sharma-booking.netlify.app','http://localhost:4173', 'http://127.0.0.1:4173', 'http://localhost:5173', 'http://127.0.0.1:5173', "http://localhost:3500", "https://air-bnb-frontend.vercel.app", "https://bookers.devsharmacode.com"]
+const whitelist = [ 'https://dev-sharma-booking.netlify.app','http://localhost:3000', 'http://127.0.0.1:3000','http://localhost:4173', 'http://127.0.0.1:4173', 'http://localhost:5173', 'http://127.0.0.1:5173', "http://localhost:3500", "https://air-bnb-frontend.vercel.app", "https://bookers.devsharmacode.com"]
 
 app.use(cors({
     credentials: true,
