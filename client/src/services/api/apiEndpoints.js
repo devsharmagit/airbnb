@@ -1,8 +1,8 @@
 const mode = import.meta.env.VITE_ENVIROMENT
 
-let baseUrl = "http://localhost:3500";
+let baseUrl = "http://localhost:3500/api/";
 if(mode === "prod"){
-  baseUrl = "https://bookers-backend.devsharmacode.com"
+  baseUrl = "https://bookers-backend.devsharmacode.com/api/"
 }
 
 
