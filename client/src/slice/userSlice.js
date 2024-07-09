@@ -4,7 +4,7 @@ import { GET_ME } from "../services/api/apiEndpoints";
 
 const initialState = {
   user: null,
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -13,7 +13,6 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) 
     const { data } = await axios.get(GET_ME, {
       withCredentials: true,
     });
-
     return data.user;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);
