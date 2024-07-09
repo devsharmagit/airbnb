@@ -4,7 +4,7 @@ import { GET_ME } from "../services/api/apiEndpoints";
 
 const initialState = {
   user: null,
-  loading: true,
+  loading: false,
   error: null,
 };
 
