@@ -21,7 +21,7 @@ function useFetchData(url) {
       setError(false);
     } catch (error) {
       if (error.name === "CanceledError") {
-        return 
+        return;
       } else {
         setError(true);
       }

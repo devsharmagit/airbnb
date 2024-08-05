@@ -1,18 +1,17 @@
-import Place from "../components/Place";
+import Place from "../components/Place.jsx";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import useFetchData from "../hooks/useFetchData";
-import IconButton from "../components/ui/IconButton";
-import Heading from "../components/typography/Heading";
-import Paragrapgh from "../components/typography/Paragrapgh";
+import IconButton from "../components/ui/IconButton.jsx";
+import Heading from "../components/typography/Heading.jsx";
+import Paragrapgh from "../components/typography/Paragrapgh.jsx";
 import { EditSvg, TrashSvg } from "../assets/svgs";
-import Skeleton from "../components/ui/Skeleton";
+import Skeleton from "../components/ui/Skeleton.jsx";
 import { useState } from "react";
-import LoadingModal from "../components/Modal/LoadingModal";
-import Error from "../components/Error";
+import LoadingModal from "../components/Modal/LoadingModal.jsx";
+import Error from "../components/Error.jsx";
 import { GET_MY_PLACES } from "../services/api/apiEndpoints";
 import { deletePlace } from "../services/api/placeApi";
-
 
 function MyPlacesPage() {
   const { result, error, loading, fetchData } = useFetchData(GET_MY_PLACES);
@@ -46,7 +45,7 @@ function MyPlacesPage() {
       <div className=" border-t border-gray-300 px-14 py-5">
         <Heading text={"My Places"} className={"mb-5 text-center"} />
 
-        {(places?.length === 0) && !loading && (
+        {places?.length === 0 && !loading && (
           <Paragrapgh text={"You have not created a Place yet."} className={"text-center"} />
         )}
 
@@ -56,7 +55,12 @@ function MyPlacesPage() {
           {places?.map((obj) => {
             return (
               <div key={obj?._id}>
-                <Place id={obj?._id} title={obj?.title} photo={obj?.mainImage}  favourites={obj?.favourites}/>
+                <Place
+                  id={obj?._id}
+                  title={obj?.title}
+                  photo={obj?.mainImage}
+                  favourites={obj?.favourites}
+                />
 
                 <div className="flex justify-center gap-2">
                   <Link

@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { EditSvg } from "../assets/svgs";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ProfilePhoto from "./ProfilePhoto";
+import ProfilePhoto from "./ProfilePhoto.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../slice/userSlice";
 import { profileSchema } from "../constants/schemaConstant";
 import toast from "react-hot-toast";
-import Button from "./ui/Button";
-import IconButton from "./ui/IconButton";
-import Input from "./ui/Input";
+import Button from "./ui/Button.jsx";
+import IconButton from "./ui/IconButton.jsx";
+import Input from "./ui/Input.jsx";
 import { uploadFilesToServer } from "../utils/handleFiles";
-import Paragrapgh from "./typography/Paragrapgh";
-import LoadingModal from "./Modal/LoadingModal";
+import Paragrapgh from "./typography/Paragrapgh.jsx";
+import LoadingModal from "./Modal/LoadingModal.jsx";
 import { updateUser } from "../services/api/userApi";
 import { logout as logouUser } from "../services/api/authApi";
-
 
 function Profile() {
   const user = useSelector((state) => state.user.user);
@@ -51,15 +49,13 @@ function Profile() {
         const responseData = await uploadFilesToServer([imageFile], "user");
         dataToSend["profilePhoto"] = responseData?.uploadedImages[0];
       }
-      
-      const responseData = await updateUser({ ...dataToSend },
-        { withCredentials: true }
-      );
+
+      const responseData = await updateUser({ ...dataToSend }, { withCredentials: true });
       dispatch(login(responseData.data.user));
       toast.success("Successfully Updated !");
       setEditMode(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Something went wrong. Try again Later.");
     } finally {
       setLoading(false);
@@ -82,7 +78,7 @@ function Profile() {
   async function logoutUser() {
     try {
       setLoading(true);
-      await logouUser()
+      await logouUser();
       dispatch(logout());
       navigate("/");
     } catch (error) {
@@ -108,7 +104,9 @@ function Profile() {
         {!editMode && (
           <IconButton
             onClick={() => setEditMode(true)}
-            className={"absolute right-1 top-2 flex gap-1 border border-primary bg-white px-3 py-2 font-semibold text-primary  hover:bg-white"}
+            className={
+              "absolute right-1 top-2 flex gap-1 border border-primary bg-white px-3 py-2 font-semibold text-primary  hover:bg-white"
+            }
             Icon={EditSvg}
             text={"Edit"}
           />

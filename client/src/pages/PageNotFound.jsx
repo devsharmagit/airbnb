@@ -1,5 +1,5 @@
 import React from "react";
-import Paragrapgh from "../components/typography/Paragrapgh";
+import Paragrapgh from "../components/typography/Paragrapgh.jsx";
 
 const PageNotFound = () => {
   return (

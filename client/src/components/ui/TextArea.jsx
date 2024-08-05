@@ -14,4 +14,7 @@ const TextArea = React.forwardRef(({ errorMsg, ...other }, ref) => {
   );
 });
 
+// Add display name for debugging
+TextArea.displayName = "TextArea"
+
 export default TextArea;

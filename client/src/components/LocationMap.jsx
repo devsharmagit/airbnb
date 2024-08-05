@@ -1,8 +1,8 @@
 import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { LocationSvg } from "../assets/svgs";
-import Heading from "./typography/Heading";
-import Paragrapgh from "./typography/Paragrapgh";
+import Heading from "./typography/Heading.jsx";
+import Paragrapgh from "./typography/Paragrapgh.jsx";
 
 function LocationMap({ coordinates, title }) {
   return (

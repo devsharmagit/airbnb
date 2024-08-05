@@ -5,7 +5,7 @@ export const findTwoConsecutiveFutureDays = (blockedDates) => {
   const today = new Date();
   let currentDay = today;
 
-  while (true) {
+  for (let i = 0; i < 365; i++) {  // Assuming you don't want to check forever
     const nextDay = addDays(currentDay, 1);
     const formattedCurrentDay = format(currentDay, "yyyy-MM-dd");
     const formattedNextDay = format(nextDay, "yyyy-MM-dd");
@@ -20,6 +20,8 @@ export const findTwoConsecutiveFutureDays = (blockedDates) => {
 
     currentDay = nextDay;
   }
+
+  return null;  // If no consecutive days are found within the limit
 };
 
 export const formatDate = (dateString) => {

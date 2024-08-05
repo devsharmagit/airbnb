@@ -1,12 +1,11 @@
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 import mapSrc from "../assets/placeholder.png";
 import L from "leaflet";
-import Button from "../components/ui/Button";
+import Button from "../components/ui/Button.jsx";
 import toast from "react-hot-toast";
-import Paragrapgh from "../components/typography/Paragrapgh";
+import Paragrapgh from "../components/typography/Paragrapgh.jsx";
 import useFetchData from "../hooks/useFetchData";
 import { GET_ALL_MAP_PLACE } from "../services/api/apiEndpoints";
 
@@ -27,7 +26,7 @@ const MapPlace = () => {
   const getCurrectLocation = async () => {
     await navigator.geolocation.getCurrentPosition(
       (position) => setCoordinates([position.coords.latitude, position.coords.longitude]),
-      (err) => {
+      () => {
         toast.error("Error occured to get location!");
         setCoordinates([]);
       }
@@ -48,9 +47,9 @@ const MapPlace = () => {
       marker.openPopup();
     }
   };
-  const {result} = useFetchData(GET_ALL_MAP_PLACE)
+  const { result } = useFetchData(GET_ALL_MAP_PLACE);
 
-const places = result?.data?.places
+  const places = result?.data?.places;
   useEffect(() => {
     getCurrectLocation();
   }, []);
@@ -75,13 +74,13 @@ const places = result?.data?.places
               position={[place.location.coordinates[1], place.location.coordinates[0]]}
             >
               <Popup>
-                <div
+                <button
                   className="w-32 cursor-pointer p-2 "
                   onClick={() => navigate(`/place/${place._id}`)}
                 >
-                  <img src={place.mainImage.url} className="h-28 w-28 rounded-md object-cover" />
+                  <img alt="" src={place.mainImage.url} className="h-28 w-28 rounded-md object-cover" />
                   <Paragrapgh text={place.title} className={"!mb-0  !mt-2 w-28 truncate text-sm"} />
-                </div>
+                </button>
               </Popup>
             </Marker>
           );

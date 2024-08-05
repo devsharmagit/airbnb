@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import userImgSrc from "../assets/user (1).png";
+import userImgSrc from "../assets/user1.png";
 import { PencilSvg } from "../assets/svgs";
 import toast from "react-hot-toast";
 

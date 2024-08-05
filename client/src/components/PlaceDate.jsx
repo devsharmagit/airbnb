@@ -1,11 +1,10 @@
 import React from "react";
 import { CalenderSvg } from "../assets/svgs";
-import Paragrapgh from "./typography/Paragrapgh";
-import DatePicker from "./DatePicker";
+import Paragrapgh from "./typography/Paragrapgh.jsx";
+import DatePicker from "./DatePicker.jsx";
 import { formatDate } from "../utils/dateFunctions";
 
 const PlaceDate = ({ checkOut, checkIn, blockedDates, setCheckIN, setCheckOut }) => {
-  
   return (
     <div className="grid gap-4  border-t border-gray-300 pt-8 md:grid-cols-2">
       <div className="flex flex-col gap-3">

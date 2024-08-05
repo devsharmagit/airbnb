@@ -1,5 +1,5 @@
-import Heading from "../components/typography/Heading";
-import Profile from "../components/Profile";
+import Heading from "../components/typography/Heading.jsx";
+import Profile from "../components/Profile.jsx";
 
 function AccountPage() {
   return (

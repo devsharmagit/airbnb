@@ -1,7 +1,7 @@
 import React from "react";
-import ModalContainer from "./ModalContainer";
-import Button from "../ui/Button";
-import Filter from "../Filter";
+import ModalContainer from "./ModalContainer.jsx";
+import Button from "../ui/Button.jsx";
+import Filter from "../Filter.jsx";
 
 const FilterModal = ({ isOpen, setIsOpen }) => {
   return (

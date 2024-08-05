@@ -1,19 +1,18 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PhotosUploader from "./PhotosUploader";
-import Perks from "./Perks";
+import PhotosUploader from "./PhotosUploader.jsx";
+import Perks from "./Perks.jsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
 import { placeSchema } from "../constants/schemaConstant";
-import Button from "./ui/Button";
-import Input from "./ui/Input";
-import TextArea from "./ui/TextArea";
-import Heading from "./typography/Heading";
-import Paragrapgh from "./typography/Paragrapgh";
+import Button from "./ui/Button.jsx";
+import Input from "./ui/Input.jsx";
+import TextArea from "./ui/TextArea.jsx";
+import Heading from "./typography/Heading.jsx";
+import Paragrapgh from "./typography/Paragrapgh.jsx";
 import { handleFormImages } from "../utils/utils";
-import LoadingModal from "./Modal/LoadingModal";
+import LoadingModal from "./Modal/LoadingModal.jsx";
 import { createPlace, editPlace } from "../services/api/placeApi";
 
 function PlaceForm({ type, placeId, place }) {
@@ -60,11 +59,11 @@ function PlaceForm({ type, placeId, place }) {
         },
       };
       if (type === "new") {
-        const responseData = await createPlace(placeObj)
+        const responseData = await createPlace(placeObj);
         if (responseData.status === 201) toast.success("Successfully Created !");
       }
       if (type === "edit") {
-        const responseData = await editPlace(placeObj, placeId)
+        const responseData = await editPlace(placeObj, placeId);
         if (responseData.status === 200) toast.success("Successfully Updated !");
       }
       navigate("/");

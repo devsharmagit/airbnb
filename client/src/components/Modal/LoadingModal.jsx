@@ -1,6 +1,6 @@
 import React from "react";
-import ModalContainer from "./ModalContainer";
-import Paragrapgh from "../typography/Paragrapgh";
+import ModalContainer from "./ModalContainer.jsx";
+import Paragrapgh from "../typography/Paragrapgh.jsx";
 
 const LoadingModal = ({ isOpen, text }) => {
   return (

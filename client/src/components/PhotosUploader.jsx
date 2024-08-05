@@ -1,6 +1,6 @@
 import { TrashSvg, UploadSvg } from "../assets/svgs";
 import toast from "react-hot-toast";
-import IconButton from "./ui/IconButton";
+import IconButton from "./ui/IconButton.jsx";
 
 function PhotosUploader({ addedPhoto, setAddedPhoto }) {
   const handleDelteImage = async (link, event) => {
@@ -22,8 +22,6 @@ function PhotosUploader({ addedPhoto, setAddedPhoto }) {
     const newAddedPhotos = addedPhoto.concat(files);
     setAddedPhoto(newAddedPhotos.slice(0, 10));
   };
-
-
 
   return (
     <>

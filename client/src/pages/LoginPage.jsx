@@ -31,8 +31,8 @@ function LoginPage() {
   const handleLoginUser = async (data) => {
     try {
       setLoading(true);
-      
-      const responseData = await logIn({...data})
+
+      const responseData = await logIn({ ...data });
       if (responseData.status === 201) toast.success("Successfully Logged In !");
       dispatch(login(responseData.data.data.user));
     } catch (error) {

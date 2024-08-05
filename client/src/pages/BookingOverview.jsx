@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate, getTimeCategory } from "../utils/dateFunctions";
 import { differenceInDays } from "date-fns";
@@ -12,6 +12,7 @@ import BookingOverviewSkeleton from "../components/ui/BookingOverviewSkeleton.js
 import LoadingModal from "../components/Modal/LoadingModal.jsx";
 import { GET_A_BOOKING } from "../services/api/apiEndpoints.js";
 import { cancelBooking } from "../services/api/bookingApi.js";
+import Error from "../components/Error.jsx";
 
 const BookingHeading = ({ text }) => {
   return <Heading text={text} className={"text-lg"} />;
@@ -32,7 +33,7 @@ function BookingOverview() {
   const handleCancelClick = async () => {
     try {
       setIsLoading(true);
-      const responseData = await cancelBooking(bookingId)
+      const responseData = await cancelBooking(bookingId);
       if (responseData.status === 200) toast.success("Successfully done !");
       navigate("/");
     } catch (error) {

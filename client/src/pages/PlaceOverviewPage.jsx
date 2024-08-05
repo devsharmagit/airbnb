@@ -1,26 +1,24 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import Perks from "../components/Perks";
+import Perks from "../components/Perks.jsx";
 import { differenceInDays } from "date-fns";
 import { findTwoConsecutiveFutureDays } from "../utils/dateFunctions";
-import PlacePhotos from "../components/PlacePhotos";
-import LocationMap from "../components/LocationMap";
+import PlacePhotos from "../components/PlacePhotos.jsx";
+import LocationMap from "../components/LocationMap.jsx";
 import { MoneySvg, GuestSvg } from "../assets/svgs";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import useFetchData from "../hooks/useFetchData";
-import Button from "../components/ui/Button";
-import Heading from "../components/typography/Heading";
-import Paragrapgh from "../components/typography/Paragrapgh";
-import PlaceOwner from "../components/PlaceOwner";
-import PlaceDate from "../components/PlaceDate";
-import PlaceOverviewSkeleton from "../components/ui/PlaceOverviewSkeleton";
-import LoadingModal from "../components/Modal/LoadingModal";
-import Error from "../components/Error.jsx"
+import Button from "../components/ui/Button.jsx";
+import Heading from "../components/typography/Heading.jsx";
+import Paragrapgh from "../components/typography/Paragrapgh.jsx";
+import PlaceOwner from "../components/PlaceOwner.jsx";
+import PlaceDate from "../components/PlaceDate.jsx";
+import PlaceOverviewSkeleton from "../components/ui/PlaceOverviewSkeleton.jsx";
+import LoadingModal from "../components/Modal/LoadingModal.jsx";
+import Error from "../components/Error.jsx";
 import { GET_A_PLACE } from "../services/api/apiEndpoints.js";
 import { placeBooking } from "../services/api/bookingApi.js";
-
 
 function PlaceOverviewPage() {
   const { placeId } = useParams();
@@ -34,13 +32,13 @@ function PlaceOverviewPage() {
 
   const { result, loading, error } = useFetchData(`${GET_A_PLACE}/${placeId}`);
   const place = result?.data?.place;
-const blockedDates = result?.data?.blockedDates
+  const blockedDates = result?.data?.blockedDates;
 
   const handleBookClick = async () => {
     if (!checkIn || !checkOut) return toast.error("check in and check out are not set");
     try {
       setIsLoading(true);
-      const data = await placeBooking({ checkIn, totalPrice: price, checkOut, place: placeId })
+      const data = await placeBooking({ checkIn, totalPrice: price, checkOut, place: placeId });
 
       if (data.status === 201) toast.success("Successfully Booked !");
       navigate(`/booking/${data.data.booking._id}`);
@@ -140,7 +138,9 @@ const blockedDates = result?.data?.blockedDates
               onClick={handleBookClick}
               disabled={!user || user?._id === place?.owner?._id || totalDays === 0}
               text={"Book"}
-              className={"!mt-0 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50"}
+              className={
+                "!mt-0 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50"
+              }
             />
             <Paragrapgh
               className={"mt-5 block text-center"}

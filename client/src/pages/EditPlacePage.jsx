@@ -1,10 +1,9 @@
 import React from "react";
-import PlaceForm from "../components/PlaceForm";
+import PlaceForm from "../components/PlaceForm.jsx";
 import { useParams } from "react-router-dom";
 import useFetchData from "../hooks/useFetchData";
-import LoadingModal from "../components/Modal/LoadingModal";
+import LoadingModal from "../components/Modal/LoadingModal.jsx";
 import { GET_A_PLACE } from "../services/api/apiEndpoints";
-
 
 function EditPlacePage() {
   const { placeId } = useParams();

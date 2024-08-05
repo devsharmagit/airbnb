@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { formatDate } from "../utils/dateFunctions";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetchData";
-import Heading from "../components/typography/Heading";
-import Button from "../components/ui/Button";
-import Paragrapgh from "../components/typography/Paragrapgh";
-import Skeleton from "../components/ui/Skeleton";
+import Heading from "../components/typography/Heading.jsx";
+import Button from "../components/ui/Button.jsx";
+import Paragrapgh from "../components/typography/Paragrapgh.jsx";
+import Skeleton from "../components/ui/Skeleton.jsx";
 import { GET_ALL_BOOKINGS } from "../services/api/apiEndpoints";
+import Error from "../components/Error.jsx";
 
 const BookingsPage = () => {
   const [viewlAll, setViewAll] = useState(false);

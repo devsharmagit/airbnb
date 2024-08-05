@@ -1,5 +1,5 @@
 import React from "react";
-import Paragrapgh from "./typography/Paragrapgh";
+import Paragrapgh from "./typography/Paragrapgh.jsx";
 import { CircleExlamanation } from "../assets/svgs";
 
 const Error = () => {

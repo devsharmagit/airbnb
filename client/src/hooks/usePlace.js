@@ -21,8 +21,9 @@ function usePlace() {
     const signal = controller.signal;
     const fetchData = async () => {
       try {
-        const response = await getAllPlace(page, queryString, signal)
-        setPlaces((prev) => [...prev, ...response?.data?.places]);
+        const response = await getAllPlace(page, queryString, signal);
+        const result = response?.data?.places || []
+        setPlaces((prev) => [...prev, ...result]);
         setTotalPlaces(response.data.totalPlaces);
       } catch (error) {
         if (error.code !== "ERR_CANCELED") {
@@ -59,7 +60,6 @@ function usePlace() {
       setError(false);
     };
   }, [queryString]);
-
 
   return { places, totalPlaces, loadig, hasMore, page, error, setPage };
 }

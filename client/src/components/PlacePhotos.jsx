@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ImageSvg } from "../assets/svgs";
-import IconButton from "./ui/IconButton";
-import ImageModal from "./Modal/ImageModal";
+import IconButton from "./ui/IconButton.jsx";
+import ImageModal from "./Modal/ImageModal.jsx";
 
 function PlacePhotos({ photos }) {
   const [isOpen, setIsOpen] = useState(false);

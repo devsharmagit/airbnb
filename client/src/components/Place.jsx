@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import IconButton from "./ui/IconButton";
+import IconButton from "./ui/IconButton.jsx";
 import { HeartOutlineSvg } from "../assets/svgs";
-import Heading from "./typography/Heading";
-import Paragrapgh from "./typography/Paragrapgh";
+import Heading from "./typography/Heading.jsx";
+import Paragrapgh from "./typography/Paragrapgh.jsx";
 import { removeSavePlace, saveAPLace } from "../services/api/placeApi";
 
 function Place({ id, photo, title, description, price, favourites, removeFromSaved }) {
@@ -24,15 +24,15 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
     if (!isSaved) {
       setIsSaved(true);
       try {
-        const responseData = await saveAPLace({ place: id })
+        const responseData = await saveAPLace({ place: id });
         if (responseData?.data?.status === "success") toast.success("Successfully saved !");
       } catch (error) {
         setIsSaved(false);
-        console.log(error)
+        console.log(error);
       }
     } else {
       if (removeFromSaved) removeFromSaved(id);
-      const responseData = await removeSavePlace({ place: id })
+      const responseData = await removeSavePlace({ place: id });
       if (responseData.data.status === "success") {
         setIsSaved(false);
         toast.success("Successfully Removed !");

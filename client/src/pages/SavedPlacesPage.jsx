@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import Place from "../components/Place";
-import Heading from "../components/typography/Heading";
-import Paragrapgh from "../components/typography/Paragrapgh";
-import Skeleton from "../components/ui/Skeleton";
-import Error from "../components/Error";
+import Place from "../components/Place.jsx";
+import Heading from "../components/typography/Heading.jsx";
+import Paragrapgh from "../components/typography/Paragrapgh.jsx";
+import Skeleton from "../components/ui/Skeleton.jsx";
+import Error from "../components/Error.jsx";
 import { GET_SAVED_PLACE } from "../services/api/apiEndpoints";
 import useFetchData from "../hooks/useFetchData";
-
 
 function SavedPlacesPage() {
   const { result, loading, error } = useFetchData(GET_SAVED_PLACE);

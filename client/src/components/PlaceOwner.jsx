@@ -1,6 +1,7 @@
 import React from "react";
-import Heading from "./typography/Heading";
-import Paragrapgh from "./typography/Paragrapgh";
+import Heading from "./typography/Heading.jsx";
+import Paragrapgh from "./typography/Paragrapgh.jsx";
+import imgSrc from "../assets/user1.png"
 
 const PlaceOwner = ({ place }) => {
   return (

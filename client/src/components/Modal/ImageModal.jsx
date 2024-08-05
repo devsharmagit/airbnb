@@ -1,6 +1,6 @@
 import React from "react";
-import ModalContainer from "./ModalContainer";
-import Button from "../ui/Button";
+import ModalContainer from "./ModalContainer.jsx";
+import Button from "../ui/Button.jsx";
 
 const ImageModal = ({ photos, isOpen, setIsOpen }) => {
   return (
@@ -9,8 +9,8 @@ const ImageModal = ({ photos, isOpen, setIsOpen }) => {
         <Button text={"close"} onClick={() => setIsOpen(false)} />
 
         <div className="m-auto flex max-w-2xl flex-col items-center justify-center gap-3 p-4">
-          {photos.map((value) => {
-            return <img src={value.url} className="w-full" alt="" loading="lazy" />;
+          {photos.map((value, index) => {
+            return <img key={index} src={value.url} className="w-full" alt="" loading="lazy" />;
           })}
         </div>
       </div>

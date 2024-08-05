@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Perks from "./Perks";
+import Perks from "./Perks.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { addFilter } from "../slice/filterSlice";
 import toast from "react-hot-toast";
-import Button from "./ui/Button";
-import Input from "./ui/Input";
-import Heading from "./typography/Heading";
-import Paragrapgh from "./typography/Paragrapgh";
+import Button from "./ui/Button.jsx";
+import Input from "./ui/Input.jsx";
+import Heading from "./typography/Heading.jsx";
+import Paragrapgh from "./typography/Paragrapgh.jsx";
 import { useNavigate } from "react-router-dom";
 
-function Filter({ filterOpen, setFilterOpen }) {
+function Filter({  setFilterOpen }) {
   const filter = useSelector((state) => state.filter.filter);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ function Filter({ filterOpen, setFilterOpen }) {
     if (event.currentTarget.id === "nearest" || event.currentTarget.id === "far") {
       navigator.geolocation.getCurrentPosition(
         (position) => setCoordinates([position.coords.longitude, position.coords.latitude]),
-        (err) => {
+        () => {
           toast.error("Error occured !");
           setSort("");
           setCoordinates([]);
@@ -96,7 +96,9 @@ function Filter({ filterOpen, setFilterOpen }) {
 
   return (
     <div
-      className={" top-16 m-auto mb-5 mt-5 w-full max-w-screen-md origin-top rounded-lg border border-gray-300 bg-white p-3 transition-all  duration-300 "}
+      className={
+        " top-16 m-auto mb-5 mt-5 w-full max-w-screen-md origin-top rounded-lg border border-gray-300 bg-white p-3 transition-all  duration-300 "
+      }
     >
       <Heading text={"Filters"} />
       <div className="relative border-b border-gray-300 py-3">
@@ -104,7 +106,9 @@ function Filter({ filterOpen, setFilterOpen }) {
 
         <Button
           text={"clear"}
-          className={"mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"}
+          className={
+            "mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"
+          }
           id={"price"}
           onClick={handleClearClick}
         />
@@ -152,7 +156,9 @@ function Filter({ filterOpen, setFilterOpen }) {
 
         <Button
           text={"clear"}
-          className={"mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"}
+          className={
+            "mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"
+          }
           id={"sort"}
           onClick={handleClearClick}
         />
@@ -184,7 +190,9 @@ function Filter({ filterOpen, setFilterOpen }) {
         <p className="mont mb-1 text-lg ">Perks</p>
         <Button
           text={"clear"}
-          className={"mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"}
+          className={
+            "mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"
+          }
           id={"perks"}
           onClick={handleClearClick}
         />

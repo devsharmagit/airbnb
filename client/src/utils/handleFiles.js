@@ -1,4 +1,3 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { imagesUpload } from "../services/api/placeApi";
 
@@ -18,7 +17,7 @@ export const uploadFilesToServer = async (filesArr, type) => {
     destination = "user-image";
   }
 
-  const responseData = await imagesUpload(destination, data)
+  const responseData = await imagesUpload(destination, data);
 
   return responseData.data;
 };

@@ -57,7 +57,9 @@ const SearchPlace = () => {
             setFilterOpen(!filterOpen);
           }}
           Icon={GearSvg}
-          className={"flex flex-col-reverse items-center justify-center bg-white text-gray-400 hover:bg-white "}
+          className={
+            "flex flex-col-reverse items-center justify-center bg-white text-gray-400 hover:bg-white "
+          }
           IconClass={"w-[24px] h-[24px] flex-1 text-gray-500"}
         />
       </div>

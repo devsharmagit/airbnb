@@ -1,5 +1,5 @@
 import React from "react";
-import PlaceForm from "../components/PlaceForm";
+import PlaceForm from "../components/PlaceForm.jsx";
 
 function NewPlaceFormPage() {
   return (
