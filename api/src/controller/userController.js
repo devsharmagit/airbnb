@@ -13,7 +13,7 @@ export const createUser = async (req, res) => {
 
 export const handleMeRoute = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.user._id)
+    const user = await UserModel.findById(req.user._id).select("-__v")
 
     res.status(200).json({
       status: "success",
