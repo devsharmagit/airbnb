@@ -2,7 +2,6 @@ import { UserModel } from "../model/User.js";
 import { deleteCloudnaryImage } from "./imageController.js";
 
 export const createUser = async (req, res) => {
-
   const user = await UserModel.create(req.body);
 
   res.status(200).json({
@@ -13,11 +12,11 @@ export const createUser = async (req, res) => {
 
 export const handleMeRoute = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.user._id).select("-__v")
+    const user = await UserModel.findById(req.user._id).select("-__v");
 
     res.status(200).json({
       status: "success",
-      user
+      user,
     });
   } catch (error) {
     res.status(500).json({
@@ -27,25 +26,24 @@ export const handleMeRoute = async (req, res) => {
   }
 };
 
-
-export const updateUser = async (req, res)=>{
+export const updateUser = async (req, res) => {
   try {
-    if(req.body.profilePhoto){
-     const user = await UserModel.findById(req.user._id)
-     if(user.profilePhoto){
-       deleteCloudnaryImage(user.profilePhoto.publicId)
-     }
+    if (req.body.profilePhoto) {
+      const user = await UserModel.findById(req.user._id);
+      if (user.profilePhoto) {
+        deleteCloudnaryImage(user.profilePhoto.publicId);
+      }
     }
-    const user =  await UserModel.findByIdAndUpdate(req.user._id,{...req.body}, {new: true})
+    const user = await UserModel.findByIdAndUpdate(req.user._id, { ...req.body }, { new: true });
 
     res.status(200).json({
       status: "success",
-      user
-    })
+      user,
+    });
   } catch (error) {
     res.status(500).json({
       status: "fail",
       error,
     });
   }
-}
+};

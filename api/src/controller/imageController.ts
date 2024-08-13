@@ -10,10 +10,7 @@ const cloudnaryUploader = async (files, options) => {
     const images = [];
     for (const file of files) {
       const { filename } = file;
-      const result = await cloudinary.uploader.upload(
-        `${imageDir}/${filename}`,
-        { ...options }
-      );
+      const result = await cloudinary.uploader.upload(`${imageDir}/${filename}`, { ...options });
 
       images.push({
         url: result.secure_url,
@@ -46,10 +43,10 @@ export const placeImageUpload = async (req, res) => {
 
     res.json({ uploadedImages });
   } catch (error) {
-   res.status(500).json({
-    status: "failed",
-    error: error.message
-   })
+    res.status(500).json({
+      status: "failed",
+      error: error.message,
+    });
   }
 };
 
