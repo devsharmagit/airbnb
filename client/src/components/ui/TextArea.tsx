@@ -1,7 +1,11 @@
 import React from "react";
 
-const TextArea = React.forwardRef(({ errorMsg, ...other }, ref) => {
-  function autoExpand(textarea) {
+interface TextAreaArgTypes {
+  errorMsg?: string;
+}
+
+const TextArea = React.forwardRef(({ errorMsg, ...other }: TextAreaArgTypes, ref: any) => {
+  function autoExpand(textarea: any) {
     textarea.style.height = "auto";
     textarea.style.height = parseInt(textarea.scrollHeight + 5) + "px";
   }
@@ -15,6 +19,6 @@ const TextArea = React.forwardRef(({ errorMsg, ...other }, ref) => {
 });
 
 // Add display name for debugging
-TextArea.displayName = "TextArea"
+TextArea.displayName = "TextArea";
 
 export default TextArea;

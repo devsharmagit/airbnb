@@ -3,13 +3,13 @@ import ModalContainer from "./ModalContainer.tsx";
 import Paragrapgh from "../typography/Paragrapgh.tsx";
 
 interface LoadingModal {
-  isOpen?: boolean,
-  text?: string,
+  isOpen?: boolean;
+  text?: string;
 }
 
 const LoadingModal = ({ isOpen, text }: LoadingModal) => {
   return (
-    <ModalContainer isOpen={isOpen}>
+    <ModalContainer isOpen={isOpen || false}>
       <div className="fixed left-0 top-0 z-[111111111] flex  h-screen w-screen flex-col items-center justify-center overflow-scroll overflow-x-hidden bg-white bg-opacity-80 backdrop-blur-sm">
         <div
           className="text-surface inline-block h-16 w-16 animate-spin rounded-full border-8 border-solid border-current border-e-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"

@@ -1,7 +1,13 @@
 import React from "react";
 import Button from "./ui/Button.tsx";
 
-function Modal({ isOpen, setIsOpen, children }) {
+interface ModalArgTypes {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  children: React.ReactNode;
+}
+
+function Modal({ isOpen, setIsOpen, children }: ModalArgTypes) {
   if (!isOpen) return null;
 
   return (

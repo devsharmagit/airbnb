@@ -11,12 +11,22 @@ import Button from "../components/ui/Button.tsx";
 import Input from "../components/ui/Input.tsx";
 import Heading from "../components/typography/Heading.tsx";
 import LoadingModal from "../components/Modal/LoadingModal.tsx";
-import { uploadFilesToServer } from "../utils/handleFiles";
+import { uploadFilesToServer, UploadType } from "../utils/handleFiles";
 import { signUp } from "../services/api/authApi";
+import { UploadedPhotoTypes } from "../types/file.ts";
+
+interface RegisterFormType {
+  email: string;
+  password: string;
+  name: string;
+  confirmPassword: string;
+}
+
+type RegisterType = RegisterFormType & { profilePhoto?: UploadedPhotoTypes };
 
 function RegisterPage() {
-  const [photo, setPhoto] = useState("");
-  const [file, setFile] = useState("");
+  const [photo, setPhoto] = useState<string>("");
+  const [file, setFile] = useState<null | File>(null);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -31,15 +41,15 @@ function RegisterPage() {
 
   const navigate = useNavigate();
 
-  async function handleRegister(data) {
-    const dataToSend = { ...data };
+  async function handleRegister(data: RegisterFormType) {
+    const dataToSend: RegisterType = { ...data };
     try {
       setLoading(true);
       if (file) {
-        const responseData = await uploadFilesToServer([file], "user");
+        const responseData = await uploadFilesToServer([file], UploadType.user);
         dataToSend["profilePhoto"] = responseData?.uploadedImages[0];
       }
-      const responseData = await signUp({ ...dataToSend });
+      const responseData: any = await signUp({ ...dataToSend });
       if (responseData.status === 201) {
         dispatch(login(responseData.data.data.user));
         toast.success("Account successfully created !");

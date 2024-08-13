@@ -1,8 +1,15 @@
 import React from "react";
 import ModalContainer from "./ModalContainer.tsx";
 import Button from "../ui/Button.tsx";
+import { ProfilePhotoType } from "../../types/file.ts";
 
-const ImageModal = ({ photos, isOpen, setIsOpen }) => {
+interface ImageModalTypes {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  photos: ProfilePhotoType[];
+}
+
+const ImageModal = ({ photos, isOpen, setIsOpen }: ImageModalTypes) => {
   return (
     <ModalContainer isOpen={isOpen}>
       <div className="fixed left-0 top-0 z-[11111] h-screen w-screen overflow-scroll overflow-x-hidden bg-white bg-opacity-50 backdrop-blur-sm">

@@ -1,6 +1,11 @@
 import React from "react";
 
-function Heading({ text, className }) {
+interface HeadingType {
+  text?: string;
+  className?: string;
+}
+
+function Heading({ text, className }: HeadingType) {
   return <h1 className={`mont text-2xl font-semibold ${className}`}>{text}</h1>;
 }
 

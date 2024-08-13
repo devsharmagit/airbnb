@@ -1,32 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { GET_ME } from "../services/api/apiEndpoints";
-
-interface ProfilePhotoType {
-_id: string,
-publicId: string,
-url: string
-}
-export interface UserType {
-email: string,
-name: string,
-_id: string,
-profilePhoto: ProfilePhotoType,
-}
+import { UserType } from "../types/user";
 
 export interface UserStateType {
-  user: null | UserType,
-  loading: boolean,
-  error: null 
+  user: null | UserType;
+  loading: boolean;
+  error: null;
 }
 
-const initialState : UserStateType = {
+const initialState: UserStateType = {
   user: null,
   loading: false,
   error: null,
 };
-
-
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) => {
   try {
@@ -34,7 +21,7 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) 
       withCredentials: true,
     });
     return data.user;
-  } catch (error : any) {
+  } catch (error: any) {
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
@@ -60,7 +47,7 @@ export const userSlice = createSlice({
         state.user = action.payload;
         state.error = null;
       })
-      .addCase(fetchUser.rejected, (state, action :any) => {
+      .addCase(fetchUser.rejected, (state, action: any) => {
         state.loading = false;
         state.error = action.payload;
       });

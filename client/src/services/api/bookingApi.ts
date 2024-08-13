@@ -10,7 +10,7 @@ export const getAllBookings = async (viewlAll) => {
   }
 };
 
-export const getOneBooking = async (bookingId : string) => {
+export const getOneBooking = async (bookingId: string) => {
   try {
     const response = await axiosInstance.get(`/api/booking/${bookingId}`);
     return response;
@@ -20,7 +20,7 @@ export const getOneBooking = async (bookingId : string) => {
   }
 };
 
-export const cancelBooking = async (bookingId : string) => {
+export const cancelBooking = async (bookingId: string) => {
   try {
     const response = await axiosInstance.get(`/api/booking/cancel/${bookingId}`);
     return response;

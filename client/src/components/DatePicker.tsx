@@ -1,5 +1,7 @@
+// @ts-nocheck
+// no types available for react-date-range
 import { format } from "date-fns";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -11,7 +13,7 @@ function DatePicker({ blockedDates, setCheckIN, checkIn, checkOut, setCheckOut }
     key: "selection",
   });
 
-  const handleDateChange = (range) => {
+  const handleDateChange = (range: any) => {
     setDate(range.selection);
     setCheckIN(format(range?.selection?.startDate, "yyyy-MM-dd"));
     setCheckOut(format(range?.selection?.endDate, "yyyy-MM-dd"));

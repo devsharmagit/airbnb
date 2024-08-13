@@ -1,4 +1,4 @@
-function useQueryMake(filter, searchString) {
+function useQueryMake(filter: any, searchString: string) {
   let searchPrice = "";
   if (filter?.price?.type === "lessThan") {
     searchPrice = searchPrice + `price[lte]=${filter?.price?.value}`;

@@ -4,21 +4,29 @@ import { EditSvg } from "../assets/svgs";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ProfilePhoto from "./ProfilePhoto.tsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login, logout } from "../slice/userSlice";
 import { profileSchema } from "../constants/schemaConstant";
 import toast from "react-hot-toast";
 import Button from "./ui/Button.tsx";
 import IconButton from "./ui/IconButton.tsx";
 import Input from "./ui/Input.tsx";
-import { uploadFilesToServer } from "../utils/handleFiles";
+import { uploadFilesToServer, UploadType } from "../utils/handleFiles";
 import Paragrapgh from "./typography/Paragrapgh.tsx";
 import LoadingModal from "./Modal/LoadingModal.tsx";
 import { updateUser } from "../services/api/userApi";
 import { logout as logouUser } from "../services/api/authApi";
+import { useAppSelector } from "../hooks/reduxhooks.ts";
+import { UploadedPhotoTypes } from "../types/file.ts";
+
+interface ProfileFormType {
+  name?: string;
+  email?: string;
+  profilePhoto?: UploadedPhotoTypes;
+}
 
 function Profile() {
-  const user = useSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -41,16 +49,16 @@ function Profile() {
     },
   });
 
-  const handleProfileEdit = async (data) => {
+  const handleProfileEdit = async (data: ProfileFormType) => {
     try {
       setLoading(true);
       const dataToSend = { ...data };
       if (imageFile) {
-        const responseData = await uploadFilesToServer([imageFile], "user");
+        const responseData = await uploadFilesToServer([imageFile], UploadType.user);
         dataToSend["profilePhoto"] = responseData?.uploadedImages[0];
       }
 
-      const responseData = await updateUser({ ...dataToSend }, { withCredentials: true });
+      const responseData: any = await updateUser({ ...dataToSend });
       dispatch(login(responseData.data.user));
       toast.success("Successfully Updated !");
       setEditMode(false);

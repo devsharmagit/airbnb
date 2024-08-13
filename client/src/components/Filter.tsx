@@ -8,23 +8,28 @@ import Input from "./ui/Input.tsx";
 import Heading from "./typography/Heading.tsx";
 import Paragrapgh from "./typography/Paragrapgh.tsx";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../hooks/reduxhooks.ts";
 
-function Filter({  setFilterOpen }) {
-  const filter = useSelector((state) => state.filter.filter);
+interface FilterTypes {
+  setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function Filter({ setFilterOpen }: FilterTypes) {
+  const filter = useAppSelector((state) => state.filter.filter);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [perks, setPerks] = useState([]);
+  const [perks, setPerks] = useState<string[]>([]);
   const [inputOne, setInputOne] = useState("");
   const [inputTwo, setInputTwo] = useState("");
   const [priceOption, setPriceOption] = useState("");
   const [sort, setSort] = useState("");
-  const [coordinates, setCoordinates] = useState([]);
+  const [coordinates, setCoordinates] = useState<number[]>([]);
 
   const sortArr = ["nearest", "far", "cheapest", "expensive", "popular"];
 
-  const handleSortClick = (event) => {
-    setSort(event.currentTarget.id);
+  const handleSortClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.currentTarget) setSort(event.currentTarget.id);
     if (event.currentTarget.id === "nearest" || event.currentTarget.id === "far") {
       navigator.geolocation.getCurrentPosition(
         (position) => setCoordinates([position.coords.longitude, position.coords.latitude]),
@@ -39,11 +44,11 @@ function Filter({  setFilterOpen }) {
     }
   };
 
-  const handlePriceChange = (event) => {
+  const handlePriceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPriceOption(event.target.value);
   };
 
-  const handleClearClick = (event) => {
+  const handleClearClick = (event: React.MouseEvent) => {
     if (event.currentTarget.id === "price") {
       setPriceOption("");
     }
@@ -56,7 +61,7 @@ function Filter({  setFilterOpen }) {
   };
 
   const handleApplyClick = () => {
-    let newFilter = {};
+    let newFilter: any = {};
     if (priceOption === "priceRange") {
       newFilter["price"] = { type: "priceRange", from: inputOne, to: inputTwo };
     } else if (priceOption) {

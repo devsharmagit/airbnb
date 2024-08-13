@@ -8,6 +8,7 @@ import Paragrapgh from "../components/typography/Paragrapgh.tsx";
 import Skeleton from "../components/ui/Skeleton.tsx";
 import { GET_ALL_BOOKINGS } from "../services/api/apiEndpoints";
 import Error from "../components/Error.tsx";
+import { BookingType } from "../types/booking.ts";
 
 const BookingsPage = () => {
   const [viewlAll, setViewAll] = useState(false);
@@ -18,7 +19,7 @@ const BookingsPage = () => {
 
   const bookings = result?.data?.bookingDoc;
 
-  const handleBookingClick = (bookingId) => {
+  const handleBookingClick = (bookingId: string) => {
     navigate(`/booking/${bookingId}`);
   };
 
@@ -52,7 +53,7 @@ const BookingsPage = () => {
       {loading && Array.from({ length: 4 }).map((val, index) => <Skeleton key={index} />)}
       <div className="mt-5">
         {!loading &&
-          bookings?.map((booking) => {
+          bookings?.map((booking: BookingType) => {
             return (
               <div
                 key={booking?._id}

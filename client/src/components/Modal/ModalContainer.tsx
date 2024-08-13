@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactPortal } from "./ReactPortal.tsx";
 
-const ModalContainer = ({ isOpen, children }) => {
+const ModalContainer = ({ isOpen, children }: { isOpen: boolean; children: React.ReactNode }) => {
   if (!isOpen) {
     return null;
   }

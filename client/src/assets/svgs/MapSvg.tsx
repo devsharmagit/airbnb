@@ -1,6 +1,10 @@
 import React from "react";
 
-const MapSvg = ({ className }) => {
+interface SVGType {
+  className?: string;
+}
+
+const MapSvg = ({ className }: SVGType) => {
   return (
     <>
       <svg

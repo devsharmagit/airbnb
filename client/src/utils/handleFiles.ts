@@ -1,7 +1,15 @@
 import toast from "react-hot-toast";
-import { imagesUpload } from "../services/api/placeApi";
+import { imagesUpload } from "../services/api/placeApi.ts";
+import { ResponseFileUploadType } from "../types/file.ts"; // Import the defined interface
 
-export const uploadFilesToServer = async (filesArr, type) => {
+export enum UploadType {
+  place = "place",
+  user = "user",
+}
+
+export const uploadFilesToServer = async (filesArr: File[], type: UploadType) => {
+  console.log({ filesArr, type });
+
   const data = new FormData();
   filesArr.forEach((file) => {
     if (file?.type?.includes("image")) {
@@ -12,12 +20,20 @@ export const uploadFilesToServer = async (filesArr, type) => {
   });
 
   let destination = "place-image";
-
-  if (type === "user") {
+  if (type === UploadType.user) {
     destination = "user-image";
   }
 
-  const responseData = await imagesUpload(destination, data);
+  try {
+    const response = await imagesUpload(destination, data);
+    const responseData: ResponseFileUploadType = response.data;
+    console.log("🤡🤡🤡🤡🤡");
+    console.log(responseData);
 
-  return responseData.data;
+    return responseData;
+  } catch (error) {
+    console.error("Error uploading images:", error);
+    toast.error("Failed to upload images");
+    throw error; // Return an empty array or handle as needed
+  }
 };

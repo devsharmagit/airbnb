@@ -14,11 +14,20 @@ import Paragrapgh from "./typography/Paragrapgh.tsx";
 import { handleFormImages } from "../utils/utils";
 import LoadingModal from "./Modal/LoadingModal.tsx";
 import { createPlace, editPlace } from "../services/api/placeApi";
+import { PlaceType, PlaceFormType } from "../types/place.ts";
+import { AxiosResponse } from "axios";
+import { HandleFormImagesType } from "../utils/utils";
 
-function PlaceForm({ type, placeId, place }) {
-  const [photos, setPhotos] = useState([]);
-  const [perks, setPerks] = useState([]);
-  const [error, setError] = useState(null);
+interface PlaceFormArgumentTypes {
+  type: string;
+  placeId?: string;
+  place?: PlaceType;
+}
+
+function PlaceForm({ type, placeId, place }: PlaceFormArgumentTypes) {
+  const [photos, setPhotos] = useState<HandleFormImagesType>([]);
+  const [perks, setPerks] = useState<string[]>([]);
+  const [error, setError] = useState<null | string>(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -37,12 +46,18 @@ function PlaceForm({ type, placeId, place }) {
       extraInfo: place?.extraInfo || "",
       maxGuests: place?.maxGuests || 1,
       price: place?.price || 100,
-      latitude: place?.location.coordinates[1] || "",
-      longitude: place?.location.coordinates[0] || "",
+      latitude:
+        place?.location.coordinates[1] !== undefined
+          ? Number(place?.location.coordinates[1])
+          : undefined,
+      longitude:
+        place?.location.coordinates[0] !== undefined
+          ? Number(place?.location.coordinates[0])
+          : undefined,
     },
   });
 
-  async function handleFormSubmit(data) {
+  async function handleFormSubmit(data: PlaceFormType) {
     if (error !== null) return toast.error(error);
 
     try {
@@ -59,11 +74,11 @@ function PlaceForm({ type, placeId, place }) {
         },
       };
       if (type === "new") {
-        const responseData = await createPlace(placeObj);
+        const responseData: AxiosResponse = await createPlace(placeObj);
         if (responseData.status === 201) toast.success("Successfully Created !");
       }
-      if (type === "edit") {
-        const responseData = await editPlace(placeObj, placeId);
+      if (type === "edit" && placeId) {
+        const responseData: AxiosResponse = await editPlace(placeObj, placeId);
         if (responseData.status === 200) toast.success("Successfully Updated !");
       }
       navigate("/");
@@ -87,7 +102,7 @@ function PlaceForm({ type, placeId, place }) {
 
   useEffect(() => {
     if (place?.photos) {
-      const newPhotosOBj = place?.photos.map((value) => {
+      const newPhotosOBj = place?.photos.map((value: any) => {
         return { ...value, fromServer: true };
       });
       setPhotos(newPhotosOBj);
@@ -107,6 +122,7 @@ function PlaceForm({ type, placeId, place }) {
         isOpen={loading}
         text={"Loading... I am using free tier of cloudnary 🥲. It will take time please wait."}
       />
+      {/* @ts-ignore */}
       <form onSubmit={handleSubmit(handleFormSubmit)} className="m-auto max-w-screen-xl px-4 pb-4">
         <div className="mt-4">
           <label htmlFor="title" className="mt-5">
@@ -135,7 +151,7 @@ function PlaceForm({ type, placeId, place }) {
             {inputCombo("Photos", "more is better")}
           </label>
           <p className="mont pl-2 text-sm font-medium text-gray-500">{error && error}</p>
-          <PhotosUploader addedPhoto={photos} setAddedPhoto={setPhotos} error={error} />
+          <PhotosUploader addedPhoto={photos} setAddedPhoto={setPhotos} />
         </div>
 
         <div className="mt-4">
@@ -225,17 +241,21 @@ function PlaceForm({ type, placeId, place }) {
 
 export default PlaceForm;
 
-function inputHeader(title) {
+function inputHeader(title: string) {
   return <Heading className={"text-xl"} text={title} />;
 }
-function inputPara(para) {
+function inputPara(para: string) {
   return <Paragrapgh className={"text-sm leading-tight"} text={para} />;
 }
-function inputCombo(title, para) {
-  return (
-    <>
-      {inputHeader(title)}
-      {inputPara(para)}
-    </>
-  );
+function inputCombo(title: string, para?: string) {
+  if (para) {
+    return (
+      <>
+        {inputHeader(title)}
+        {inputPara(para)}
+      </>
+    );
+  } else {
+    return <>{inputHeader(title)}</>;
+  }
 }

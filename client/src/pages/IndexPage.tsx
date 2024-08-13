@@ -10,8 +10,10 @@ import { CircleExlamanation } from "../assets/svgs";
 import Error from "../components/Error.tsx";
 import { Link } from "react-router-dom";
 import { MapSvg } from "../assets/svgs";
+import { useAppSelector } from "../hooks/reduxhooks.ts";
+import { PlaceDataType } from "../types/place.ts";
 
-function LoadingSkeleton({ loadig }) {
+function LoadingSkeleton({ loadig }: { loadig: boolean }) {
   return (
     <div className="grid grid-cols-1 items-center justify-center gap-x-[24px] gap-y-[30px] py-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {loadig && Array.from({ length: 4 }).map((val, index) => <Skeleton key={index} />)}
@@ -20,7 +22,7 @@ function LoadingSkeleton({ loadig }) {
 }
 
 function IndexPage() {
-  const filter = useSelector((state) => state.filter.filter);
+  const filter = useAppSelector((state) => state.filter.filter);
   const dispatch = useDispatch();
 
   const { places, totalPlaces, hasMore, loadig, error, setPage } = usePlace();
@@ -75,7 +77,7 @@ function IndexPage() {
                 className="text-center"
               >
                 <div className="grid items-center justify-center gap-x-[34px] gap-y-[40px] py-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                  {places.map((obj) => (
+                  {places.map((obj: PlaceDataType) => (
                     <Place
                       key={obj?._id}
                       id={obj?._id}

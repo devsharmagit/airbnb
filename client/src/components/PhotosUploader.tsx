@@ -1,24 +1,31 @@
 import { TrashSvg, UploadSvg } from "../assets/svgs";
 import toast from "react-hot-toast";
 import IconButton from "./ui/IconButton.tsx";
+import { HandleFormImagesType } from "../utils/utils";
 
-function PhotosUploader({ addedPhoto, setAddedPhoto }) {
-  const handleDelteImage = async (link, event) => {
+interface PhotosUploaderArgType {
+  addedPhoto: HandleFormImagesType;
+  setAddedPhoto: React.Dispatch<React.SetStateAction<HandleFormImagesType>>;
+}
+
+function PhotosUploader({ addedPhoto, setAddedPhoto }: PhotosUploaderArgType) {
+  const handleDelteImage = async (event: React.MouseEvent<HTMLAnchorElement>, link?: string) => {
     event.preventDefault();
     setAddedPhoto((prev) => {
       return prev.filter((val) => val.url !== link);
     });
   };
 
-  const handleFileSelect = async (event) => {
-    const files = [];
-    Array.from(event.target.files).forEach((value) => {
-      if (value?.type?.includes("image") && value?.size / 1048576 < 4.5) {
-        files.push({ file: value, url: URL.createObjectURL(value) });
-      } else {
-        toast.error("Please select images with size less than 4.5 mb only!");
-      }
-    });
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files: any[] = [];
+    if (event.target.files)
+      Array.from(event.target.files).forEach((value) => {
+        if (value?.type?.includes("image") && value?.size / 1048576 < 4.5) {
+          files.push({ file: value, url: URL.createObjectURL(value) });
+        } else {
+          toast.error("Please select images with size less than 4.5 mb only!");
+        }
+      });
     const newAddedPhotos = addedPhoto.concat(files);
     setAddedPhoto(newAddedPhotos.slice(0, 10));
   };
@@ -30,7 +37,9 @@ function PhotosUploader({ addedPhoto, setAddedPhoto }) {
           return (
             <div className="relative " key={fileObj?.url}>
               <IconButton
-                onClick={(event) => handleDelteImage(fileObj?.url, event)}
+                onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
+                  handleDelteImage(event, fileObj?.url)
+                }
                 className={
                   "absolute bottom-1 right-1 rounded-md bg-white !bg-opacity-60 p-1 hover:bg-opacity-100"
                 }

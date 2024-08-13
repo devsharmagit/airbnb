@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface FilterStateType {
-  filter: null | any,
-  searchString: string,
+  filter: null | any;
+  searchString: string;
 }
 
-const initialState :FilterStateType = {
+const initialState: FilterStateType = {
   filter: null,
   searchString: "",
 };

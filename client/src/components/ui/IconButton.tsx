@@ -1,9 +1,18 @@
 import React from "react";
 
-function IconButton({ type, onClick, className, Icon, text, IconClass }) {
+interface IconButton {
+  type?: "submit" | "reset" | "button";
+  onClick: any;
+  className?: string;
+  Icon?: any;
+  text?: string;
+  IconClass?: string;
+}
+
+function IconButton({ type, onClick, className, Icon, text, IconClass }: IconButton) {
   return (
     <button
-      type={type}
+      type={type || "submit"}
       onClick={onClick}
       className={`box-border rounded-full bg-gray-100 p-1 text-center text-gray-700 hover:bg-gray-200  ${className}`}
     >

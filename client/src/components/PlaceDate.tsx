@@ -4,7 +4,21 @@ import Paragrapgh from "./typography/Paragrapgh.tsx";
 import DatePicker from "./DatePicker.tsx";
 import { formatDate } from "../utils/dateFunctions";
 
-const PlaceDate = ({ checkOut, checkIn, blockedDates, setCheckIN, setCheckOut }) => {
+interface PlaceDateArgType {
+  checkOut: string;
+  checkIn: string;
+  blockedDates: string[];
+  setCheckIN: React.Dispatch<React.SetStateAction<string>>;
+  setCheckOut: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const PlaceDate = ({
+  checkOut,
+  checkIn,
+  blockedDates,
+  setCheckIN,
+  setCheckOut,
+}: PlaceDateArgType) => {
   return (
     <div className="grid gap-4  border-t border-gray-300 pt-8 md:grid-cols-2">
       <div className="flex flex-col gap-3">

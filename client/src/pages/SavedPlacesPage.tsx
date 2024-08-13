@@ -6,13 +6,14 @@ import Skeleton from "../components/ui/Skeleton.tsx";
 import Error from "../components/Error.tsx";
 import { GET_SAVED_PLACE } from "../services/api/apiEndpoints";
 import useFetchData from "../hooks/useFetchData";
+import { PlaceDataType } from "../types/place.ts";
 
 function SavedPlacesPage() {
   const { result, loading, error } = useFetchData(GET_SAVED_PLACE);
   const [places, setPlaces] = useState(result?.data?.places || []);
 
-  const removeFromSaved = (id) => {
-    const newPlaces = places.filter((place) => {
+  const removeFromSaved = (id: string) => {
+    const newPlaces = places.filter((place: any) => {
       return place._id !== id;
     });
     setPlaces(newPlaces);
@@ -47,7 +48,7 @@ function SavedPlacesPage() {
           <Paragrapgh text={"You have not saved a Place yet."} className={"text-center"} />
         )}
         <div className="sm:grid-col-2 m-auto grid w-fit max-w-7xl justify-center gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {places.map((obj) => {
+          {places.map((obj: PlaceDataType) => {
             return (
               <Place
                 removeFromSaved={removeFromSaved}

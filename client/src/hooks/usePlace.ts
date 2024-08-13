@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import useQueryMake from "./useQueryMake";
-import { useSelector } from "react-redux";
 import { getAllPlace } from "../services/api/placeApi";
+import { useAppSelector } from "./reduxhooks";
+import { PlaceDataType } from "../types/place";
 
 function usePlace() {
   const [page, setPage] = useState(1);
-  const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState<PlaceDataType[]>([]);
   const [totalPlaces, setTotalPlaces] = useState(0);
   const [loadig, setLoading] = useState(true);
   const [hasMore, setHasmore] = useState(false);
   const [error, setError] = useState(false);
 
-  const filter = useSelector((state) => state.filter.filter);
-  const searchString = useSelector((state) => state.filter.searchString);
+  const filter = useAppSelector((state) => state.filter.filter);
+  const searchString = useAppSelector((state) => state.filter.searchString);
 
   const queryString = useQueryMake(filter, searchString);
 
@@ -21,11 +22,11 @@ function usePlace() {
     const signal = controller.signal;
     const fetchData = async () => {
       try {
-        const response = await getAllPlace(page, queryString, signal);
-        const result = response?.data?.places || []
+        const response: any = await getAllPlace(page, queryString, signal);
+        const result = response?.data?.places || [];
         setPlaces((prev) => [...prev, ...result]);
         setTotalPlaces(response.data.totalPlaces);
-      } catch (error) {
+      } catch (error: any) {
         if (error.code !== "ERR_CANCELED") {
           setError(true);
         }

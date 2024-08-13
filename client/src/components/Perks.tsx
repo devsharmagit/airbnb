@@ -1,6 +1,13 @@
 import { EnteranceSvg, ParkingSvg, PetsSvg, RadioSvg, TVSvg, WifiSvg } from "../assets/svgs";
 
-function Perks({ selected, onChange, forDisplay, allowedPerks }) {
+interface PerksArgTypes {
+  selected?: string[];
+  onChange?: (arr: string[]) => void;
+  forDisplay?: boolean;
+  allowedPerks?: string[];
+}
+
+function Perks({ selected, onChange, forDisplay, allowedPerks }: PerksArgTypes) {
   const perksArr = [
     {
       perk: "wifi",
@@ -34,12 +41,12 @@ function Perks({ selected, onChange, forDisplay, allowedPerks }) {
     },
   ];
 
-  const handleClick = (name) => {
+  const handleClick = (name: string) => {
     if (forDisplay) return;
 
-    if (!selected.includes(name)) {
+    if (selected && !selected.includes(name) && onChange) {
       onChange([...selected, name]);
-    } else {
+    } else if (onChange && selected) {
       onChange([...selected.filter((selectedName) => selectedName !== name)]);
     }
   };

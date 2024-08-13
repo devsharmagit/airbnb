@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { ImageSvg } from "../assets/svgs";
 import IconButton from "./ui/IconButton.tsx";
 import ImageModal from "./Modal/ImageModal.tsx";
+import { ProfilePhotoType } from "../types/file.ts";
 
-function PlacePhotos({ photos }) {
+function PlacePhotos({ photos }: { photos: ProfilePhotoType[] }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {

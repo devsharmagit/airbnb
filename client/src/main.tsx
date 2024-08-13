@@ -17,5 +17,7 @@ if (rootElement) {
     </BrowserRouter>
   );
 } else {
-  console.error("Failed to find the root element. Ensure there is an element with id 'root' in your HTML.");
+  console.error(
+    "Failed to find the root element. Ensure there is an element with id 'root' in your HTML."
+  );
 }

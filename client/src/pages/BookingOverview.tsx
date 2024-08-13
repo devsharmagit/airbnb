@@ -14,7 +14,7 @@ import { GET_A_BOOKING } from "../services/api/apiEndpoints.js";
 import { cancelBooking } from "../services/api/bookingApi.js";
 import Error from "../components/Error.tsx";
 
-const BookingHeading = ({ text }) => {
+const BookingHeading = ({ text }: { text: string }) => {
   return <Heading text={text} className={"text-lg"} />;
 };
 
@@ -33,7 +33,8 @@ function BookingOverview() {
   const handleCancelClick = async () => {
     try {
       setIsLoading(true);
-      const responseData = await cancelBooking(bookingId);
+      if (!bookingId) throw error;
+      const responseData: any = await cancelBooking(bookingId);
       if (responseData.status === 200) toast.success("Successfully done !");
       navigate("/");
     } catch (error) {
@@ -76,7 +77,9 @@ function BookingOverview() {
                 <BookingHeading text={"Check-Out"} />
                 <Paragrapgh text={formatDate(bookingDoc?.checkOut)} />
                 <BookingHeading text={"Nights"} />
-                <Paragrapgh text={differenceInDays(bookingDoc?.checkOut, bookingDoc?.checkIn)} />
+                <Paragrapgh
+                  text={differenceInDays(bookingDoc?.checkOut, bookingDoc?.checkIn).toString()}
+                />
                 <BookingHeading text={"Total Price Paid"} />
                 <Paragrapgh text={`$ ${bookingDoc?.totalPrice}`} />
               </div>

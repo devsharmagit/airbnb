@@ -1,25 +1,25 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useRef, useState } from "react";
 
-function useFetchData(url) {
-  const [result, setResult] = useState(null);
+function useFetchData(url: string) {
+  const [result, setResult] = useState<null | AxiosResponse>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const abortControllerRef = useRef(null);
+  const abortControllerRef: any = useRef(null);
 
   const fetchData = async () => {
     abortControllerRef.current = new AbortController();
     const signal = abortControllerRef.current.signal;
     setLoading(true);
     try {
-      const responseData = await axios.get(url, {
+      const responseData: AxiosResponse = await axios.get(url, {
         withCredentials: true,
         signal,
       });
       setResult(responseData);
       setError(false);
-    } catch (error) {
+    } catch (error: any) {
       if (error.name === "CanceledError") {
         return;
       } else {

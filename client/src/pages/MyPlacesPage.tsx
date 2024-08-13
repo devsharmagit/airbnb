@@ -12,6 +12,7 @@ import LoadingModal from "../components/Modal/LoadingModal.tsx";
 import Error from "../components/Error.tsx";
 import { GET_MY_PLACES } from "../services/api/apiEndpoints";
 import { deletePlace } from "../services/api/placeApi";
+import { PlaceDataType } from "../types/place.ts";
 
 function MyPlacesPage() {
   const { result, error, loading, fetchData } = useFetchData(GET_MY_PLACES);
@@ -20,10 +21,10 @@ function MyPlacesPage() {
 
   const places = result?.data?.places || [];
 
-  const handleClick = async (placeId) => {
+  const handleClick = async (placeId: string) => {
     try {
       setIsLoading(true);
-      const responseData = await deletePlace(placeId);
+      const responseData: any = await deletePlace(placeId);
       if (responseData.status === 204) {
         toast.success("Successfully deleted.");
         await fetchData();
@@ -52,7 +53,7 @@ function MyPlacesPage() {
         <div className="sm:grid-col-2 m-auto grid max-w-7xl justify-center gap-4 md:grid-cols-3 lg:grid-cols-4">
           {loading && Array.from({ length: 4 }).map((val, index) => <Skeleton key={index} />)}
 
-          {places?.map((obj) => {
+          {places?.map((obj: PlaceDataType) => {
             return (
               <div key={obj?._id}>
                 <Place
@@ -72,7 +73,7 @@ function MyPlacesPage() {
                   </Link>
 
                   <IconButton
-                    onClick={() => handleClick(obj?.id)}
+                    onClick={() => handleClick(obj?._id)}
                     className={
                       "mont flex flex-row-reverse items-center gap-1 rounded-md border border-gray-300 bg-gray-100 px-2 py-[2px] text-base font-medium"
                     }

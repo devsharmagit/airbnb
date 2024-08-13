@@ -2,10 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import filterReducer from "../slice/filterSlice.ts";
 import userReducer from "../slice/userSlice.ts";
 
-
 export const store = configureStore({
-  reducer : {
-    filter: filterReducer ,
+  reducer: {
+    filter: filterReducer,
     user: userReducer,
   },
 });

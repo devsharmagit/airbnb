@@ -1,28 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Options from "./Options.tsx";
+import Options from "./Options";
 import { LogoSvg, BarSvg, UserSolidSvg } from "../assets/svgs";
-import SearchPlace from "./SearchPlace.tsx";
+import SearchPlace from "./SearchPlace";
+import { useAppSelector } from "../hooks/reduxhooks";
 
 function Header() {
-  const user = useSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user.user);
 
   const navigate = useNavigate();
 
   const [profileOptions, setProfileOptions] = useState(false);
 
-  const handleProfileOptions = (event) => {
+  const handleProfileOptions = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     if (!user) return navigate("/login");
     setProfileOptions(!profileOptions);
   };
 
-  const handleEventListener = (event) => {
-    if (
-      event.target.closest(".profile__options") === null ||
-      event.target.closest(".profile__link")
-    ) {
+  const handleEventListener = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (!target.closest(".profile__options") || target.closest(".profile__link")) {
       setProfileOptions(false);
     }
   };
@@ -51,7 +49,11 @@ function Header() {
         >
           <BarSvg className={"hidden sm:inline"} />
           {user?.profilePhoto ? (
-            <img className="h-8 w-8 rounded-full object-cover" src={`${user?.profilePhoto?.url}`} />
+            <img
+              className="h-8 w-8 rounded-full object-cover"
+              src={user.profilePhoto.url}
+              alt="Profile"
+            />
           ) : (
             <UserSolidSvg />
           )}

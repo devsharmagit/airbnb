@@ -6,15 +6,14 @@ import LoadingModal from "./components/Modal/LoadingModal.tsx";
 import Error from "./components/Error.tsx";
 import React, { useEffect, Suspense } from "react";
 import RoutesContainer from "./utils/RoutesContainer.tsx";
-import { useAppSelector,useAppDispatch } from "./hooks/reduxhooks.js";
-
+import { useAppSelector, useAppDispatch } from "./hooks/reduxhooks.js";
 
 function App() {
   const { loading, error, user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const token = Cookies.get("token");
 
-  console.log(user)
+  console.log(user);
 
   useEffect(() => {
     if (token && !user) {

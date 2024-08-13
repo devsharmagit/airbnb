@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import IconButton from "./ui/IconButton.tsx";
@@ -7,10 +6,28 @@ import { HeartOutlineSvg } from "../assets/svgs";
 import Heading from "./typography/Heading.tsx";
 import Paragrapgh from "./typography/Paragrapgh.tsx";
 import { removeSavePlace, saveAPLace } from "../services/api/placeApi";
+import { PlaceType } from "../types/place.ts";
+import { ProfilePhotoType } from "../types/file.ts";
+import { useAppSelector } from "../hooks/reduxhooks.ts";
 
-function Place({ id, photo, title, description, price, favourites, removeFromSaved }) {
+type PlaceArgType = Partial<Pick<PlaceType, "title" | "description" | "price">> & {
+  id: string;
+  favourites?: string[];
+  removeFromSaved?: (id: string) => void;
+  photo: ProfilePhotoType;
+};
+
+function Place({
+  id,
+  photo,
+  title,
+  description,
+  price,
+  favourites,
+  removeFromSaved,
+}: PlaceArgType) {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
+  const { user } = useAppSelector((state) => state.user);
 
   const [isSaved, setIsSaved] = useState(false);
 
@@ -18,13 +35,13 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
     navigate(`/place/${id}`);
   };
 
-  const handleFavClick = async (event) => {
+  const handleFavClick = async (event: Event) => {
     event.stopPropagation();
     if (!user) return toast.error("Please Login to Save !");
     if (!isSaved) {
       setIsSaved(true);
       try {
-        const responseData = await saveAPLace({ place: id });
+        const responseData: any = await saveAPLace({ place: id });
         if (responseData?.data?.status === "success") toast.success("Successfully saved !");
       } catch (error) {
         setIsSaved(false);
@@ -32,7 +49,7 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
       }
     } else {
       if (removeFromSaved) removeFromSaved(id);
-      const responseData = await removeSavePlace({ place: id });
+      const responseData: any = await removeSavePlace({ place: id });
       if (responseData.data.status === "success") {
         setIsSaved(false);
         toast.success("Successfully Removed !");
@@ -60,7 +77,7 @@ function Place({ id, photo, title, description, price, favourites, removeFromSav
         <Heading text={title} className={"truncate text-lg"} />
         <Paragrapgh text={description} className={"truncate text-sm"} />
         <Paragrapgh
-          text={price && `$ ${price} per night`}
+          text={price ? `$ ${price} per night` : undefined}
           className={"mt-2 text-base font-semibold"}
         />
       </div>

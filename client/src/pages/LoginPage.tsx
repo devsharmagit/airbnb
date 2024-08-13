@@ -11,9 +11,15 @@ import Input from "../components/ui/Input.tsx";
 import Heading from "../components/typography/Heading.tsx";
 import LoadingModal from "../components/Modal/LoadingModal.tsx";
 import { logIn } from "../services/api/authApi.js";
+import { useAppSelector } from "../hooks/reduxhooks.ts";
+
+interface LoginFormDataType {
+  email: string;
+  password: string;
+}
 
 function LoginPage() {
-  const user = useSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user.user);
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -28,14 +34,13 @@ function LoginPage() {
 
   const navigate = useNavigate();
 
-  const handleLoginUser = async (data) => {
+  const handleLoginUser = async (data: LoginFormDataType) => {
     try {
       setLoading(true);
-
-      const responseData = await logIn({ ...data });
+      const responseData: any = await logIn({ ...data });
       if (responseData.status === 201) toast.success("Successfully Logged In !");
       dispatch(login(responseData.data.data.user));
-    } catch (error) {
+    } catch (error: any) {
       if (error?.response?.status === 401) {
         toast.error("Incorrect Email or Password !");
       } else {

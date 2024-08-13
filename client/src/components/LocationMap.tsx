@@ -4,7 +4,12 @@ import { LocationSvg } from "../assets/svgs";
 import Heading from "./typography/Heading.tsx";
 import Paragrapgh from "./typography/Paragrapgh.tsx";
 
-function LocationMap({ coordinates, title }) {
+interface LocationMapTypes {
+  coordinates: number[];
+  title: string;
+}
+
+function LocationMap({ coordinates, title }: LocationMapTypes) {
   return (
     <>
       {coordinates && (

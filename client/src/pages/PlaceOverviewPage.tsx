@@ -7,7 +7,6 @@ import PlacePhotos from "../components/PlacePhotos.tsx";
 import LocationMap from "../components/LocationMap.tsx";
 import { MoneySvg, GuestSvg } from "../assets/svgs";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
 import useFetchData from "../hooks/useFetchData";
 import Button from "../components/ui/Button.tsx";
 import Heading from "../components/typography/Heading.tsx";
@@ -19,16 +18,17 @@ import LoadingModal from "../components/Modal/LoadingModal.tsx";
 import Error from "../components/Error.tsx";
 import { GET_A_PLACE } from "../services/api/apiEndpoints.js";
 import { placeBooking } from "../services/api/bookingApi.js";
+import { useAppSelector } from "../hooks/reduxhooks.ts";
 
 function PlaceOverviewPage() {
   const { placeId } = useParams();
   const navigate = useNavigate();
 
-  const [checkIn, setCheckIN] = useState("");
-  const [checkOut, setCheckOut] = useState("");
+  const [checkIn, setCheckIN] = useState<string>("");
+  const [checkOut, setCheckOut] = useState<string>("");
   const [isloading, setIsLoading] = useState(false);
 
-  const user = useSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user.user);
 
   const { result, loading, error } = useFetchData(`${GET_A_PLACE}/${placeId}`);
   const place = result?.data?.place;
@@ -38,7 +38,12 @@ function PlaceOverviewPage() {
     if (!checkIn || !checkOut) return toast.error("check in and check out are not set");
     try {
       setIsLoading(true);
-      const data = await placeBooking({ checkIn, totalPrice: price, checkOut, place: placeId });
+      const data: any = await placeBooking({
+        checkIn,
+        totalPrice: price,
+        checkOut,
+        place: placeId,
+      });
 
       if (data.status === 201) toast.success("Successfully Booked !");
       navigate(`/booking/${data.data.booking._id}`);
@@ -57,8 +62,10 @@ function PlaceOverviewPage() {
   useEffect(() => {
     if (blockedDates) {
       const nearestAllowedDates = findTwoConsecutiveFutureDays(blockedDates);
-      setCheckIN(nearestAllowedDates[0]);
-      setCheckOut(nearestAllowedDates[1]);
+      if (nearestAllowedDates) {
+        setCheckIN(nearestAllowedDates[0]);
+        setCheckOut(nearestAllowedDates[1]);
+      }
     }
   }, [place]);
 

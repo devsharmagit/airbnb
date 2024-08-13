@@ -16,7 +16,7 @@ import {
   PlaceOverviewPage,
   RegisterPage,
   SavedPlacesPage,
-} from "../pages/index";
+} from "../pages/index.ts";
 
 import LoadingModal from "../components/Modal/LoadingModal.tsx";
 
