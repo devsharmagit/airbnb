@@ -9,7 +9,9 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "lint:dev": "eslint \"src/**/*.{js,jsx}\"",
-    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix"
+    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
+      "preetier:write": "npx prettier ./src --write",
+    "preetier:check": "npx prettier ./src --check"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
