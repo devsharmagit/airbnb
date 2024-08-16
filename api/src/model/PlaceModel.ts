@@ -1,6 +1,33 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-const PlaceSchema = new mongoose.Schema(
+// Define the PhotoType interface
+export interface PhotoType {
+  url: string;
+  publicId: string;
+}
+
+// Define the Place document interface
+interface PlaceDocument extends Document {
+  owner: mongoose.Types.ObjectId;
+  title: string;
+  address: string;
+  photos: PhotoType[];
+  description: string;
+  perks?: string[];
+  extraInfo?: string;
+  maxGuests: number;
+  price: number;
+  location: {
+    type: string;
+    coordinates: number[];
+  };
+  mainImage?: PhotoType;
+  favourites: mongoose.Types.ObjectId[];
+  favCount: number;
+}
+
+// Define the Place schema
+const PlaceSchema = new mongoose.Schema<PlaceDocument>(
   {
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
     title: {
@@ -24,11 +51,11 @@ const PlaceSchema = new mongoose.Schema(
       ],
       required: true,
       validate: {
-        validator: function (value) {
+        validator: function (value: PhotoType[]) {
           if (value.length < 5) return false;
           return value.length <= 10;
         },
-        message: "maxium 10 photos are allowed",
+        message: "Maximum 10 photos are allowed",
       },
     },
     description: {
@@ -48,9 +75,9 @@ const PlaceSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: [true, "Accomodation must have a price"],
+      required: [true, "Accommodation must have a price"],
       default: 10,
-      minimum: 10,
+      min: 10,
     },
     location: {
       type: {
@@ -64,14 +91,14 @@ const PlaceSchema = new mongoose.Schema(
         url: String,
         publicId: String,
       },
-      default: function () {
+      default: function (this: PlaceDocument) {
         return this.photos[0];
       },
     },
     favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
     favCount: {
       type: Number,
-      default: function () {
+      default: function (this: PlaceDocument) {
         return this.favourites.length;
       },
     },
@@ -79,27 +106,15 @@ const PlaceSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-// virtual fields
+// Define virtual fields
 PlaceSchema.virtual("bookings", {
   ref: "booking",
   foreignField: "place",
   localField: "_id",
 });
 
+// Create a geospatial index for the location field
 PlaceSchema.index({ location: "2dsphere" });
 
-export const PlaceModel = mongoose.model("place", PlaceSchema);
-
-// PlaceSchema.pre(/^find/, function(next){
-//   this.populate({
-//       path:"owner",
-//       select: "-__v"
-//   })
-
-//   next()
-// })
-
-// PlaceSchema.pre(/^find/, function(next){
-// this.populate("bookings")
-//   next()
-// })
+// Export the Place model
+export const PlaceModel = mongoose.model<PlaceDocument>("place", PlaceSchema);

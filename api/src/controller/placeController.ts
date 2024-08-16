@@ -1,10 +1,23 @@
 import { BookingModel } from "../model/BookingModel.js";
-import { PlaceModel } from "../model/Place.js";
+import { PhotoType, PlaceModel } from "../model/PlaceModel.js";
 import { getBlockedDates } from "../utils/dateFunctions.js";
 import { format } from "date-fns";
 import { deleteCloudnaryImage } from "./imageController.js";
+import { Request, Response } from "express";
+import { RequestWithUser } from "../model/UserModel.js";
 
-export const getAllPlaces = async (req, res) => {
+type ReqWithQuery = Request & {
+  query: {
+    longitude: string;
+    latitude: string;
+    sort: string;
+    limit: number;
+    page: number;
+    fields: string;
+  };
+};
+
+export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
   try {
     const excludedFields = [
       "sort",
@@ -21,8 +34,8 @@ export const getAllPlaces = async (req, res) => {
       delete queryObj[value];
     });
 
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt|in|all)\b/g, (match) => `$${match}`);
+    let queryStr: any = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt|in|all)\b/g, (match: string) => `$${match}`);
 
     queryStr = JSON.parse(queryStr);
 
@@ -103,7 +116,7 @@ export const getAllPlaces = async (req, res) => {
       totalPlaces,
       places,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     res.status(500).json({
       status: "fail",
@@ -112,7 +125,7 @@ export const getAllPlaces = async (req, res) => {
   }
 };
 
-export const getAllMap = async (req, res) => {
+export const getAllMap = async (req: Request, res: Response) => {
   try {
     const places = await PlaceModel.find()
       .select("title price mainImage location")
@@ -121,7 +134,7 @@ export const getAllMap = async (req, res) => {
       places,
       length: places.length,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     res.status(500).json({
       status: "fail",
@@ -130,8 +143,9 @@ export const getAllMap = async (req, res) => {
   }
 };
 
-export const addAPlace = async (req, res) => {
+export const addAPlace = async (req: RequestWithUser, res: Response) => {
   try {
+    if (!req.user) throw Error;
     const place = await PlaceModel.create({
       ...req.body,
       owner: req.user._id,
@@ -141,7 +155,7 @@ export const addAPlace = async (req, res) => {
       status: "success",
       place,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     res.status(500).json({
       status: "fail",
@@ -150,7 +164,7 @@ export const addAPlace = async (req, res) => {
   }
 };
 
-export const getOnePlace = async (req, res) => {
+export const getOnePlace = async (req: Request, res: Response) => {
   try {
     const placeId = req.params.id;
     const place = await PlaceModel.findById(placeId).populate({
@@ -174,7 +188,7 @@ export const getOnePlace = async (req, res) => {
       place,
       blockedDates,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       status: "fail",
       message: error.message,
@@ -182,8 +196,9 @@ export const getOnePlace = async (req, res) => {
   }
 };
 
-export const getAllUserPlaces = async (req, res) => {
+export const getAllUserPlaces = async (req: RequestWithUser, res: Response) => {
   try {
+    if (!req.user) throw Error;
     const places = await PlaceModel.find({ owner: req.user._id })
       .sort("-updatedAt")
       .select("mainImage title price description favourites");
@@ -202,13 +217,14 @@ export const getAllUserPlaces = async (req, res) => {
   }
 };
 
-export const byFavourite = async (req, res) => {
+export const byFavourite = async (req: Request, res: Response) => {
   const places = await PlaceModel.find().sort({ "favourites.length": -1 });
   res.json({ places });
 };
 
-export const updateAPlace = async (req, res) => {
+export const updateAPlace = async (req: RequestWithUser, res: Response) => {
   try {
+    if (!req.user) throw Error;
     const userId = req.user._id;
     const placeId = req.params.id;
     const place = await PlaceModel.findById(placeId);
@@ -221,7 +237,7 @@ export const updateAPlace = async (req, res) => {
     const newPhotos = req.body.photos;
 
     oldPhotos.forEach((value) => {
-      if (!newPhotos.find((photo) => photo.publicId === value.publicId)) {
+      if (!newPhotos.find((photo: PhotoType) => photo.publicId === value.publicId)) {
         // deleteImage(value.publicId);
         deleteCloudnaryImage(value.publicId);
       }
@@ -238,7 +254,7 @@ export const updateAPlace = async (req, res) => {
       status: "updated",
       updatedPlace: newPlace,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     res.status(500).json({
       status: "error",
@@ -247,8 +263,9 @@ export const updateAPlace = async (req, res) => {
   }
 };
 
-export const deleteAPlace = async (req, res) => {
+export const deleteAPlace = async (req: RequestWithUser, res: Response) => {
   try {
+    if (!req.user) throw Error;
     const userId = req.user._id;
     const placeId = req.params.id;
     const place = await PlaceModel.findById(placeId);
@@ -268,7 +285,7 @@ export const deleteAPlace = async (req, res) => {
     res.status(204).json({
       status: "deleted",
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     res.status(500).json({
       status: "error",
@@ -277,15 +294,16 @@ export const deleteAPlace = async (req, res) => {
   }
 };
 
-export const getFavouritePlaces = async (req, res) => {
+export const getFavouritePlaces = async (req: RequestWithUser, res: Response) => {
   try {
+    if (!req.user) throw Error;
     const places = await PlaceModel.find({ favourites: req.user._id })
       .sort("-createdAt")
       .select("title description price mainImage favourites");
     res.json({
       places,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     res.status(500).json({
       status: "error",

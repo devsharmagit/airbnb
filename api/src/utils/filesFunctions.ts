@@ -3,7 +3,7 @@ import path from "path";
 
 const imageDir = path.join(process.cwd(), "images");
 
-export const deleteImage = async (imageName) => {
+export const deleteImage = async (imageName: string) => {
   try {
     const filePath = path.join(imageDir, imageName);
     // Check if the file exists
@@ -16,7 +16,7 @@ export const deleteImage = async (imageName) => {
   }
 };
 
-export const imageNameConstructor = (imageName) => {
+export const imageNameConstructor = (imageName: string) => {
   const image = imageName.split(".");
   return image[0] + `${Date.now()}` + "." + image[1];
 };

@@ -1,24 +1,31 @@
 // always remember to put .js in the end of the file path
-import { PlaceModel } from "../model/Place.js";
+import { PlaceModel } from "../model/PlaceModel.js";
+import { RequestHandler, Response } from "express";
+import { RequestWithUser } from "../model/UserModel.js";
 
-export const addToFavourite = async (req, res) => {
+export const addToFavourite = async (req: RequestWithUser, res: Response) => {
   try {
     const placeId = req.body.place;
-    const userId = req.user._id;
+    let userId;
+    if (req.user) {
+      userId = req.user._id;
+    }
     const place = await PlaceModel.findById(placeId);
 
-    if (place.favourites.includes(userId)) throw Error("user can't be added more than once");
+    if (place?.favourites.includes(userId)) throw Error("user can't be added more than once");
 
-    place.favourites = [...place.favourites, userId];
-    place.favCount = place.favCount + 1;
+    if (place) {
+      place.favourites = [...place.favourites, userId];
+      place.favCount = place.favCount + 1;
+    }
 
-    const savedDoc = await place.save();
+    const savedDoc = await place?.save();
 
     res.status(201).json({
       status: "success",
-      favourites: savedDoc.favourites,
+      favourites: savedDoc?.favourites,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       status: "fail",
       error: error.message,
@@ -26,12 +33,16 @@ export const addToFavourite = async (req, res) => {
   }
 };
 
-export const deleteAfav = async (req, res) => {
+export const deleteAfav: RequestHandler = async (req: RequestWithUser, res: Response) => {
   try {
     const placeId = req.body.place;
-    const userId = req.user._id;
+    let userId: any;
+    if (req.user) {
+      userId = req.user._id;
+    }
     const place = await PlaceModel.findById(placeId);
-    if (!place.favourites.includes(userId)) throw Error("user is already not added so cant remove");
+    if (!place?.favourites.includes(userId))
+      throw Error("user is already not added so cant remove");
     place.favourites = place.favourites.filter((value) => {
       return value.toString() !== userId;
     });
@@ -41,7 +52,7 @@ export const deleteAfav = async (req, res) => {
       status: "success",
       favourites: savedDoc.favourites,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       status: "fail",
       error: error.message,

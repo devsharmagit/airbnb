@@ -14,7 +14,8 @@ const BookingSchema = new mongoose.Schema({
     type: Date,
     required: [true, "booking must have a checkout date"],
     validate: {
-      validator: function (value) {
+      validator: function (value: Date) {
+        // @ts-expect-error "this" is defined
         return value > this.checkIn;
       },
       message: "CheckOut Date should be greater than CheckIn Date",

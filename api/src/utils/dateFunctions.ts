@@ -1,17 +1,24 @@
-export function isDateRangeOverlapping(checkin, checkout, existingBookings) {
+export interface Booking {
+  checkIn: string | Date; // ISO string representing the date
+  checkOut: string | Date; // ISO string representing the date
+}
+
+export function isDateRangeOverlapping(
+  checkin: string,
+  checkout: string,
+  existingBookings: Booking[]
+): boolean {
   const userCheckin = new Date(checkin);
   const userCheckout = new Date(checkout);
 
   const today = new Date().getDate();
 
-  // if(userCheckin < today || userCheckout <= today){
-
-  if (userCheckin < today) {
-    throw new Error("CHECKIN OR CHECKOUT CANT BE SET IN PAST or same as today");
+  if (userCheckin.getDate() < today) {
+    throw new Error("CHECKIN OR CHECKOUT CAN'T BE SET IN THE PAST or same as today");
   }
 
   if (userCheckout <= userCheckin) {
-    throw new Error("invalid dates entered");
+    throw new Error("Invalid dates entered");
   }
 
   for (const booking of existingBookings) {
@@ -30,8 +37,8 @@ export function isDateRangeOverlapping(checkin, checkout, existingBookings) {
   return false;
 }
 
-export const getBlockedDates = (bookings) => {
-  const blockedDates = [];
+export const getBlockedDates = (bookings: Booking[]): string[] => {
+  const blockedDates: string[] = [];
 
   bookings.forEach((booking) => {
     const checkInDate = new Date(booking.checkIn);
@@ -47,7 +54,7 @@ export const getBlockedDates = (bookings) => {
   return blockedDates;
 };
 
-export function isDatePast(date) {
+export function isDatePast(date: string | Date): boolean {
   const currentDate = new Date();
   const inputDate = new Date(date);
 

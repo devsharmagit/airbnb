@@ -12,9 +12,10 @@ import favouriteRouter from "./routes/favouriteRoutes.js";
 
 const app = express();
 
-const port = process.env.PORT || 3500;
+const port = process.env.PORT || "3500";
+const MONGO_URL = process.env.MONGO_URL || "";
 
-mongoose.connect(process.env.MONGO_URL).then(() => {
+mongoose.connect(MONGO_URL).then(() => {
   console.log("DATABASE connected successfully!");
 });
 
@@ -37,7 +38,7 @@ app.use(
   cors({
     credentials: true,
     origin: function (url, callback) {
-      if (whitelist.indexOf(url) !== -1 || !url) {
+      if ((url && whitelist.indexOf(url) !== -1) || !url) {
         callback(null, true);
       } else {
         callback(new Error("not allowed by cors"));
@@ -66,7 +67,7 @@ process.on("uncaughtException", (error) => {
   console.log(error);
 });
 
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server is running at port ${port}`);
 });
 
