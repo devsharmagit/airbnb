@@ -1,4 +1,4 @@
-# Airbnb - Booking Web appp
+# Airbnb - Booking Web app
 
 Hey! 
 I started this project from a YouTube video on how to make a simple crud app using the MERN stack. I added a lot of features after that. 
