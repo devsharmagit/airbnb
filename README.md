@@ -7,6 +7,7 @@ I started this project from a YouTube video on how to make a simple crud app usi
 <h3>
 <img src="https://github.com/Meetjain1/wanderlust/assets/133582566/1ee5934a-27be-4502-a7bf-e6a8c78fe5a3" width="35" height="35" style="max-width: 100%;"> Some Cool features are:
 </h3>
+
 - User authentication.
 - Infinite Scroll and complex query.
 - Third party services for image storage (cloudinary)
