@@ -13,8 +13,6 @@ function App() {
   const dispatch = useAppDispatch();
   const token = Cookies.get("token");
 
-  console.log("heyffffdddddddddddffffff");
-
   useEffect(() => {
     if (token && !user) {
       dispatch(fetchUser());

@@ -10,7 +10,7 @@ import imageRouter from "./routes/imageRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 import favouriteRouter from "./routes/favouriteRoutes.js";
 
-console.log("hello new world!123456789sdfsdfsdfsd")
+console.log("hello new world!")
 const app = express();
 
 const port = process.env.PORT || "3500";

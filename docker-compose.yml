@@ -12,14 +12,14 @@ services:
       - server
     ports:
       - "5173:5173"
+    volumes:
+      - "./client/src:/client/src"
     env_file:
       - "./client/.env"
     environment:
       - CHOKIDAR_USEPOLLING=true
     networks:
       - app-network
-    volumes:
-      - "./client/src:/client/src"
 
   server:
     container_name: server
@@ -28,6 +28,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3500:3500"
+    depends_on:
+      - mongodb
     volumes:
        - "./api/src:/api/src"
     env_file:
@@ -37,3 +39,14 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
 
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_volume:/data/db
+    networks:
+      - app-network
+volumes:
+  mongodb_volume:
