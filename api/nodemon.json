@@ -1,0 +1,7 @@
+{
+    "watch": ["src"],
+    "ignore": ["dist"],
+    "exec": "tsc -b && node dist/index.js",
+    "ext": "ts"
+  }
+  

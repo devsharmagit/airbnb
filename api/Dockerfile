@@ -7,4 +7,4 @@ COPY . .
 
 EXPOSE 3500
 
-CMD [ "npm", "run", "start" ]
+CMD [ "npx" , "nodemon" ]

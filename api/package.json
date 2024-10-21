@@ -7,7 +7,7 @@
   "scripts": {
     "start": "tsc -b && node dist/index.js",
     "vercel-build": "echo yay",
-    "dev": "nodemon",
+    "dev": "nodemon --watch 'src/**/*' --ignore 'dist/*' --exec 'tsc -b && node dist/index.js'",
     "lint": "npx eslint ./src",
     "lint:fix": "npx eslint --fix ./src",
     "preetier:write": "npx prettier ./src --write",
@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
     "multer": "^1.4.5-lts.1",
+    "typescript": "^5.6.3",
     "validator": "^13.11.0"
   },
   "devDependencies": {
@@ -43,8 +44,10 @@
     "@typescript-eslint/parser": "^8.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "nodemon": "^3.1.7",
     "prettier": "3.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "tslib": "^2.8.0",
+    "tsup": "^8.3.0"
   }
 }

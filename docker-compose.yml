@@ -1,4 +1,7 @@
 version: "3.8"
+networks:
+  app-network:
+    driver: bridge
 services:
   web-app:
     container_name: web-app
@@ -11,8 +14,12 @@ services:
       - "5173:5173"
     env_file:
       - "./client/.env"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     networks:
       - app-network
+    volumes:
+      - "./client/src:/client/src"
 
   server:
     container_name: server
@@ -22,12 +29,11 @@ services:
     ports:
       - "3500:3500"
     volumes:
-      - "./api:/api:rw"
+       - "./api/src:/api/src"
     env_file:
       - "./api/.env"
     networks:
       - app-network
+    environment:
+      - CHOKIDAR_USEPOLLING=true
 
-networks:
-  app-network:
-    driver: bridge

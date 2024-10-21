@@ -38,7 +38,7 @@ function Header() {
       <header className="relative flex items-center justify-between border-b border-gray-300 px-2 py-3 sm:px-4">
         <Link to={"/"} className="hidden items-center gap-1 md:flex">
           <LogoSvg />
-          <span className="text-xl font-bold">Airbnb</span>
+          <span className="text-xl font-bold">Notbnb ddd</span>
         </Link>
 
         <SearchPlace />

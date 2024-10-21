@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const mode = import.meta.env.VITE_ENVIROMENT;
+const mode = import.meta.env.VITE_ENVIRONMENT;
 
 console.log({ mode });
 
