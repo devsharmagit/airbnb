@@ -39,9 +39,12 @@ mv .env.sample .env
 npm run dev
 ```
 <h3> With Docker </h3>
+make sure docker is up and running
+
 ```bash
 docker compose up
 ```
+
 <h3>
 <img src="https://github.com/user-attachments/assets/e9ad9181-81f2-43ea-97d6-6dea009acfa1" width="35" height="35" style="max-width: 100%;"> Contributing
 </h3>
