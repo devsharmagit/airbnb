@@ -18,6 +18,8 @@ I started this project from a YouTube video on how to make a simple crud app usi
 <img src="https://github.com/user-attachments/assets/4e1250df-4c49-48c5-80f5-9797d3e73170" width="35" height="35" style="max-width: 100%;"> Installation
 </h3>
 
+<h3> Without Docker </h3>
+
 To Start the Backend
 
 ```bash
@@ -35,6 +37,10 @@ npm install
 
 mv .env.sample .env
 npm run dev
+```
+<h3> With Docker </h3>
+```bash
+docker compose up
 ```
 <h3>
 <img src="https://github.com/user-attachments/assets/e9ad9181-81f2-43ea-97d6-6dea009acfa1" width="35" height="35" style="max-width: 100%;"> Contributing
