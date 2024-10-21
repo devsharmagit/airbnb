@@ -10,6 +10,7 @@ import imageRouter from "./routes/imageRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 import favouriteRouter from "./routes/favouriteRoutes.js";
 
+console.log("hello world123")
 const app = express();
 
 const port = process.env.PORT || "3500";
@@ -29,6 +30,7 @@ const whitelist = [
   "http://127.0.0.1:4173",
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "http://web-app:5173",
   "http://localhost:3500",
   "https://air-bnb-frontend.vercel.app",
   "https://bookers.devsharmacode.com",

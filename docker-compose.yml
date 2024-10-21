@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  web-app:
+    container_name: web-app
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    depends_on:
+      - server
+    ports:
+      - "5173:5173"
+    env_file:
+      - "./client/.env"
+    networks:
+      - app-network
+
+  server:
+    container_name: server
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3500:3500"
+    volumes:
+      - "./api:/api:rw"
+    env_file:
+      - "./api/.env"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
