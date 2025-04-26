@@ -8,3 +8,4 @@ coverage/
 .idea/
 node_modules
 client/build
+dist
