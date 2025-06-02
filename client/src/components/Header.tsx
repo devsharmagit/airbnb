@@ -12,14 +12,15 @@ function Header() {
 
   const [profileOptions, setProfileOptions] = useState(false);
 
-  const handleProfileOptions = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleProfileOptions = (event : React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     if (!user) return navigate("/login");
     setProfileOptions(!profileOptions);
   };
 
-  const handleEventListener = (event: MouseEvent) => {
+  const handleEventListener = (event : MouseEvent) => {
     const target = event.target as HTMLElement;
+    if(!target) return;
     if (!target.closest(".profile__options") || target.closest(".profile__link")) {
       setProfileOptions(false);
     }
@@ -33,9 +34,22 @@ function Header() {
     };
   }, []);
 
+  
+  useEffect(() => {
+    if (profileOptions) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [profileOptions]);
+
   return (
     <>
-      <header className="relative flex items-center justify-between border-b border-gray-300 px-2 py-3 sm:px-4">
+      <header className="relative flex items-center justify-between border-b border-gray-300 px-2 py-3 sm:px-4 z-10">
         <Link to={"/"} className="hidden items-center gap-1 md:flex">
           <LogoSvg />
           <span className="text-xl font-bold"> Airbnb </span>
@@ -45,7 +59,7 @@ function Header() {
 
         <div
           onClick={handleProfileOptions}
-          className="relative flex h-fit cursor-pointer items-center gap-2 rounded-full border border-gray-300 px-2 py-2 sm:px-4"
+          className="relative flex h-fit cursor-pointer items-center gap-2 rounded-full border border-gray-300 px-2 py-2 sm:px-4 hover:shadow-md transition-shadow duration-200"
         >
           <BarSvg className={"hidden sm:inline"} />
           {user?.profilePhoto ? (
@@ -59,8 +73,18 @@ function Header() {
           )}
           <p className="hidden md:inline">{user?.name}</p>
         </div>
-        {profileOptions && <Options />}
       </header>
+
+      {/* Backdrop */}
+      {profileOptions && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-30 z-[11111110] transition-opacity duration-300"
+          onClick={() => setProfileOptions(false)}
+        />
+      )}
+
+      {/* Options Panel */}
+      <Options isVisible={profileOptions} />
     </>
   );
 }
