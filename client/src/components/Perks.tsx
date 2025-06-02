@@ -58,7 +58,7 @@ function Perks({ selected, onChange, forDisplay, allowedPerks }: PerksArgTypes) 
           <div
             key={text}
             onClick={() => handleClick(perk)}
-            className={`flex items-center justify-center gap-2 border border-black ${selected?.includes(perk) && "bg-primary text-white"} min-h-[50px] rounded-xl ${forDisplay && !allowedPerks?.includes(perk) ? "hidden" : ""}`}
+            className={`flex cursor-pointer items-center justify-center  gap-2 rounded-lg border px-3 py-2 text-center transition-all ${selected?.includes(perk) ? "border-primary bg-primary text-white" : "border-gray-200 bg-white text-gray-700 hover:border-primary hover:bg-gray-50" } ${forDisplay && !allowedPerks?.includes(perk) ? "hidden" : ""} `}
           >
             <Svg />
             <p>{text}</p>

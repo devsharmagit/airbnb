@@ -14,6 +14,7 @@ type ReqWithQuery = Request & {
     limit: number;
     page: number;
     fields: string;
+    priceRange: string
   };
 };
 
@@ -27,6 +28,7 @@ export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
       "latitude",
       "longitude",
       "searchString",
+      "priceRange"
     ];
     const queryObj = { ...req.query };
 
@@ -49,6 +51,14 @@ export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
     if (req.query.searchString) {
       query = query.find({ title: { $regex: req.query.searchString, $options: "i" } });
     }
+    
+    if(req.query.priceRange){
+      query = query.find({price: {
+        $gte: req.query.priceRange === "budget" ? 0 : req.query.priceRange === "mid" ? 500 : 1000,
+        $lte: req.query.priceRange === "budget" ? 500 : req.query.priceRange === "mid" ? 1000 : 1000000000
+      }})
+    }
+    
     const totalPlaces = await PlaceModel.countDocuments(query);
 
     if (req.query.sort === "far") {

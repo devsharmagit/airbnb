@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Perks from "./Perks.tsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addFilter } from "../slice/filterSlice";
 import toast from "react-hot-toast";
 import Button from "./ui/Button.tsx";
-import Input from "./ui/Input.tsx";
-import Heading from "./typography/Heading.tsx";
-import Paragrapgh from "./typography/Paragrapgh.tsx";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../hooks/reduxhooks.ts";
+import { priceRangeData, PriceRangeEnum, sortArr } from "../constants/filter.ts";
 
 interface FilterTypes {
   setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,14 +17,10 @@ function Filter({ setFilterOpen }: FilterTypes) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [perks, setPerks] = useState<string[]>([]);
-  const [inputOne, setInputOne] = useState("");
-  const [inputTwo, setInputTwo] = useState("");
-  const [priceOption, setPriceOption] = useState("");
-  const [sort, setSort] = useState("");
+  const [perks, setPerks] = useState<string[]>(filter?.perks || []);
+  const [sort, setSort] = useState(filter?.sort || "");
   const [coordinates, setCoordinates] = useState<number[]>([]);
-
-  const sortArr = ["nearest", "far", "cheapest", "expensive", "popular"];
+  const [priceRange, setPriceRange] = useState<PriceRangeEnum | null>(filter?.priceRange || null)
 
   const handleSortClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.currentTarget) setSort(event.currentTarget.id);
@@ -44,13 +38,11 @@ function Filter({ setFilterOpen }: FilterTypes) {
     }
   };
 
-  const handlePriceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPriceOption(event.target.value);
-  };
+  
 
   const handleClearClick = (event: React.MouseEvent) => {
-    if (event.currentTarget.id === "price") {
-      setPriceOption("");
+    if (event.currentTarget.id === "priceRange") {
+      setPriceRange(null);
     }
     if (event.currentTarget.id === "sort") {
       setSort("");
@@ -62,11 +54,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
 
   const handleApplyClick = () => {
     let newFilter: any = {};
-    if (priceOption === "priceRange") {
-      newFilter["price"] = { type: "priceRange", from: inputOne, to: inputTwo };
-    } else if (priceOption) {
-      newFilter["price"] = { type: priceOption, value: inputOne };
-    }
+    newFilter["priceRange"] = priceRange;
     newFilter["sort"] = sort;
     newFilter["perks"] = perks;
     newFilter["location"] = coordinates;
@@ -77,15 +65,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
   };
 
   const checkingFromGlobal = () => {
-    if (filter?.price?.type === "priceRange") {
-      setPriceOption("priceRange");
-      setInputOne(filter?.price?.from || "");
-      setInputTwo(filter?.price?.to || "");
-    } else {
-      setPriceOption(filter?.price?.type || "");
-      setInputOne(filter?.price?.value || "");
-      setInputTwo("");
-    }
+    
     setSort(filter?.sort || "");
     setPerks(filter?.perks || []);
   };
@@ -99,120 +79,107 @@ function Filter({ setFilterOpen }: FilterTypes) {
     checkingFromGlobal();
   }, [filter]);
 
+  
+
   return (
-    <div
-      className={
-        "top-16 m-auto mb-5 mt-5 w-full max-w-screen-md origin-top rounded-lg border border-gray-300 bg-white p-3 transition-all duration-300 animate-fadeIn"
-      }
-    >
-      <Heading text={"Filters"} className="animate-slideDown" />
-      <div className="relative border-b border-gray-300 py-3 animate-slideIn">
-        <Paragrapgh text={"Price"} />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="w-full max-w-2xl rounded-xl bg-white p-6 shadow-2xl">
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold text-gray-800">Filters</h2>
+          <button
+            onClick={() => setFilterOpen(false)}
+            className="rounded-full p-2 text-gray-500 hover:bg-gray-100"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
-        <Button
-          text={"clear"}
-          className={
-            "mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"
-          }
-          id={"price"}
-          onClick={handleClearClick}
-        />
-        <select
-          className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700  outline-none "
-          value={priceOption}
-          onChange={handlePriceChange}
-        >
-          <option value="">None</option>
-          <option value="lessThan"> Less Than </option>
-          <option value="moreThan"> More Than </option>
-          <option value="equalsTo"> Equals To</option>
-          <option value="priceRange">Price Range</option>
-        </select>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="item-center flex flex-col gap-1 px-4" id="lessThan">
-            {priceOption === "priceRange" && <Paragrapgh text={"From -"} />}
-            {priceOption && (
-              <Input
-                type="number"
-                placeholder="600"
-                className={"mt-2 !rounded-md !border-0 bg-gray-100 !px-2 !py-2  !outline-0 "}
-                onChange={(event) => setInputOne(event.target.value)}
-                value={inputOne}
+        <div className="space-y-6">
+          {/* Price Section */}
+          <div className="rounded-lg border border-gray-200 p-4">
+            <div className="flex justify-between items-center">
+            <h3 className="mb-4 text-lg font-medium text-gray-700">Price Range</h3>
+            <Button
+                text="Clear"
+                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 m-0"
+                id="priceRange"
+                onClick={handleClearClick}
               />
-            )}
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              {
+                priceRangeData.map(({text, range, key})=> <div className={`cursor-pointer rounded-lg border p-4 transition-all hover:shadow-md ${priceRange === key ? "border-primary bg-primary text-white" : "border-gray-200 bg-white text-gray-700 hover:border-primary hover:bg-gray-50" } `} onClick={()=>setPriceRange(key)}>
+                <p className={`text-lg font-semibold ${priceRange === key ? "text-gray-100" : "text-gray-800" } `}>
+                  {range}
+                </p>
+                <p className={`text-sm ${priceRange === key ? "text-gray-200" : "text-gray-500" }`}>{text}</p>
+              </div>)
+              }
+              
+            </div>
           </div>
-          <div className="item-center flex flex-col gap-1 px-4" id="moreThan">
-            {priceOption === "priceRange" && <Paragrapgh text={"To -"} />}
-            <Input
-              type="number"
-              placeholder="600"
-              className={`!m-0 mt-2 hidden !rounded-md !border-0 bg-gray-100 !px-2 !py-2  !outline-0 ${
-                priceOption === "priceRange" ? "!block" : ""
-              }`}
-              onChange={(event) => setInputTwo(event.target.value)}
-              value={inputTwo}
-            />
+
+          {/* Sort Section */}
+          <div className="rounded-lg border border-gray-200 p-4">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-medium text-gray-700">Sort by</h3>
+              <Button
+                text="Clear"
+                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 m-0"
+                id="sort"
+                onClick={handleClearClick}
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {sortArr.map((value) => (
+                <div
+                  key={value}
+                  className={`cursor-pointer rounded-lg border px-4 py-3 text-center transition-all ${
+                    sort === value
+                      ? "border-primary bg-primary text-white"
+                      : "border-gray-200 bg-white text-gray-700 hover:border-primary hover:bg-gray-50"
+                  }`}
+                  id={value}
+                  onClick={handleSortClick}
+                >
+                  <span className="capitalize">{value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Perks Section */}
+          <div className="rounded-lg border border-gray-200 p-4">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-medium text-gray-700">Perks</h3>
+              <Button
+                text="Clear"
+                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 m-0"
+                id="perks"
+                onClick={handleClearClick}
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+              <Perks selected={perks} onChange={setPerks} />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="relative border-b border-gray-300 py-3 animate-slideIn delay-100">
-        <Paragrapgh text={"Sort by"} />
-
-        <Button
-          text={"clear"}
-          className={
-            "mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"
-          }
-          id={"sort"}
-          onClick={handleClearClick}
-        />
-
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {sortArr.map((value) => {
-            return (
-              <div
-                key={value}
-                className={`rounded-md border border-gray-300 px-3 py-2 ${
-                  sort === value ? "bg-primary !text-white" : "bg-white !text-black"
-                }`}
-                id={value}
-                onClick={handleSortClick}
-              >
-                <Paragrapgh
-                  className={`${
-                    sort === value ? "!text-white" : "!text-black"
-                  } text-base font-normal capitalize`}
-                  text={value}
-                />
-              </div>
-            );
-          })}
+        {/* Action Buttons */}
+        <div className="mt-8 flex gap-4">
+          <Button
+            onClick={handleApplyClick}
+            text="Apply Filters"
+            className="flex-1 rounded-lg bg-primary px-6 py-3 text-white hover:bg-primary/90"
+          />
+          <Button
+            onClick={handleCancelClick}
+            text="Cancel"
+            className="flex-1 rounded-lg border border-gray-300 bg-white px-6 py-3 !text-gray-700 hover:bg-gray-50"
+          />
         </div>
-      </div>
-
-      <div className="relative border-b border-gray-300 py-3 animate-slideIn delay-200">
-        <p className="mont mb-1 text-lg ">Perks</p>
-        <Button
-          text={"clear"}
-          className={
-            "mont absolute right-1 top-1 !m-0 rounded-md border border-gray-300 !bg-gray-50 !p-1 !text-xs !font-normal !text-black"
-          }
-          id={"perks"}
-          onClick={handleClearClick}
-        />
-
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-          <Perks selected={perks} onChange={setPerks} />
-        </div>
-      </div>
-      <div className="mt-5 flex gap-3 animate-slideIn delay-300">
-        <Button onClick={handleApplyClick} text={"Apply"} className={"!m-0 "} />
-        <Button
-          onClick={handleCancelClick}
-          text={"Cancel"}
-          className={"!m-0 border border-gray-300 bg-white !text-gray-700 "}
-        />
       </div>
     </div>
   );

@@ -1,20 +1,12 @@
 function useQueryMake(filter: any, searchString: string) {
-  let searchPrice = "";
-  if (filter?.price?.type === "lessThan") {
-    searchPrice = searchPrice + `price[lte]=${filter?.price?.value}`;
-  }
-  if (filter?.price?.type === "moreThan") {
-    searchPrice = searchPrice + `price[gte]=${filter?.price?.value}`;
-  }
-  if (filter?.price?.type === "equalsTo") {
-    searchPrice = searchPrice + `price=${filter?.price?.value}`;
-  }
-  if (filter?.price?.type === "priceRange") {
-    searchPrice = searchPrice + `price[gte]=${filter?.price?.from}&price[lte]=${filter?.price?.to}`;
-  }
+  console.log(filter)
+  let priceRange = "";
   let searchSort = "";
   let latitude = "";
   let longitude = "";
+  if(filter?.priceRange){
+    priceRange = `priceRange=${filter.priceRange}`
+  }
   if (filter?.location) {
     latitude = `latitude=${filter?.location[1] || 0}`;
     longitude = `longitude=${filter?.location[0] || 0}`;
@@ -45,13 +37,15 @@ function useQueryMake(filter: any, searchString: string) {
     searchStringToAdd = `searchString=${searchString}`;
   }
 
-  let queryArray = [searchPrice, searchSort, searchPerk, latitude, longitude, searchStringToAdd];
+  let queryArray = [priceRange, searchSort, searchPerk, latitude, longitude, searchStringToAdd];
 
   const query = queryArray
     .filter((value) => {
       return value.length !== 0;
     })
     .join("&");
+
+    console.log({query})
 
   return query;
 }
