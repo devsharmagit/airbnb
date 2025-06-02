@@ -102,11 +102,11 @@ function Filter({ setFilterOpen }: FilterTypes) {
   return (
     <div
       className={
-        " top-16 m-auto mb-5 mt-5 w-full max-w-screen-md origin-top rounded-lg border border-gray-300 bg-white p-3 transition-all  duration-300 "
+        "top-16 m-auto mb-5 mt-5 w-full max-w-screen-md origin-top rounded-lg border border-gray-300 bg-white p-3 transition-all duration-300 animate-fadeIn"
       }
     >
-      <Heading text={"Filters"} />
-      <div className="relative border-b border-gray-300 py-3">
+      <Heading text={"Filters"} className="animate-slideDown" />
+      <div className="relative border-b border-gray-300 py-3 animate-slideIn">
         <Paragrapgh text={"Price"} />
 
         <Button
@@ -156,7 +156,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
         </div>
       </div>
 
-      <div className="relative border-b border-gray-300 py-3">
+      <div className="relative border-b border-gray-300 py-3 animate-slideIn delay-100">
         <Paragrapgh text={"Sort by"} />
 
         <Button
@@ -191,7 +191,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
         </div>
       </div>
 
-      <div className="relative border-b  border-gray-300 py-3">
+      <div className="relative border-b border-gray-300 py-3 animate-slideIn delay-200">
         <p className="mont mb-1 text-lg ">Perks</p>
         <Button
           text={"clear"}
@@ -206,7 +206,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
           <Perks selected={perks} onChange={setPerks} />
         </div>
       </div>
-      <div className="mt-5 flex gap-3">
+      <div className="mt-5 flex gap-3 animate-slideIn delay-300">
         <Button onClick={handleApplyClick} text={"Apply"} className={"!m-0 "} />
         <Button
           onClick={handleCancelClick}
