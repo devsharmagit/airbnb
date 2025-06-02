@@ -15,7 +15,7 @@ const SearchPlace = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
 
-  const handleClick = (event) => {
+  const handleClick = (event : React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     navigate("/");
     dispatch(editSearchString(searchString));
@@ -35,7 +35,7 @@ const SearchPlace = () => {
         >
           <Input
             value={searchString}
-            onChange={(e) => setSearchString(e.target.value)}
+            onChange={(e) => { setSearchString(e.target.value)}}
             type="text"
             placeholder="search here..."
             className="mont !my-0 !rounded-none !border-0 !py-0 px-1 text-lg text-black outline-0"

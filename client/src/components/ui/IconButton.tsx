@@ -1,8 +1,7 @@
-import React from "react";
 
 interface IconButton {
   type?: "submit" | "reset" | "button";
-  onClick: any;
+  onClick?: ()=>void;
   className?: string;
   Icon?: any;
   text?: string;

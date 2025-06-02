@@ -18,6 +18,7 @@ const Input = React.forwardRef(
           placeholder={placeholder || "Name"}
           ref={ref}
           className={className}
+          onChange={onChange}
           {...others}
         />
         {errorMsg && <p className="mont pl-2 text-sm font-medium text-red-500">{errorMsg}</p>}
