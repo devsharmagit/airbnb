@@ -96,7 +96,7 @@ useEffect(() => {
           </div>
         </div>
         {/* Right: Image Grid */}
-        <div className="relative left-20 flex max-w-full flex-1  flex-row  gap-5 overflow-hidden">
+        <div className="relative flex max-w-full flex-1  flex-row  gap-5 overflow-hidden">
           <div className="">
             <img
               src={heroImages[0]}
@@ -121,7 +121,7 @@ useEffect(() => {
               className="mt-5 h-80 w-[300px] rounded-3xl object-cover"
             />
           </div>
-          <img src={heroImages[4]} alt="dest4" className="absolute top-40 left-60 w-[300px] h-[300px] rounded-3xl border-white border-4 shadow-2xl" />
+          <img src={heroImages[4]} alt="dest4" className="absolute top-40 left-20 xl:left-60 w-[200px] h-[200px] xl:w-[300px] xl:h-[300px] rounded-3xl border-white border-4 shadow-2xl" />
         </div>
       </section>
 
@@ -137,7 +137,7 @@ useEffect(() => {
                   alt="Main destination"
                   className="h-[500px] w-full rounded-3xl object-cover shadow-xl"
                 />
-                <div className="absolute -bottom-8 -right-8 rounded-2xl bg-white p-4 shadow-lg">
+                <div className="absolute bottom-0 right-0 md:-bottom-8 md:-right-8 rounded-2xl bg-white p-4 shadow-lg">
                   <div className="flex items-center gap-3">
                     <div className="rounded-full bg-primary/10 p-3">
                       <svg
@@ -170,7 +170,7 @@ useEffect(() => {
             </div>
 
             {/* Right: Content */}
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2 text-center md:text-left">
               <span className="mb-2 text-lg font-semibold text-primary">About Us</span>
               <h2 className="mont mb-6 text-4xl font-bold md:text-5xl">
                 Your Journey Begins With Us
@@ -181,8 +181,8 @@ useEffect(() => {
                 connect you with the world's most extraordinary destinations.
               </p>
 
-              <div className="mb-8 grid grid-cols-2 gap-6">
-                <div className="flex items-center gap-4">
+              <div className="mb-8 grid grid-cols-2 gap-6 ">
+                <div className="flex justify-center md:justify-start items-center gap-4">
                   <div className="rounded-full bg-primary/10 p-3">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -204,7 +204,7 @@ useEffect(() => {
                     <p className="text-sm text-gray-600">Quality assured</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex justify-center md:justify-start items-center gap-4">
                   <div className="rounded-full bg-primary/10 p-3">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -256,7 +256,7 @@ useEffect(() => {
       {/* Features Section */}
 
       {/* Features Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-gray-50 py-20 text-center md:text-left">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-start gap-16 lg:flex-row">
             {/* Left: Content */}
@@ -447,7 +447,7 @@ useEffect(() => {
             </div>
 
             {/* Social Links */}
-            <div className="mb-6 flex items-center gap-6">
+            <div className="mb-6 flex items-center gap-6 flex-wrap justify-center">
               {/* GitHub */}
               <a
                 href="https://github.com/devsharmagit/"
