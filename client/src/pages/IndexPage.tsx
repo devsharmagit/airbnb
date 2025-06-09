@@ -16,7 +16,7 @@ import { PlaceDataType } from "../types/place.ts";
 function LoadingSkeleton({ loadig }: { loadig: boolean }) {
   return (
     <div className="grid grid-cols-1 items-center justify-center gap-x-[24px] gap-y-[30px] py-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {loadig && Array.from({ length: 4 }).map((val, index) => <Skeleton key={index} />)}
+      {loadig && Array.from({ length: 4 }).map((_, index) => <Skeleton key={index} />)}
     </div>
   );
 }

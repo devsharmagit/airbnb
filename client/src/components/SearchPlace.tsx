@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { editSearchString } from "../slice/filterSlice.js";
@@ -6,16 +6,17 @@ import IconButton from "./ui/IconButton.tsx";
 import Input from "./ui/Input.tsx";
 import { CrossSvg, SearchSvg, GearSvg } from "../assets/svgs";
 import FilterModal from "./Modal/FilterModal.tsx";
+import { useAppSelector } from "../hooks/reduxhooks.ts";
 
 const SearchPlace = () => {
+  const searchStringGlobal = useAppSelector((state) => state.filter.searchString);
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const [filterOpen, setFilterOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
 
-  const handleClick = (event : React.SyntheticEvent<HTMLFormElement>) => {
+  const handleClick = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     navigate("/");
     dispatch(editSearchString(searchString));
@@ -26,6 +27,10 @@ const SearchPlace = () => {
     dispatch(editSearchString(""));
   };
 
+  useEffect(() => {
+    setSearchString(searchStringGlobal);
+  }, [searchStringGlobal, setSearchString]);
+
   return (
     <>
       <div className="relative flex items-center gap-1">
@@ -35,7 +40,9 @@ const SearchPlace = () => {
         >
           <Input
             value={searchString}
-            onChange={(e) => { setSearchString(e.target.value)}}
+            onChange={(e) => {
+              setSearchString(e.target.value);
+            }}
             type="text"
             placeholder="search here..."
             className="mont !my-0 !rounded-none !border-0 !py-0 px-1 text-lg text-black outline-0"

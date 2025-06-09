@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SearchPlace from "../components/SearchPlace";
 import { getMostPopularPlaces } from "../services/api/placeApi";
 import Place from "../components/Place";
 import { PlaceDataType } from "../types/place";
