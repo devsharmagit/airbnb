@@ -12,7 +12,7 @@ const heroImages = [
   "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "https://images.unsplash.com/photo-1515238152791-8216bfdf89a7?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "https://images.unsplash.com/photo-1478059299873-f047d8c5fe1a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=400&q=80",
+  "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=1883&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
 const aboutImages = [
@@ -101,26 +101,27 @@ useEffect(() => {
             <img
               src={heroImages[0]}
               alt="dest1"
-              className="ml-auto h-80 w-[300px] rounded-2xl object-cover"
+              className="ml-auto h-80 w-[300px] rounded-3xl object-cover"
             />
             <img
               src={heroImages[1]}
               alt="dest2"
-              className="mt-5 h-52 w-[550px] rounded-2xl object-cover "
+              className="mt-5 h-52 w-[550px] rounded-3xl object-cover "
             />
           </div>
           <div>
             <img
               src={heroImages[2]}
               alt="dest2"
-              className="h-52 w-[550px] rounded-2xl object-cover "
+              className="h-52 w-[550px] rounded-3xl object-cover "
             />
             <img
               src={heroImages[3]}
               alt="dest1"
-              className="mt-5 h-80 w-[300px] rounded-2xl object-cover"
+              className="mt-5 h-80 w-[300px] rounded-3xl object-cover"
             />
           </div>
+          <img src={heroImages[4]} alt="dest4" className="absolute top-40 left-60 w-[300px] h-[300px] rounded-3xl border-white border-4 shadow-2xl" />
         </div>
       </section>
 
