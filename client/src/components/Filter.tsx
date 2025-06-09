@@ -103,7 +103,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
             <h3 className="mb-4 text-lg font-medium text-gray-700">Price Range</h3>
             <Button
                 text="Clear"
-                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 m-0"
+                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 !m-0"
                 id="priceRange"
                 onClick={handleClearClick}
               />
@@ -127,7 +127,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
               <h3 className="text-lg font-medium text-gray-700">Sort by</h3>
               <Button
                 text="Clear"
-                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 m-0"
+                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 !m-0"
                 id="sort"
                 onClick={handleClearClick}
               />
@@ -156,7 +156,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
               <h3 className="text-lg font-medium text-gray-700">Perks</h3>
               <Button
                 text="Clear"
-                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 m-0"
+                className="rounded-md border border-gray-300 bg-white !px-2 !py-1 text-xs !text-gray-600 hover:bg-gray-50 mt-0 !m-0"
                 id="perks"
                 onClick={handleClearClick}
               />

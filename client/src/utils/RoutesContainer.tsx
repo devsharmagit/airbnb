@@ -16,6 +16,7 @@ import {
   PlaceOverviewPage,
   RegisterPage,
   SavedPlacesPage,
+  LandingPage,
 } from "../pages/index.ts";
 
 import LoadingModal from "../components/Modal/LoadingModal.tsx";
@@ -133,6 +134,14 @@ const RoutesContainer = () => {
               <AuthProtection>
                 <BookingOverview />
               </AuthProtection>
+            </Suspense>
+          }
+        />
+        <Route
+          path="/landingpage"
+          element={
+            <Suspense fallback={<LoadingModal isOpen={true} text={"Loading"} />}>
+              <LandingPage />
             </Suspense>
           }
         />

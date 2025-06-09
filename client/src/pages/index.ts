@@ -16,20 +16,21 @@ const BookingsPage = React.lazy(() => import("./BookingsPage.tsx"));
 const MapPlace = React.lazy(() => import("./MapPlace.tsx"));
 const PageNotFound = React.lazy(() => import("./PageNotFound.tsx"));
 
+export { default as LandingPage } from "./LandingPage";
 export {
-  IndexPage,
-  LoginPage,
-  Layout,
-  RegisterPage,
   AccountPage,
-  PlaceOverviewPage,
-  BookingOverview,
-  NewPlaceFormPage,
-  EditPlacePage,
   AuthProtection,
-  MyPlacesPage,
-  SavedPlacesPage,
+  BookingOverview,
   BookingsPage,
+  EditPlacePage,
+  IndexPage,
+  Layout,
+  LoginPage,
   MapPlace,
+  MyPlacesPage,
+  NewPlaceFormPage,
   PageNotFound,
+  PlaceOverviewPage,
+  RegisterPage,
+  SavedPlacesPage,
 };

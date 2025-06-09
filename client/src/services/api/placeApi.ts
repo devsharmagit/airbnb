@@ -16,6 +16,19 @@ export const getAllPlace = async (page: number, queryString: string, signal: Abo
   }
 };
 
+export const getMostPopularPlaces = async (signal: AbortSignal) => {
+  try {
+    const resonse = await axiosInstance.get(
+      `/api/place?fields=title,mainImage,price&limit=9&sort=-favCount`,
+      { signal: signal }
+    );
+    return resonse;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const getOnePlace = async (placeId: string) => {
   try {
     const response = await axiosInstance.get(`/api/place/${placeId}`);

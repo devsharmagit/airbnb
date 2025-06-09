@@ -3,7 +3,7 @@ import Place from "../components/Place.tsx";
 import InfiniteScroll from "react-infinite-scroll-component";
 import usePlace from "../hooks/usePlace.js";
 import Skeleton from "../components/ui/Skeleton.tsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { removeAllFilter } from "../slice/filterSlice.js";
 import Paragrapgh from "../components/typography/Paragrapgh.tsx";
 import { CircleExlamanation } from "../assets/svgs";
