@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
 import { loginSchema } from "../constants/schemaConstant.js";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../slice/userSlice.js";
 import Button from "../components/ui/Button.tsx";
 import Input from "../components/ui/Input.tsx";
@@ -12,6 +12,7 @@ import Heading from "../components/typography/Heading.tsx";
 import LoadingModal from "../components/Modal/LoadingModal.tsx";
 import { logIn } from "../services/api/authApi.js";
 import { useAppSelector } from "../hooks/reduxhooks.ts";
+import mountainImg from "../assets/mountain.jpeg";
 
 interface LoginFormDataType {
   email: string;
@@ -58,29 +59,56 @@ function LoginPage() {
   return (
     <>
       <LoadingModal isOpen={loading} text={"Logging you in."} />
-      <div className="mx-auto mt-4 flex h-[45vh] max-w-md items-center justify-center">
-        <div>
-          <Heading text={"Login"} className={"text-center"} />
-          <form className="" onSubmit={handleSubmit(handleLoginUser)}>
-            <Input
-              type={"email"}
-              placeholder={"saraflex@gmail.com"}
-              {...register("email")}
-              errorMsg={errors?.email?.message}
-            />
-            <Input
-              type={"password"}
-              placeholder={"password"}
-              {...register("password")}
-              errorMsg={errors?.password?.message}
-            />
-            <Button text={"Login"} />
-          </form>
-          <div className="mt-4 text-center text-gray-600">
-            <span className="mr-5">Dont have an account yet?</span>
-            <Link className="text-black underline" to={"/register"}>
-              Register
-            </Link>
+      <div className="h-[100vh] flex w-full">
+        {/* Left side - Mountain Image */}
+        <div className="w-1/2 h-full">
+          <img 
+            src={mountainImg} 
+            className="w-full h-full object-cover" 
+            alt="Mountain landscape" 
+          />
+        </div>
+        
+        {/* Right side - Login Form */}
+        <div className="w-1/2 h-full flex items-center justify-center">
+          <div className="max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+            <div className="text-center">
+              <Heading text={"Welcome Back"} className={"text-3xl font-bold mb-2"} />
+              <p className="text-gray-600">Please sign in to your account</p>
+            </div>
+            
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleLoginUser)}>
+              <div className="space-y-4">
+                <Input
+                  type={"email"}
+                  placeholder={"Enter your email"}
+                  {...register("email")}
+                  errorMsg={errors?.email?.message}
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+                <Input
+                  type={"password"}
+                  placeholder={"Enter your password"}
+                  {...register("password")}
+                  errorMsg={errors?.password?.message}
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+              </div>
+
+              <Button 
+                text={"Sign In"} 
+                type="submit"
+              />
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-600">
+                Don't have an account?{" "}
+                <Link className="text-black font-semibold hover:underline" to={"/register"}>
+                  Create an account
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>

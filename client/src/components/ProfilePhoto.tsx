@@ -28,7 +28,7 @@ function ProfilePhoto({ photo, setPhoto, setFile }) {
     <>
       <input type="file" onChange={handleFile} className="hidden" ref={inputRef} accept="image/*" />
       <div
-        className="relative m-auto h-32 w-32 overflow-hidden rounded-full border-4 border-gray-500"
+        className="relative m-auto h-32 w-32 overflow-hidden rounded-full border-2 border-gray-500"
         onClick={handleProfileClick}
         onMouseEnter={() => {
           setHoverProfile(true);

@@ -14,6 +14,7 @@ import LoadingModal from "../components/Modal/LoadingModal.tsx";
 import { uploadFilesToServer, UploadType } from "../utils/handleFiles";
 import { signUp } from "../services/api/authApi";
 import { UploadedPhotoTypes } from "../types/file.ts";
+import riversideImg from "../assets/riverside.jpeg";
 
 interface RegisterFormType {
   email: string;
@@ -65,41 +66,80 @@ function RegisterPage() {
   return (
     <>
       <LoadingModal isOpen={loading} text={"Making your account..."} />
-      <div className="mx-auto mt-4 max-w-md text-center">
-        <Heading text={"Register"} className={"mb-4"} />
-        <ProfilePhoto photo={photo} setPhoto={setPhoto} setFile={setFile} />
-        <form className="" onSubmit={handleSubmit(handleRegister)}>
-          <Input
-            type={"text"}
-            placeholder={"Full Name"}
-            {...register("name")}
-            errorMsg={errors?.name?.message}
+      <div className="h-screen flex w-full">
+           
+        {/* Left side - Register Form */}
+        <div className="w-1/2 h-full flex items-center justify-center px-4">
+          <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
+            <div className="text-center">
+              <Heading text={"Create Account"} className={"text-3xl font-bold mb-2"} />
+              <p className="text-gray-600">Join us and start your journey</p>
+            </div>
+
+            <div className="flex justify-center">
+              <ProfilePhoto 
+                photo={photo} 
+                setPhoto={setPhoto} 
+                setFile={setFile}
+              />
+            </div>
+
+            <form className="space-y-4" onSubmit={handleSubmit(handleRegister)}>
+              <div className="space-y-3">
+                <Input
+                  type={"text"}
+                  placeholder={"Full Name"}
+                  {...register("name")}
+                  errorMsg={errors?.name?.message}
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+                <Input
+                  type={"email"}
+                  placeholder={"Email address"}
+                  {...register("email")}
+                  errorMsg={errors?.email?.message}
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+                <Input
+                  type={"password"}
+                  placeholder={"Create password"}
+                  {...register("password")}
+                  errorMsg={errors?.password?.message}
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+                <Input
+                  type={"password"}
+                  placeholder={"Confirm password"}
+                  {...register("confirmPassword")}
+                  errorMsg={errors?.confirmPassword?.message}
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                />
+              </div>
+
+              <Button 
+                type={"submit"} 
+                text={"Create Account"} 
+              />
+            </form>
+
+            <div className="text-center">
+              <p className="text-gray-600">
+                Already have an account?{" "}
+                <Link className="text-black font-semibold hover:underline" to={"/login"}>
+                  Sign in
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right side - Riverside Image */}
+        <div className="w-1/2 h-full">
+          <img 
+            src={riversideImg} 
+            className="w-full h-full object-cover" 
+            alt="Riverside landscape" 
           />
-          <Input
-            type={"email"}
-            placeholder={"example@gmail.com"}
-            {...register("email")}
-            errorMsg={errors?.email?.message}
-          />
-          <Input
-            type={"password"}
-            placeholder={"password"}
-            {...register("password")}
-            errorMsg={errors?.password?.message}
-          />
-          <Input
-            type={"password"}
-            placeholder={"confirm password"}
-            {...register("confirmPassword")}
-            errorMsg={errors?.confirmPassword?.message}
-          />
-          <Button type={"submit"} text={"Register"} />
-        </form>
-        <div className="mt-4 text-center text-gray-600">
-          <span className="mr-1"> Already have an account ? </span>
-          <Link className="text-black underline" to={"/login"}>
-            Login
-          </Link>
         </div>
       </div>
     </>
