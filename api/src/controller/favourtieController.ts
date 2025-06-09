@@ -2,6 +2,7 @@
 import { PlaceModel } from "../model/PlaceModel.js";
 import { RequestHandler, Response } from "express";
 import { RequestWithUser } from "../model/UserModel.js";
+import redisClient from "../redis/redis.js";
 
 export const addToFavourite = async (req: RequestWithUser, res: Response) => {
   try {
@@ -21,7 +22,10 @@ export const addToFavourite = async (req: RequestWithUser, res: Response) => {
 
     const savedDoc = await place?.save();
 
-    res.status(201).json({
+    // Invalidating the cache
+    await redisClient.del("place:byfav");
+
+    return res.status(201).json({
       status: "success",
       favourites: savedDoc?.favourites,
     });
@@ -48,7 +52,8 @@ export const deleteAfav: RequestHandler = async (req: RequestWithUser, res: Resp
     });
     place.favCount = place.favCount - 1;
     const savedDoc = await place.save();
-    res.status(200).json({
+    await redisClient.del("place:byfav");
+    return res.status(200).json({
       status: "success",
       favourites: savedDoc.favourites,
     });

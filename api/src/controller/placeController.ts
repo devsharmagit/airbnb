@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { deleteCloudnaryImage } from "./imageController.js";
 import { Request, Response } from "express";
 import { RequestWithUser } from "../model/UserModel.js";
+import redisClient from "../redis/redis.js";
 
 type ReqWithQuery = Request & {
   query: {
@@ -14,12 +15,56 @@ type ReqWithQuery = Request & {
     limit: number;
     page: number;
     fields: string;
-    priceRange: string
+    priceRange: string;
   };
+};
+
+// Cache invalidation helper function
+const invalidatePlaceCache = async (userId?: string, placeId?: string) => {
+  try {
+    const patterns = [
+      "place:*", // All place list caches
+      "place:map", // Map cache
+      "place:byfav", // By favourite cache
+    ];
+
+    if (userId) {
+      patterns.push(`user:place:${userId}`); // User's places cache
+      patterns.push(`favUser:place:${userId}`); // User's favourite places cache
+    }
+
+    if (placeId) {
+      patterns.push(`one:place:${placeId}`); // Individual place cache
+    }
+
+    // Delete cache keys matching patterns
+    for (const pattern of patterns) {
+      if (pattern.includes("*")) {
+        // For wildcard patterns, we need to scan and delete
+        const keys = await redisClient.keys(pattern);
+        if (keys.length > 0) {
+          await redisClient.del(keys);
+        }
+      } else {
+        // For exact keys, delete directly
+        await redisClient.del(pattern);
+      }
+    }
+
+    console.log(`Cache invalidated for patterns: ${patterns.join(", ")}`);
+  } catch (error) {
+    console.error("Cache invalidation error:", error);
+  }
 };
 
 export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
   try {
+    console.log(req.url);
+    const cacheKey = "place:" + req.url;
+    const cachedData = await redisClient.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json(JSON.parse(cachedData));
+    }
     const excludedFields = [
       "sort",
       "limit",
@@ -28,7 +73,7 @@ export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
       "latitude",
       "longitude",
       "searchString",
-      "priceRange"
+      "priceRange",
     ];
     const queryObj = { ...req.query };
 
@@ -51,14 +96,21 @@ export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
     if (req.query.searchString) {
       query = query.find({ title: { $regex: req.query.searchString, $options: "i" } });
     }
-    
-    if(req.query.priceRange){
-      query = query.find({price: {
-        $gte: req.query.priceRange === "budget" ? 0 : req.query.priceRange === "mid" ? 500 : 1000,
-        $lte: req.query.priceRange === "budget" ? 500 : req.query.priceRange === "mid" ? 1000 : 1000000000
-      }})
+
+    if (req.query.priceRange) {
+      query = query.find({
+        price: {
+          $gte: req.query.priceRange === "budget" ? 0 : req.query.priceRange === "mid" ? 500 : 1000,
+          $lte:
+            req.query.priceRange === "budget"
+              ? 500
+              : req.query.priceRange === "mid"
+                ? 1000
+                : 1000000000,
+        },
+      });
     }
-    
+
     const totalPlaces = await PlaceModel.countDocuments(query);
 
     if (req.query.sort === "far") {
@@ -119,13 +171,19 @@ export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
     }
 
     const places = await query.sort("-createdAt");
-
-    res.status(200).json({
+    const responseData = {
       status: "success",
       length: places.length,
       totalPlaces,
       places,
+    };
+    res.status(200).json(responseData);
+
+    await redisClient.set(cacheKey, JSON.stringify(responseData), {
+      EX: 60,
     });
+
+    return;
   } catch (error: any) {
     console.log(error);
     res.status(500).json({
@@ -137,13 +195,23 @@ export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
 
 export const getAllMap = async (req: Request, res: Response) => {
   try {
+    const cacheKey = "place:map";
+    const cachedData = await redisClient.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json(JSON.parse(cachedData));
+    }
     const places = await PlaceModel.find()
       .select("title price mainImage location")
       .sort("-createdAt");
-    return res.status(200).json({
+    const responesData = {
       places,
       length: places.length,
+    };
+    res.status(200).json(responesData);
+    await redisClient.set(cacheKey, JSON.stringify(responesData), {
+      EX: 60,
     });
+    return;
   } catch (error: any) {
     console.log(error);
     res.status(500).json({
@@ -155,11 +223,15 @@ export const getAllMap = async (req: Request, res: Response) => {
 
 export const addAPlace = async (req: RequestWithUser, res: Response) => {
   try {
-    if (!req.user) throw Error;
+    if (!req.user) throw new Error("User not authenticated");
+
     const place = await PlaceModel.create({
       ...req.body,
       owner: req.user._id,
     });
+
+    // Invalidate relevant caches after successful creation
+    await invalidatePlaceCache(req.user._id.toString());
 
     res.status(201).json({
       status: "success",
@@ -177,6 +249,11 @@ export const addAPlace = async (req: RequestWithUser, res: Response) => {
 export const getOnePlace = async (req: Request, res: Response) => {
   try {
     const placeId = req.params.id;
+    const cacheKey = "one:place:" + placeId;
+    const cachedData = await redisClient.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json(JSON.parse(cachedData));
+    }
     const place = await PlaceModel.findById(placeId).populate({
       path: "owner",
       select: "-__v",
@@ -192,12 +269,15 @@ export const getOnePlace = async (req: Request, res: Response) => {
     });
 
     const blockedDates = getBlockedDates(bookings);
-
-    res.status(200).json({
+    const responseData = {
       status: "success",
       place,
       blockedDates,
+    };
+    await redisClient.set(cacheKey, JSON.stringify(responseData), {
+      EX: 60,
     });
+    return res.status(200).json(responseData);
   } catch (error: any) {
     res.status(500).json({
       status: "fail",
@@ -208,57 +288,83 @@ export const getOnePlace = async (req: Request, res: Response) => {
 
 export const getAllUserPlaces = async (req: RequestWithUser, res: Response) => {
   try {
-    if (!req.user) throw Error;
+    if (!req.user) throw new Error("User not authenticated");
+    const cacheKey = "user:place:" + req.user._id;
+    const cachedData = await redisClient.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json(JSON.parse(cachedData));
+    }
     const places = await PlaceModel.find({ owner: req.user._id })
       .sort("-updatedAt")
       .select("mainImage title price description favourites");
 
-    res.status(200).json({
+    const responesData = {
       status: "success",
       length: places.length,
       places,
+    };
+    await redisClient.set(cacheKey, JSON.stringify(responesData), {
+      EX: 60,
     });
+    res.status(200).json(responesData);
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      status: "amg",
+      status: "fail",
       message: error,
     });
   }
 };
 
 export const byFavourite = async (req: Request, res: Response) => {
+  const cacheKey = "place:byfav";
+  const cachedData = await redisClient.get(cacheKey);
+  if (cachedData) {
+    return res.json(JSON.parse(cachedData));
+  }
   const places = await PlaceModel.find().sort({ "favourites.length": -1 });
-  res.json({ places });
+  await redisClient.set(cacheKey, JSON.stringify({ places }), {
+    EX: 60,
+  });
+  return res.json({ places });
 };
 
 export const updateAPlace = async (req: RequestWithUser, res: Response) => {
   try {
-    if (!req.user) throw Error;
-    const userId = req.user._id;
+    if (!req.user) throw new Error("User not authenticated");
+
+    const userId = req.user._id.toString();
     const placeId = req.params.id;
     const place = await PlaceModel.findById(placeId);
 
-    if (!place) throw Error("can not find place with this id");
-    if (place.owner.toString() !== userId) throw Error("only owner can update its own place");
-    if (req.body.owner) throw Error("owner cant be updated");
+    if (!place) throw new Error("Cannot find place with this id");
+    if (place.owner.toString() !== userId) throw new Error("Only owner can update its own place");
+    if (req.body.owner) throw new Error("Owner cannot be updated");
 
     const oldPhotos = place?.photos;
     const newPhotos = req.body.photos;
 
-    oldPhotos.forEach((value) => {
-      if (!newPhotos.find((photo: PhotoType) => photo.publicId === value.publicId)) {
-        // deleteImage(value.publicId);
-        deleteCloudnaryImage(value.publicId);
-      }
-    });
+    // Handle photo deletions
+    if (oldPhotos && newPhotos) {
+      oldPhotos.forEach((value) => {
+        if (!newPhotos.find((photo: PhotoType) => photo.publicId === value.publicId)) {
+          deleteCloudnaryImage(value.publicId);
+        }
+      });
+    }
 
-    req.body.mainImage = newPhotos[0];
+    if (newPhotos && newPhotos.length > 0) {
+      req.body.mainImage = newPhotos[0];
+    }
+
     const newPlace = await PlaceModel.findByIdAndUpdate(
       placeId,
       { ...req.body },
       { new: true, runValidators: true }
     );
+
+    // Invalidate relevant caches after successful update
+    await invalidatePlaceCache(userId, placeId);
 
     res.status(200).json({
       status: "updated",
@@ -275,22 +381,30 @@ export const updateAPlace = async (req: RequestWithUser, res: Response) => {
 
 export const deleteAPlace = async (req: RequestWithUser, res: Response) => {
   try {
-    if (!req.user) throw Error;
-    const userId = req.user._id;
+    if (!req.user) throw new Error("User not authenticated");
+
+    const userId = req.user._id.toString();
     const placeId = req.params.id;
     const place = await PlaceModel.findById(placeId);
 
-    if (!place) throw Error("can not find place with this id");
-    if (place.owner.toString() !== userId) throw Error("only owner can delte its own place");
+    if (!place) throw new Error("Cannot find place with this id");
+    if (place.owner.toString() !== userId) throw new Error("Only owner can delete its own place");
 
     const photos = place.photos;
 
-    photos.forEach(({ publicId }) => {
-      //  deleteImage(fileName)
-      deleteCloudnaryImage(publicId);
-    });
+    // Delete all photos from cloud storage
+    if (photos && photos.length > 0) {
+      photos.forEach(({ publicId }) => {
+        deleteCloudnaryImage(publicId);
+      });
+    }
+
+    // Delete related bookings and the place
     await BookingModel.deleteMany({ place: placeId });
     await PlaceModel.findByIdAndDelete(placeId);
+
+    // Invalidate relevant caches after successful deletion
+    await invalidatePlaceCache(userId, placeId);
 
     res.status(204).json({
       status: "deleted",
@@ -306,11 +420,20 @@ export const deleteAPlace = async (req: RequestWithUser, res: Response) => {
 
 export const getFavouritePlaces = async (req: RequestWithUser, res: Response) => {
   try {
-    if (!req.user) throw Error;
+    if (!req.user) throw new Error("User not authenticated");
+    const cacheKey = "favUser:place:" + req.user._id;
+    const cachedData = await redisClient.get(cacheKey);
+    if (cachedData) {
+      return res.json(JSON.parse(cachedData));
+    }
     const places = await PlaceModel.find({ favourites: req.user._id })
       .sort("-createdAt")
       .select("title description price mainImage favourites");
-    res.json({
+
+    await redisClient.set(cacheKey, JSON.stringify({ places }), {
+      EX: 60,
+    });
+    return res.json({
       places,
     });
   } catch (error: any) {
