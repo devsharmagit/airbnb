@@ -177,7 +177,7 @@ function Filter({ setFilterOpen }: FilterTypes) {
           <Button
             onClick={handleCancelClick}
             text="Cancel"
-            className="flex-1 rounded-lg border border-gray-300 bg-white px-6 py-3 !text-gray-700 hover:bg-gray-50"
+            className="flex-1 rounded-lg border border-gray-300 bg-white px-6 py-3 !text-gray-700 hover:!text-white hover:bg-gray-50"
           />
         </div>
       </div>

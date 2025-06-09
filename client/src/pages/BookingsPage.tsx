@@ -34,13 +34,13 @@ const BookingsPage = () => {
         <Button
           onClick={() => setViewAll(false)}
           text={"View Active Bookings Only."}
-          className={" mb-2 border border-gray-300 !bg-gray-50 text-sm !text-black"}
+          className={" mb-2 border border-gray-300 !bg-gray-50 text-sm !text-black mx-auto"}
         />
       ) : (
         <Button
           onClick={() => setViewAll(true)}
           text={"View all Bookings."}
-          className={" mb-2 border border-gray-300 !bg-gray-50 text-sm !text-black"}
+          className={" mb-2 border border-gray-300 !bg-gray-50 text-sm !text-black mx-auto"}
         />
       )}
 

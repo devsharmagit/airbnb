@@ -152,7 +152,7 @@ function Profile() {
           </div>
         </div>
         {editMode && (
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center gap-3 mt-5">
             <Button
               text={"Save"}
               type={"submit"}
@@ -163,12 +163,12 @@ function Profile() {
               text={"Cancel"}
               type={"reset"}
               onClick={handleCancel}
-              className={"mx-0 border border-gray-500 bg-white !text-gray-700 "}
+              className={"mx-0 border border-gray-500 bg-white !text-gray-700 hover:!text-white "}
             />
           </div>
         )}
       </div>
-      <Button onClick={logoutUser} text={"Logout"} />
+      <Button onClick={logoutUser} text={"Logout"} className="mx-auto mt-5" />
     </>
   );
 }

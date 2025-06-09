@@ -146,7 +146,7 @@ function PlaceOverviewPage() {
               disabled={!user || user?._id === place?.owner?._id || totalDays === 0}
               text={"Book"}
               className={
-                "!mt-0 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50"
+                "!mt-0 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50 mx-auto"
               }
             />
             <Paragrapgh
