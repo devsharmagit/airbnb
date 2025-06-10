@@ -4,7 +4,7 @@ import { fetchUser } from "./slice/userSlice";
 import Cookies from "js-cookie";
 import LoadingModal from "./components/Modal/LoadingModal.tsx";
 import Error from "./components/Error.tsx";
-import React, { useEffect, Suspense } from "react";
+import  { useEffect, Suspense } from "react";
 import RoutesContainer from "./utils/RoutesContainer.tsx";
 import { useAppSelector, useAppDispatch } from "./hooks/reduxhooks.js";
 

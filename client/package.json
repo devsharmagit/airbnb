@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "lint:dev": "eslint \"src/**/*.{js,jsx}\"",
     "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
-      "preetier:write": "npx prettier ./src --write",
+    "preetier:write": "npx prettier ./src --write",
     "preetier:check": "npx prettier ./src --check"
   },
   "dependencies": {

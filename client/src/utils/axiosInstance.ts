@@ -1,11 +1,10 @@
 import axios from "axios";
 
-const mode = import.meta.env.VITE_ENVIRONMENT;
-
-console.log({ mode });
+const mode = import.meta.env.PROD;
 
 let baseUrl = "http://localhost:3500";
-if (mode === "prod") {
+
+if (mode === true) {
   baseUrl = "https://bookers-backend.devsharmacode.com";
 }
 

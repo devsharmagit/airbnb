@@ -8,7 +8,6 @@ export enum UploadType {
 }
 
 export const uploadFilesToServer = async (filesArr: File[], type: UploadType) => {
-  console.log({ filesArr, type });
 
   const data = new FormData();
   filesArr.forEach((file) => {
@@ -27,8 +26,6 @@ export const uploadFilesToServer = async (filesArr: File[], type: UploadType) =>
   try {
     const response = await imagesUpload(destination, data);
     const responseData: ResponseFileUploadType = response.data;
-    console.log("🤡🤡🤡🤡🤡");
-    console.log(responseData);
 
     return responseData;
   } catch (error) {

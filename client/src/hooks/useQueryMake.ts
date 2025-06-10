@@ -1,5 +1,4 @@
 function useQueryMake(filter: any, searchString: string) {
-  console.log(filter)
   let priceRange = "";
   let searchSort = "";
   let latitude = "";
@@ -44,8 +43,6 @@ function useQueryMake(filter: any, searchString: string) {
       return value.length !== 0;
     })
     .join("&");
-
-    console.log({query})
 
   return query;
 }

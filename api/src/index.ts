@@ -12,7 +12,6 @@ import favouriteRouter from "./routes/favouriteRoutes.js";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 
-console.log("hello new world!")
 const app = express();
 
 const port = process.env.PORT || "3500";

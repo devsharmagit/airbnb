@@ -50,8 +50,6 @@ const invalidatePlaceCache = async (userId?: string, placeId?: string) => {
         await redisClient.del(pattern);
       }
     }
-
-    console.log(`Cache invalidated for patterns: ${patterns.join(", ")}`);
   } catch (error) {
     console.error("Cache invalidation error:", error);
   }
@@ -59,7 +57,6 @@ const invalidatePlaceCache = async (userId?: string, placeId?: string) => {
 
 export const getAllPlaces = async (req: ReqWithQuery, res: Response) => {
   try {
-    console.log(req.url);
     const cacheKey = "place:" + req.url;
     const cachedData = await redisClient.get(cacheKey);
     if (cachedData) {

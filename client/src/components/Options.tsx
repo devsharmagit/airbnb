@@ -10,7 +10,6 @@ import {
 
 function Options({ isVisible }: { isVisible: boolean }) {
   const {pathname} = useLocation();
-  console.log(pathname)
 
   const profileOptions = [
     { to: "/", Svg: HomeSvg, text: "Home" },
