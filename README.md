@@ -64,3 +64,11 @@ Before submitting a pull request, please ensure that proper linting is done to m
 
 Feel free to fork the repository, and if you like the project, don't forget to give it a star!
 
+
+
+docker command to start redis
+docker run -d \
+  --name redis \
+  -p 6379:6379 \
+  --restart unless-stopped \
+  redis:latest

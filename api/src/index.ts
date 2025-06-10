@@ -9,6 +9,8 @@ import placeRouter from "./routes/placeRoutes.js";
 import imageRouter from "./routes/imageRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 import favouriteRouter from "./routes/favouriteRoutes.js";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 
 console.log("hello new world!")
 const app = express();
@@ -20,19 +22,29 @@ mongoose.connect(MONGO_URL).then(() => {
   console.log("DATABASE connected successfully!");
 });
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 100, 
+  message: {
+    status: "error",
+    message: "Too many requests from this IP, please try again after 15 minutes"
+  },
+  standardHeaders: true, 
+  legacyHeaders: false, 
+});
+
+app.use(limiter);
+
+// helmet is used to add security headers to the response
+app.use(helmet());
+
 app.use("/images", express.static("./images"));
 
 const whitelist = [
-  "https://dev-sharma-booking.netlify.app",
   "http://localhost:3000",
   "http://127.0.0.1:3000",
-  "http://localhost:4173",
-  "http://127.0.0.1:4173",
   "http://localhost:5173",
   "http://127.0.0.1:5173",
-  "http://web-app:5173",
-  "http://localhost:3500",
-  "https://air-bnb-frontend.vercel.app",
   "https://bookers.devsharmacode.com",
 ];
 
