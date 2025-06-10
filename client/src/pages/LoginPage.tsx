@@ -98,6 +98,7 @@ function LoginPage() {
               <Button 
                 text={"Sign In"} 
                 type="submit"
+                className="mx-auto"
               />
             </form>
 

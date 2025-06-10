@@ -119,6 +119,7 @@ function RegisterPage() {
               <Button 
                 type={"submit"} 
                 text={"Create Account"} 
+                className="mx-auto"
               />
             </form>
 

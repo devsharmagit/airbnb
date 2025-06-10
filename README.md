@@ -1,4 +1,4 @@
-# Airbnb - Booking Web app
+# Driftbnb - Booking Web app
 
 Hey! 
 I started this project from a YouTube video on how to make a simple crud app using the MERN stack. I added a lot of features after that. 
@@ -67,8 +67,10 @@ Feel free to fork the repository, and if you like the project, don't forget to g
 
 
 docker command to start redis
+```
 docker run -d \
   --name redis \
   -p 6379:6379 \
   --restart unless-stopped \
   redis:latest
+```
