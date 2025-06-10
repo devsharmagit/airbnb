@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { GET_ME } from "../services/api/apiEndpoints";
+import axiosInstance from "../utils/axiosInstance";
 import { UserType } from "../types/user";
 
 export interface UserStateType {
@@ -17,9 +16,7 @@ const initialState: UserStateType = {
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get(GET_ME, {
-      withCredentials: true,
-    });
+    const { data } = await axiosInstance.get("/api/user/me");
     return data.user;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error.response.data);
