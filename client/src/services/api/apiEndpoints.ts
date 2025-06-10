@@ -1,8 +1,8 @@
 const mode = import.meta.env.PROD;
 
-let baseUrl = "http://localhost:3500";
+let baseUrl = "http://localhost:3500/";
 if (mode === true) {
-  baseUrl = "https://bookers-backend.devsharmacode.com";
+  baseUrl = "https://bookers-backend.devsharmacode.com/";
 }
 
 export const GET_SAVED_PLACE = baseUrl + "place/fav";
